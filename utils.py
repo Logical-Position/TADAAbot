@@ -69,3 +69,4 @@ def optimize_file_name(target_name, bot_hints_path, hints_path):  # Cleans up fi
         target_name = target_name[1:]
 
     return target_name
+
