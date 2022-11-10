@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/TADAbot.iml" filepath="$PROJECT_DIR$/.idea/TADAbot.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/TADAAbot.iml" filepath="$PROJECT_DIR$/.idea/TADAAbot.iml" />
     </modules>
   </component>
 </project>

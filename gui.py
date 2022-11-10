@@ -1,32 +1,22 @@
-from tkinter import *
-from tkinter import filedialog
-from tkinter import messagebox
-import os
+from utils import *
 
+# TODO Update tkinter version and MacOs Pysimplegui bug
 
-window = Tk()
-
-possible_files = ['external_redirected_urls', 'broken_internal_urls', 'h1__tag_is_empty', 'external_redirected_urls', 'images_with_missing_alt_text', 'internal_redirected_urls', 'meta_description_is_empty', 'meta_description_is_missing', 'url_is_orphaned_and_was_not_found_by_the_crawler', 'urls_with_duplicate_meta_descriptions', 'urls_with_duplicate_page_titles']
-
-def main_window():
-    window.lift()
-    window.attributes('-topmost', True)
-    window.after_idle(window.attributes, '-topmost', False)
-    window.title('Tech Audit Technical')
-    window.geometry("500x500")
-    hints_button = Button(window, text='Select Hints Folder', command=get_hints)
-    hints_button.pack()
-
-
-def get_hints():
-    hints_path = filedialog.askdirectory(title='Choose Hints Folder')
-    if '/hints' in hints_path:
-        all_hint_files = os.listdir(hints_path)
-        for file in all_hint_files:
-            if file == possible_files:
-                print(f'{file} found.')
-                possible_files.remove(file)
-        print(f'These files were not found: {possible_files}')
-    elif '/hints' not in hints_path:
-        messagebox.showerror(title='Wrong Directory', message="Choose the 'hints' folder found within the Sitebulb "
-                                                              "exports.")
+# import PySimpleGUI as sg
+#
+# sg.theme('DarkAmber')   # Add a touch of color
+# # All the stuff inside your window.
+# layout = [  [sg.Text('Some text on Row 1')],
+#             [sg.Text('Enter something on Row 2'), sg.InputText()],
+#             [sg.Button('Ok'), sg.Button('Cancel')] ]
+#
+# # Create the Window
+# window = sg.Window('Window Title', layout)
+# # Event Loop to process "events" and get the "values" of the inputs
+# while True:
+#     event, values = window.read()
+#     if event == sg.WIN_CLOSED or event == 'Cancel': # if user closes window or clicks cancel
+#         break
+#     print('You entered ', values[0])
+#
+# window.close()
