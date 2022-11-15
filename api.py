@@ -8,6 +8,7 @@
 #  Google Mobile Friendliness,
 
 import requests
+import
 
 
 def get_moz_data_obj():

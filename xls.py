@@ -71,12 +71,12 @@ def get_all_xls_data(xls_paths, bot_hints_path, hints_path):  # Gets all data fr
     return xls_data
 
 
-# TODO Fix transfer xls function
-
 def transfer_xls_data_to_master(xls_data, master_xls_obj, export_path):
     for entry in xls_data:
         data_key = list(entry.keys())[0]
         entry_data = list(entry.values())[0]
+
+        print(f'Adding data to {data_key} in master spreadsheet.')
 
         for i in entry_data:  # Accesses each element of tuple (columns of xl object)
 
@@ -86,7 +86,7 @@ def transfer_xls_data_to_master(xls_data, master_xls_obj, export_path):
 
             for sheet in master_xls_obj:
                 if data_key == sheet.title:
-                    target_sheet = master_xls_obj[data_key]  # If key and master xl sheet title match, adds data values.
+                    target_sheet = master_xls_obj[data_key]  # If key and sheet title match, appends data values.
                     target_sheet.append(data_values)
 
                 # for r in range(1, num_rows + 1):  # Alternative process for transferring xl data, may need in future.

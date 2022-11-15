@@ -44,5 +44,11 @@ if export_path:  # Allows process to continue if correct folder is selected.
     xls_data = xls.get_all_xls_data(xl_file_paths, bot_hints_path, hints_path)  # Reads data from each xls
     # in bot-hints and returns it in this data structure: [{name: [data]}, {name: [data]}]
 
-    xls.transfer_xls_data_to_master(xls_data, master_xls_obj, export_path)  # Takes all xls data, matches it to the proper
-    # master sub-sheet using the key, and places all the data into the master sheet.
+    for sheet in master_xls_obj.worksheets[1:]:  # Checks if master sub-sheet (minus overview) have data
+        if sheet.calculate_dimension() == 'A1:A1':
+            xls.transfer_xls_data_to_master(xls_data, master_xls_obj, export_path)  # Takes all xls data, matches it to the proper
+            # master sub-sheet using the key, and places all the data into the master sheet.
+            break
+        else:
+            print('Data already exists in master sub-sheets.')
+            break
