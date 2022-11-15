@@ -17,9 +17,11 @@ target_hint_files = ['external_url_redirect_broken__4xx_or_5xx',
                      ]
 
 
+# TODO Replace hardcoded exports path with filedialog.askdirectory()
+
 def walk_exports_folder():  # Asks for Sitebulb export folder and can return paths for
     # all files/folders in the Sitebulb directory, if necessary.
-    main_exports_path = filedialog.askdirectory()
+    main_exports_path = '/Users/applehand/Desktop/goldenwags-exports'  # Hardcoded export path for faster testing
     if main_exports_path.endswith('exports'):
         hints_path = main_exports_path + '/hints'
         bot_hints_path = main_exports_path + '/bot-hints'
@@ -64,9 +66,11 @@ def optimize_file_name(target_name, bot_hints_path, hints_path):  # Cleans up fi
         target_name = target_name.replace(bot_hints_path + '/', '')
     elif hints_path in target_name:
         target_name = target_name.replace(hints_path + '/', '')
-    target_name = target_name[:-5]
+    if target_name.endswith('.csv'):
+        target_name = target_name[:-4]
+    elif target_name.endswith('.xlsx'):
+        target_name = target_name[:-5]
     while len(target_name) > 31:
         target_name = target_name[1:]
 
     return target_name
-

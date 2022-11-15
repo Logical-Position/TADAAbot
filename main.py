@@ -4,7 +4,8 @@ import utils
 import gui
 import xls
 
-# TODO Setup on github
+# TODO Update Python version to 3.11
+target_domain = ''
 
 export_path, hints_path, bot_hints_path, master_xls_path = utils.walk_exports_folder()  # Walks through Sitebulb folder
 # to get file paths. Function returns a list of file path variables that are unpacked.
@@ -21,26 +22,27 @@ if export_path:  # Allows process to continue if correct folder is selected.
     # against those required in the tech audit. Returns matched file names in a list.
 
     if 'master.xlsx' not in os.listdir(export_path):
-        xls.create_master_xls(matched_hint_files, export_path, hints_path, bot_hints_path)  # Takes the list of matched hint files
+        master_xls_obj = xls.create_master_xls(matched_hint_files, export_path, hints_path, bot_hints_path)  # Takes the list of matched hint files
         # and creates the master spreadsheet with a sheet for each file.
     else:
         print('Master spreadsheet already exists.')
+        master_xls_obj = xls.get_master_xls_obj(master_xls_path)
 
     csv_file_paths = xls.get_csv_paths(matched_hint_files, hints_path)  # Takes matched hint paths and returns csv paths
 
-    xl_file_paths = xls.create_target_xls_paths(csv_file_paths)  # Tweaks csv file path string to allow the xls files
+    xl_file_paths = xls.create_target_xls_paths(csv_file_paths)  # Tweaks csv file paths to allow the xls files
     # to be created in the /bot-hints folder.
 
     num_files_in_bot_hints = len(os.listdir(bot_hints_path))  # Gets num of files in bot-hints
 
     if num_files_in_bot_hints < 2:  # hidden mac file makes bot-hints always contain at least 1 file
-        xls.create_raw_xls_from_csv_paths(csv_file_paths, xl_file_paths)  # Creates a raw Excel worksheet in /bot-hints
+        xls.create_xls_from_csv_paths(csv_file_paths, xl_file_paths)  # Creates an Excel worksheet in /bot-hints
         # for each csv_path.
     else:
         print('bot-hints folder is not empty.')
 
-    target_xls_data = xls.get_all_xls_data(xl_file_paths, bot_hints_path, hints_path)  # Reads all data from each xls
-    # in bot-hints and returns it in a list of data dictionaries with the file name as key. [{name: data}, {name: data}]
+    xls_data = xls.get_all_xls_data(xl_file_paths, bot_hints_path, hints_path)  # Reads data from each xls
+    # in bot-hints and returns it in this data structure: [{name: [data]}, {name: [data]}]
 
-    xls.transfer_xls_data_to_master(target_xls_data, master_xls_path)  # Takes all xls data, matches it to the proper
-    # master sub-sheet using the key, and plops all the data into the master sheet.
+    xls.transfer_xls_data_to_master(xls_data, master_xls_obj, export_path)  # Takes all xls data, matches it to the proper
+    # master sub-sheet using the key, and places all the data into the master sheet.

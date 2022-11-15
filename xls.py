@@ -6,27 +6,31 @@ from utils import *
 
 def create_master_xls(matched_hint_files, export_path, hints_path, bot_hints_path):  # Creates a master Excel spreadsheet in the main
     # Sitebulb exports folder with a sub-sheet for each matched hint file.
-    master_xls = Workbook()
+    master_xls_obj = Workbook()
+    overview_sheet = master_xls_obj.active
+    overview_sheet.title = 'Overview'
     print('Created master spreadsheet.')
 
     for file in matched_hint_files:
         target_sheet_name = optimize_file_name(file, bot_hints_path, hints_path)
-        master_xls.create_sheet(title=target_sheet_name)
+        master_xls_obj.create_sheet(title=target_sheet_name)
         print(f'Added sheet to master: {target_sheet_name}')
 
-    master_xls.save(filename=export_path + '/master.xlsx')
+    master_xls_obj.save(filename=export_path + '/master.xlsx')
+
+    return master_xls_obj
 
 
 def get_csv_paths(found_hint_files, hints_path):  # Takes hint paths and returns a list of csv paths
-    csv_files = []
+    csv_file_paths = []
     for csv_file_name in found_hint_files:
         csv_path = hints_path + '/' + csv_file_name
-        csv_files.append(csv_path)
+        csv_file_paths.append(csv_path)
 
-    return csv_files
+    return csv_file_paths
 
 
-def create_raw_xls_from_csv_paths(csv_file_paths, xl_file_paths):  # Takes csv paths from hints and creates them as xls
+def create_xls_from_csv_paths(csv_file_paths, xl_file_paths):  # Takes csv paths from hints and creates them as xls
     for index, csv_file_path in enumerate(csv_file_paths):
         csv_data = []
         with open(csv_file_path) as file_obj:
@@ -51,23 +55,49 @@ def create_target_xls_paths(csv_file_paths):  # Tweaks csv path strings to allow
     return xl_file_paths
 
 
-# TODO Make function that puts data into proper master excel sub-sheet
-
 def get_all_xls_data(xls_paths, bot_hints_path, hints_path):  # Gets all data from raw xls in bot-hints and returns it
     # as a list that contains a data dictionary for each xls, with the file name string as key.
-    target_xls_data = []
+    xls_data = []
     for path in xls_paths:
         target_name = optimize_file_name(path, bot_hints_path, hints_path)
         file = load_workbook(filename=path)
         sheet = file.active
         sheet_dict, sheet_data = {}, []
         for row in sheet.rows:
-            sheet_data = [row]
+            sheet_data.append(row)
         sheet_dict.update({target_name: sheet_data})
-        target_xls_data.append(sheet_dict)
+        xls_data.append(sheet_dict)
 
-    return target_xls_data
+    return xls_data
 
 
-def transfer_xls_data_to_master(all_sheets_data, master_path):
-    print(all_sheets_data)
+# TODO Fix transfer xls function
+
+def transfer_xls_data_to_master(xls_data, master_xls_obj, export_path):
+    for entry in xls_data:
+        data_key = list(entry.keys())[0]
+        entry_data = list(entry.values())[0]
+
+        for i in entry_data:  # Accesses each element of tuple (columns of xl object)
+
+            data_values = [data.value for data in i]  # makes list of values instead of cell objects
+            # num_col = len(entry_data)
+            # num_rows = entry_data[0].row
+
+            for sheet in master_xls_obj:
+                if data_key == sheet.title:
+                    target_sheet = master_xls_obj[data_key]  # If key and master xl sheet title match, adds data values.
+                    target_sheet.append(data_values)
+
+                # for r in range(1, num_rows + 1):  # Alternative process for transferring xl data, may need in future.
+                #     for c in range(1, num_col + 1):
+                #         for item in entry_data:
+                #             target_sheet.cell(row=r, column=c).value = item(row=r, column=c).value
+
+    master_xls_obj.save(filename=export_path + '/master.xlsx')
+
+
+def get_master_xls_obj(master_xls_path):
+    master_xls_obj = load_workbook(master_xls_path)
+
+    return master_xls_obj
