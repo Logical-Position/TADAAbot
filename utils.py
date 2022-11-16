@@ -21,7 +21,7 @@ target_hint_files = ['external_url_redirect_broken__4xx_or_5xx',
 
 def walk_exports_folder():  # Asks for Sitebulb export folder and can return paths for
     # all files/folders in the Sitebulb directory, if necessary.
-    main_exports_path = '/Users/applehand/Desktop/goldenwags-exports'  # Hardcoded export path for faster testing
+    main_exports_path = '/Users/applehand/Desktop/creationnet-exports'  # Hardcoded export path for faster testing
     if main_exports_path.endswith('exports'):
         hints_path = main_exports_path + '/hints'
         bot_hints_path = main_exports_path + '/bot-hints'

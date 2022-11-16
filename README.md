@@ -18,6 +18,10 @@ An automation assistant for tech audits! Tadaa!!
 11. Adjusts SEO recommendation template based on data for each slide.
 12. Displays real-time completion status messages in main window during operation. 
 
+## Here's what it can't do. (TADAAbot Limitations)
+1. Screenshots.
+2. ???
+
 
 ## Here's what you do. (The Analyst)
 1. Get an impression of the target site; click around, read some words, search for noindex tags, swap your device view. How does it all make you feel?
@@ -52,3 +56,66 @@ An automation assistant for tech audits! Tadaa!!
 - os - for file management.
 - tkinter - for file explorer dialogue.
 - Pyinstaller - for packaging the project and creating an .exe.
+
+### Tech Audit - Slide Notes and Variables
+#### Slide 8.
+Has_sc_access = Boolean
+Has_ga_access = Boolean
+
+#### Slide 10.
+Is_mobile_friendly = Boolean
+Num_mob_friendly_issues = int
+
+#### Slide 11.
+Is_sitemap_submitted_sc = Boolean
+Sitemap_errors = int
+Sitemap_location = domain + str(sitemap.xml)
+
+#### Slide 12.
+Has_robots = Boolean
+Robots_location = domain + str(robots.txt)
+
+#### Slide 15.
+Titles_too_long = int
+Titles_too_short = int
+Duplicate_titles = int
+
+#### Slide 16.
+Desc_too_long = int
+Desc_too_short = int
+Duplicate_desc = int
+
+#### Slide 17.
+Duplicate_h1_tags = int
+
+#### Slide 18.
+Has_duplicate_content = Boolean
+Has_thin_content = Boolean
+
+#### Slide 19.
+Has_duplicate_content = Boolean
+
+#### Slide 22.
+Img_alt_text = int
+
+#### Slide 24.
+Broken_int_links = int
+Broken_ext_links = int
+SC_404s = int
+SC_crawl_anom = int
+SC_soft_404s = int
+
+#### Slide 26.
+Int_redirect_links = int
+Ext_redirect_links = int
+
+#### Slide 28.
+Mob_load_time = float
+Desk_load_time = float
+(Use pagespeed insights api)
+
+#### Slide 30.
+Need ahrefs account upgrade for api to get broken back links
+
+#### Slide 31.
+Use Moz api

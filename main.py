@@ -1,7 +1,6 @@
 import os.path
 
 import utils
-import gui
 import xls
 
 # TODO Update Python version to 3.11
@@ -52,3 +51,7 @@ if export_path:  # Allows process to continue if correct folder is selected.
         else:
             print('Data already exists in master sub-sheets.')
             break
+
+    for sheet in master_xls_obj:  # Begins calculations of data found in the matched hint files, all items
+        # that are required in the tech audit.
+        print(sheet)
