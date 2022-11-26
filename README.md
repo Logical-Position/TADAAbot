@@ -37,7 +37,6 @@ An automation assistant for tech audits! Tadaa!!
 11. Dig deeper in each individual sub-sheet to inspect the issues for their severity. Ex: Are the broken links on an unfinished lorem ipsum template page? Did Sitebulb act strangely and pick up something that isn't on the site anymore?
 12. Inspect the live site for examples of any detected issues, and search for noindex tags on all types of pages (homepage, collections, categories, products, blogs, etc.)
 13. Consult your favorite SEO tool (Sitebulb/Screaming Frog, GA/SC, SEMRUSH, etc.) or the raw Sitebulb exports to analyze more data.
-14. Deliver your judgements and prioritize solutions based on issue severity.
 
 
 #### BONUS

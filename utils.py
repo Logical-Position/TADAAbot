@@ -1,6 +1,4 @@
 import os
-
-import ppt
 import ppt as pp
 
 # TODO Get complete list of all possible export files that analysts use in TA
@@ -125,7 +123,7 @@ def calc_totals(master_xls_obj):
         if 'description_is_empty' in sheet.title:
             for row in sheet.rows:
                 pp.desc_empty += 1
-            ppt.desc_empty -= 1
+            pp.desc_empty -= 1
 
         if 'description_is_missing' in sheet.title:
             for row in sheet.rows:
