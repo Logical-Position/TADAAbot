@@ -6,7 +6,7 @@
 #  Siteliner,
 #  Copyscape,
 #  Google Mobile Friendliness,
+#  Pagespeed Insights,
 
-import requests
-
+# Cache/cookie? previously saved api creds until they don't work again, then prompt when needed?
 
