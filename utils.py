@@ -5,6 +5,7 @@ import ppt as pp
 
 target_hint_files = ['external_url_redirect_broken__4xx_or_5xx',
                      'broken_internal_urls',
+                     'broken_external_urls',
                      'h1__tag_is_empty',
                      'external_redirected_urls',
                      'images_with_missing_alt_text',
@@ -17,6 +18,11 @@ target_hint_files = ['external_url_redirect_broken__4xx_or_5xx',
                      'url_in_multiple_xml_sitemaps',
                      'noindex_url_in_xml_sitemaps',
                      'redirect__3xx__url_in_xml_sitemaps',
+                     'title_tag_length_too_long',
+                     'title_tag_length_too_short',
+                     'description_length_too_long',
+                     'description_length_too_short',
+                     'urls_with_duplicate_h1s'
                      ]
 
 # TODO Rework and rename walk_exports_folder function to align with web app and add documentation comment
@@ -90,6 +96,7 @@ def calc_totals(master_xls_obj):
     @param master_xls_obj:
     """
     for sheet in master_xls_obj:
+        print(f'Calculating Totals for: {sheet.title}')
         if 'broken__4xx_or_5xx' in sheet.title:
             for row in sheet.rows:
                 pp.broken_4xx_5xx += 1
@@ -100,10 +107,20 @@ def calc_totals(master_xls_obj):
                 pp.broken_int_links += 1
             pp.broken_int_links -= 1
 
+        if 'broken_external_urls' in sheet.title:
+            for row in sheet.rows:
+                pp.broken_ext_links += 1
+            pp.broken_ext_links -= 1
+
         if 'h1__tag_is_empty' in sheet.title:
             for row in sheet.rows:
                 pp.h1_tag_empty += 1
             pp.h1_tag_empty -= 1
+
+        if 'urls_with_duplicate_h1' in sheet.title:
+            for row in sheet.rows:
+                pp.duplicate_h1_tags += 1
+            pp.duplicate_h1_tags -= 1
 
         if 'external_redirected_urls' in sheet.title:
             for row in sheet.rows:
@@ -130,15 +147,37 @@ def calc_totals(master_xls_obj):
                 pp.desc_missing += 1
             pp.desc_missing -= 1
 
+        if 'description_length_too_long' in sheet.title:
+            for row in sheet.rows:
+                pp.desc_too_long += 1
+            pp.desc_too_long -= 1
+
+        if 'description_length_too_short' in sheet.title:
+            for row in sheet.rows:
+                pp.desc_too_short += 1
+            pp.desc_too_short -= 1
+
         if 'not_found_by_the_crawler' in sheet.title:
             for row in sheet.rows:
+                pp.sitemap_errors += 1
                 pp.orphaned_pages += 1
             pp.orphaned_pages -= 1
+            pp.sitemap_errors -= 1
 
         if 'duplicate_meta_descriptions' in sheet.title:
             for row in sheet.rows:
                 pp.duplicate_desc += 1
             pp.duplicate_desc -= 1
+
+        if 'title_tag_length_too_long' in sheet.title:
+            for row in sheet.rows:
+                pp.titles_too_long += 1
+            pp.titles_too_long -= 1
+
+        if 'title_tag_length_too_short' in sheet.title:
+            for row in sheet.rows:
+                pp.titles_too_short += 1
+            pp.titles_too_short -= 1
 
         if 'duplicate_page_titles' in sheet.title:
             for row in sheet.rows:

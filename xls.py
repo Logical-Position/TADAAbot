@@ -22,7 +22,7 @@ def create_master_xls(matched_hint_files, export_path, hints_path, bot_hints_pat
     for file in matched_hint_files:
         target_sheet_name = optimize_file_name(file, bot_hints_path, hints_path)
         master_xls_obj.create_sheet(title=target_sheet_name)
-        print(f'Added sheet to master: {target_sheet_name}')
+        print(f'Created Sheet in Master: {target_sheet_name}')
 
     master_xls_obj.save(filename=export_path + '/master.xlsx')
 
@@ -75,7 +75,7 @@ def create_xls_from_csv_paths(csv_file_paths, xl_file_paths):
         sheet = workbook.active
         for row in csv_data:
             sheet.append(row)
-        print(f'Created file: {xl_file_paths[index]}')
+        print(f'Created Excel file: {xl_file_paths[index]}')
         workbook.save(xl_file_paths[index])
 
 
@@ -115,7 +115,7 @@ def transfer_xls_data_to_master(xls_data, master_xls_obj, export_path):
         data_key = list(entry.keys())[0]
         entry_data = list(entry.values())[0]
 
-        print(f'Adding data to {data_key} in master spreadsheet.')
+        print(f'Added data to {data_key} in master spreadsheet.')
 
         for i in entry_data:  # Accesses each element of tuple (columns of xl object)
             data_values = [data.value for data in i]  # Makes list of values instead of cell objects

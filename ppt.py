@@ -1,5 +1,4 @@
 from pptx import Presentation
-from PyPDF2 import PdfReader
 
 # Slide 8.
 has_sc_access = bool
@@ -26,7 +25,6 @@ robots_location = None
 titles_too_long = 0
 titles_too_short = 0
 duplicate_titles = 0
-titles_missing = 0
 
 # Slide 16.
 desc_too_long = 0
@@ -78,7 +76,6 @@ def populate_powerpoint(ta_template_path, exports_path):
         print(f'---------Slide {slide_num}---------')
         for shape in slide.shapes:
             if shape.has_text_frame:
-
                 text_frame = shape.text_frame
                 paragraph = text_frame.paragraphs[0]
                 runs = paragraph.runs
@@ -98,7 +95,9 @@ def populate_powerpoint(ta_template_path, exports_path):
                 # Slide 11
                 if 'sitemap_analyst_notes' == shape.name:
                     print(shape.name)
-                    runs[0].text = f'# of Sitemap Errors:{sitemap_errors}, # of Orphaned Pages {orphaned_pages}'
+                    runs[0].text = f'Sitemap Errors: {sitemap_errors} | Orphaned Pages: {orphaned_pages} | ' \
+                                   f'Redirects in Sitemap: {redirects_in_sitemap} | Noindex URLs in Sitemap: ' \
+                                   f'{noindex_urls_in_sitemap} | URLs in Multiple Sitemaps: {urls_in_multiple_sitemaps}'
                 if 'sc_sitemap_submitted_bool' == shape.name:
                     print(shape.name)
                 if 'sitemap_errors_bool' == shape.name:
@@ -118,14 +117,19 @@ def populate_powerpoint(ta_template_path, exports_path):
                 # Slide 15
                 if 'meta_title_analyst_notes' == shape.name:
                     print(shape.name)
+                    runs[0].text = f'Short titles : {titles_too_short} | Long titles :' \
+                                   f' {titles_too_long} | Duplicate titles: {duplicate_titles}'
 
                 # Slide 16
                 if 'meta_descriptions_analyst_notes' == shape.name:
                     print(shape.name)
+                    runs[0].text = f'Missing descriptions: {desc_missing} | Short descriptions: {desc_too_short} | ' \
+                                   f'Long descriptions: {desc_too_long} | Empty descriptions: {desc_empty}'
 
                 # Slide 17
                 if 'h1_analyst_notes' == shape.name:
                     print(shape.name)
+                    runs[0].text = f'Empty H1 tags: {h1_tag_empty} | Duplicate H1 tags: {duplicate_h1_tags}'
 
                 # Slide 18
                 if 'site_content_analyst_notes' == shape.name:
@@ -148,10 +152,13 @@ def populate_powerpoint(ta_template_path, exports_path):
                 # Slide 22
                 if 'alt_text_analyst_notes' == shape.name:
                     print(shape.name)
+                    runs[0].text = f'Missing alt text: {img_alt_text}'
 
                 # Slide 24
                 if '404s_analyst_notes' == shape.name:
                     print(shape.name)
+                    runs[0].text = f'Broken internal links: {broken_int_links} | Broken external links: ' \
+                                   f'{broken_ext_links} | Redirects to 4/5xx: {broken_4xx_5xx}'
 
                 # Slide 25
                 if 'canonical_analyst_notes' == shape.name:
@@ -160,6 +167,8 @@ def populate_powerpoint(ta_template_path, exports_path):
                 # Slide 26
                 if 'redirects_analyst_notes' == shape.name:
                     print(shape.name)
+                    runs[0].text = f'Internal redirect links: {int_redirect_links} | External redirect links: ' \
+                                   f'{ext_redirect_links}'
 
                 # Slide 27
                 if 'site_security_analyst_notes' == shape.name:

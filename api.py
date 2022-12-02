@@ -24,11 +24,14 @@ from oauth2client import file
 from oauth2client import tools
 from creds import *
 
+target_site = ''
 
-creds = sc_json
+# ------------- Search Console--------------------
+
+sc_creds = sc_json
 
 
-def authorize_creds(creds, authorizedcreds='authorizedcreds.dat'):
+def authorize_sc_creds(creds, authorizedcreds='authorizedcreds.dat'):
     """
     Authorize Search Console credentials using OAuth2.
     @param [str] creds: the path to the client_secrets.json file
@@ -74,10 +77,36 @@ def authorize_creds(creds, authorizedcreds='authorizedcreds.dat'):
     return webmasters_service
 
 
-# API for testing structured data?
-# url = 'https://api.microlink.io'
-# params = {'url': 'https://www.deepcoat.com/', 'meta': 'True'}
-#
-# response = requests.get(url, params)
-#
-# print(response.json())
+# -----------------COPYSCAPE----------------------
+
+def copyscape(username, key):
+    copyscape_url = f'https://www.copyscape.com/api/?u={username}&k={key}&o=csearch&x=1&f=json'
+    copyscape_response = requests.get(copyscape_url).json()
+    copyscape_results_list = copyscape_response['result']
+    copyscape_num_result_urls = copyscape_response['count']
+
+
+# ------------------Structured/Meta Data from Microlink----------------------
+
+def microlink(target_url):  # https://api.microlink.io
+    params = {'url': f'{target_url}', 'meta': 'True'}
+    response = requests.get(target_url, params)
+    print(response.json())
+
+
+# ------------------SEMRUSH-----------------------------
+
+def semrush(username, key):  # Need to upgrade account
+    pass
+
+
+# -------------------AHREFS----------------------------
+
+def ahrefs(username, key):  # Need to upgrade account
+    pass
+
+
+# -------------------MOZ----------------------------
+
+def moz(username, key):
+    pass

@@ -3,7 +3,6 @@ import utils
 import xls
 import ppt
 
-
 export_path, hints_path, bot_hints_path, master_xls_path = utils.walk_exports_folder('exports_folder')
 
 if export_path:
@@ -45,7 +44,5 @@ if export_path:
     utils.calc_totals(master_xls_obj)
 
     ppt_path = '/Users/applehand/Documents/LP/TADAA-ppt-template.pptx'
-
-    presentation = ppt.Presentation(ppt_path)
 
     populated_ppt = ppt.populate_powerpoint(ppt_path, export_path)
