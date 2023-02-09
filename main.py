@@ -1,48 +1,48 @@
-import os.path
-import utils
-import xls
-import ppt
+from flask import Flask, jsonify, render_template, request, send_file
+import os
+import tadaa
+import time
 
-export_path, hints_path, bot_hints_path, master_xls_path = utils.walk_exports_folder('exports_folder')
 
-if export_path:
-    is_bot_hints_created = os.path.exists(bot_hints_path)
-    if not is_bot_hints_created:
-        os.mkdir(bot_hints_path)
-    else:
-        print('Bot hints folder already exists.')
+UPLOAD_DIR = '/path/to/uploads'
 
-    matched_hint_files = utils.match_target_hint_files(hints_path)
+app = Flask(__name__)
+app.config['UPLOAD_DIR'] = UPLOAD_DIR
 
-    if 'master.xlsx' not in os.listdir(export_path):
-        master_xls_obj = xls.create_master_xls(matched_hint_files, export_path, hints_path, bot_hints_path)
-    else:
-        print('Master spreadsheet already exists.')
-        master_xls_obj = xls.get_master_xls_obj(master_xls_path)
 
-    csv_file_paths = xls.get_csv_paths(matched_hint_files, hints_path)
+@app.route('/', methods=['GET'])
+def index():
+    return render_template('index.html')
 
-    xl_file_paths = xls.create_target_xls_paths(csv_file_paths)
+@app.route('/main')
+def get_main():
+    return render_template('main.html')
 
-    num_files_in_bot_hints = len(os.listdir(bot_hints_path))
+@app.route('/results')
+def get_results():
+    return render_template('results.html')
 
-    if num_files_in_bot_hints < 2:
-        xls.create_xls_from_csv_paths(csv_file_paths, xl_file_paths)
-    else:
-        print('bot-hints folder is not empty.')
+@app.route('/', methods=['POST'])
+def do_something():
+    # Parse form and get exports filepath
+    # Generate audit
+    inputID = 'spreadsheet-selection'
+    for file in request.files.getlist(inputID):
+        print(file.name)
+        print(file.stream)
+        print(file.filename)
+    # TODO: get local filepaths
+    # TODO: call TADAA to generate report
+    # TODO: enable "Download report" button once audit finishes running
+    data = tadaa.test_run()
+    print(data)
+    time.sleep(3)
+    return jsonify({"Choo Choo": "Welcome to your Flask app 🚅"})
 
-    xls_data = xls.get_all_xls_data(xl_file_paths, bot_hints_path, hints_path)
+@app.route('/download', methods=['GET'])
+def download_audit():
+    ppt_path = tadaa.test_run()
+    return send_file(ppt_path)
 
-    for sheet in master_xls_obj.worksheets[1:]:
-        if sheet.calculate_dimension() == 'A1:A1':
-            xls.transfer_xls_data_to_master(xls_data, master_xls_obj, export_path)
-            break
-        else:
-            print('Data already exists in master sub-sheets.')
-            break
-
-    utils.calc_totals(master_xls_obj)
-
-    ppt_path = '/Users/applehand/Documents/LP/TADAA-ppt-template.pptx'
-
-    populated_ppt = ppt.populate_powerpoint(ppt_path, export_path)
+if __name__ == '__main__':
+    app.run(debug=True, port=os.getenv("PORT", default=5000))

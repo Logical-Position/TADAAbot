@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}
+TADAA
+{% endblock %}
+
+{% block main %}
+<div class="main-grid-container">
+    <div class="main">
+        <p><em>The "Technical Audit Documentation Automation Assistant", or TADAA!</em></p>
+        <div>
+            Domain URL: <input type="text">
+        </div>
+        <form id="tadaa-form" action="/" method="post" enctype="multipart/form-data">
+            <legend class="field-title">
+                <b>Upload Data</b>
+            </legend>
+            <label class="field-label"  for="spreadsheet-selection">
+                Select the `exports` folder to upload.
+            </label>
+            <!-- The input seemingly can only accept files xor directories, not both. This is UI/UX problem, talk to Jake. -->
+            <!-- Asking users for the 'export' directory seems like it will be easiest. Directories it is. -->
+            <input id="spreadsheet-selection" type="file" name="spreadsheet-selection" required accept=".csv, .xlsx, .xls, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" multiple webkitdirectory>
+            <input id="submit-input" class="submit-button" type="submit" value="Generate PDF">
+        </form>
+        <div>
+            <button id="ppt-download-button" disabled>Download Audit Powerpoint</button>
+        </div>
+    </div>
+</div>
+{% endblock %}

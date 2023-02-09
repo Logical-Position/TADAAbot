@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+
+{% block title %}
+TADAA -- Results
+{% endblock %}
+
+{% block main %}
+<div class="results-grid-container">
+    <div class="general">
+        <h2>General</h2>
+        <div class="table-grid">
+            <div class="grid-header">Data</div>
+            <div class="grid-header">Value</div>
+            <div class="grid-item">domain_name</div>
+            <div class="grid-item">string</div>
+            <div class="grid-item">has_robots</div>
+            <div class="grid-item">boolean</div>
+            <div class="grid-item">robots_location</div>
+            <div class="grid-item">string</div>
+            <div class="grid-item">has_duplicate_content</div>
+            <div class="grid-item">boolean</div>
+            <div class="grid-item">has_thin_content</div>
+            <div class="grid-item">boolean</div>
+            <div class="grid-item">mob_load_time</div>
+            <div class="grid-item">float</div>
+            <div class="grid-item">desk_load_time</div>
+            <div class="grid-item">float</div>
+        </div>
+    </div>
+    <div class="overview-sc-data">
+        <h2>Search Console Data</h2>
+        <div class="table-grid">
+            <div class="grid-header">Data</div>
+            <div class="grid-header">Value</div>
+            <div class="grid-item">has_sc_access</div>
+            <div class="grid-item">boolean</div>
+            <div class="grid-item">has_ga_access</div>
+            <div class="grid-item">boolean</div>
+            <div class="grid-item">is_mobile_friendly</div>
+            <div class="grid-item">boolean</div>
+            <div class="grid-item">num_mob_friendly_issues</div>
+            <div class="grid-item">integer</div>
+            <div class="grid-item">is_sitemap_submitted_sc</div>
+            <div class="grid-item">boolean</div>
+            <div class="grid-item">sitemap_errors</div>
+            <div class="grid-item">integer</div>
+            <div class="grid-item">sitemap_location</div>
+            <div class="grid-item">string</div>
+            <div class="grid-item">sc_404s</div>
+            <div class="grid-item">integer</div>
+            <div class="grid-item">sc_crawl_anom</div>
+            <div class="grid-item">integer</div>
+            <div class="grid-item">sc_soft_404s</div>
+            <div class="grid-item">integer</div>
+        </div>
+    </div>
+    <div class="overview-crawl-data">
+        <h2>Sitebulb Crawl Data</h2>
+        <div class="table-grid">
+            <div class="grid-header">Data</div>
+            <div class="grid-header">Value</div>
+            <div class="grid-item">redirects_in_sitemap</div>
+            <div class="grid-item">integer</div>
+            <div class="grid-item">noindex_urls_in_sitemap</div>
+            <div class="grid-item">integer</div>
+            <div class="grid-item">urls_in_multiple_sitemaps</div>
+            <div class="grid-item">integer</div>
+            <div class="grid-item">titles_too_long</div>
+            <div class="grid-item">integer</div>
+            <div class="grid-item">titles_too_short</div>
+            <div class="grid-item">integer</div>
+            <div class="grid-item">duplicate_titles</div>
+            <div class="grid-item">integer</div>
+            <div class="grid-item">desc_too_long</div>
+            <div class="grid-item">integer</div>
+            <div class="grid-item">desc_too_short</div>
+            <div class="grid-item">integer</div>
+            <div class="grid-item">duplicate_desc</div>
+            <div class="grid-item">integer</div>
+            <div class="grid-item">desc_missing</div>
+            <div class="grid-item">integer</div>
+            <div class="grid-item">desc_empty</div>
+            <div class="grid-item">integer</div>
+            <div class="grid-item">duplicate_h1_tags</div>
+            <div class="grid-item">integer</div>
+            <div class="grid-item">h1_tag_empty</div>
+            <div class="grid-item">integer</div>
+            <div class="grid-item">img_alt_text</div>
+            <div class="grid-item">integer</div>
+            <div class="grid-item">broken_int_links</div>
+            <div class="grid-item">integer</div>
+            <div class="grid-item">broken_ext_links</div>
+            <div class="grid-item">integer</div>
+            <div class="grid-item">broken_4xx_5xx</div>
+            <div class="grid-item">integer</div>
+            <div class="grid-item">int_redirect_links</div>
+            <div class="grid-item">integer</div>
+            <div class="grid-item">ext_redirect_links</div>
+            <div class="grid-item">integer</div>
+        </div>
+    </div>
+    <div class="sc-data">
+        <div class="dropdown">
+            <button class="dropbtn">SC's Issues</button>
+            <div class="dropdown-content">
+                <a href="#">File 1</a>
+                <a href="#">File 2</a>
+            </div>
+        </div>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint placeat omnis quidem minus nobis rerum ea? Mollitia quia dolore tenetur, delectus aliquam quisquam fugiat est velit ad possimus dignissimos ipsa.</p>
+    </div>
+    <div class="crawl-data">
+        <div class="dropdown">
+            <button class="dropbtn">Sitebulb's Issues</button>
+            <div class="dropdown-content">
+                <a href="#">File 1</a>
+                <a href="#">File 2</a>
+            </div>
+        </div>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem velit consequuntur eaque nesciunt ea ducimus deserunt dignissimos magni, adipisci unde praesentium aliquid blanditiis ipsa autem! Sint odio quaerat ut iste?</p>
+    </div>
+</div>
+{% endblock %}
