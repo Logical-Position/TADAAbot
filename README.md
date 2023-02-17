@@ -57,3 +57,24 @@ An automation assistant for tech audits! Tadaa!!
 - Competitive Analysis Tool
 - Blog Strategy Tool
 - 
+
+## How to run locally
+
+TODO: write this up
+
+## Data Requiring Manual Input
+* SC access - bool that adjusts Yes/No image
+* GA access - bool that adjusts Yes/No image
+* # of Mobile Usability Issues - Adjusts integer and text
+* Is Sitemap Submitted in SC - bool that adjusts Yes/No image
+* Sitemap URL - string to add to end of sitemap slide
+* Robots URL - string to add to end of robots slide
+* Structured Data - a multiple choice drop down for the options in slide notes
+* Site Content/UX - a multiple choice drop down for the options in slide notes
+* Internal/External Dup Content - a multiple choice drop down for the options in slide notes
+* Calls to Action - a multiple choice drop down for the options in slide notes
+* Blog - a multiple choice drop down for the options in slide notes
+* Canonicals - a multiple choice drop down for the options in slide notes
+* Website Security - a multiple choice drop down for the options in slide notes
+* Mob/Desk Page Speed - two floats for mob/desktop page speed
+* # of Broken Backlinks - int 

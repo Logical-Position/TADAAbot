@@ -26,12 +26,11 @@ def get_results():
 
 @app.route('/', methods=['POST'])
 def parse_upload():
- 
     inputID = 'spreadsheet-selection'
     for file in request.files.getlist(inputID):
         if file.filename != '':
             filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_DIR'], filename.lstrip('Tadaa-test/')))
+            file.save(os.path.join(app.config['UPLOAD_DIR'], filename))
 
     tadaabject = tadaa.parse_data(UPLOAD_DIR)
 
@@ -44,7 +43,9 @@ def parse_upload():
 
 @app.route('/download', methods=['GET'])
 def download_audit():
-    return 'Send file'  # send_file(ppt_path)
+    ppt_path = app.root_path + '/populated_ppt.pptx'
+    return send_file(ppt_path)
+    #return 'Send file'  # send_file(ppt_path)
 
 
 if __name__ == '__main__':

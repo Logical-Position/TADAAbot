@@ -272,5 +272,7 @@ def populate_powerpoint(final_data_object, root_path):
                         runs[0].text = f"We found {broken_backlinks} broken backlinks. You can view them here. To help maintain your website’s authority, we recommend fixing broken backlinks from relevant, high-authority domains. "
                     print(shape.name)
 
-    presentation.save(root_path + '/populated_ppt.pptx')
-    return presentation
+    output_path = root_path + '/populated_ppt.pptx'
+    presentation.save(output_path)
+    return output_path
+    #return presentation
