@@ -1,5 +1,6 @@
 import os
 import ppt as pp
+import pandas as pd
 
 # TODO Get complete list of all possible export files that analysts use in TA
 
@@ -25,34 +26,16 @@ target_hint_files = ['external_url_redirect_broken__4xx_or_5xx',
                      'urls_with_duplicate_h1s'
                      ]
 
-# TODO Rework and rename walk_exports_folder function to align with web app and add documentation comment
 
-
-def walk_exports_folder(exports_folder):
-    main_exports_path = '/Users/applehand/Desktop/creationnet-exports'  # Hardcoded export path for faster testing
-    if main_exports_path.endswith('exports'):
-        hints_path = main_exports_path + '/hints'
-        bot_hints_path = main_exports_path + '/bot-hints'
-        master_xls_path = main_exports_path + '/master.xlsx'
-
-        return [main_exports_path, hints_path, bot_hints_path, master_xls_path]
-    else:
-        print('Choose the main exports folder from the Sitebulb ZIP.')
-        return [False, False, False, False]  # If the main exports folder isn't chosen, it returns a list of
-        # False elements to be unpacked on main which stops the process from progressing.
-
-
-def match_target_hint_files(hints_path):
+def match_target_hint_files(all_uploaded_files):
     """
-    Looks at all the export file paths inside the hints folder and matches them against a list of target file paths that
-    are used in the tech audit. Returns a list of file path strings. Also prints a list of the leftover target file
-    paths that were not matched.
-    @param [str] hints_path: the path to the hints directory.
+    Matches the necessary export files that are used in the tech audit. Returns a list of file paths to these matched files.
+    @param [str] all_uploaded_files: the file paths in the uploaded directory as a list.
     @return [list] found_hint_files: a list of matched hint files that are used in the TA.
     """
+    
     found_hint_files = []
-    all_hint_file_names = os.listdir(hints_path)
-    for file_name in all_hint_file_names:
+    for file_name in all_uploaded_files:
         for possible_file in target_hint_files:
             if possible_file in file_name:
                 target_hint_files.remove(possible_file)
@@ -60,149 +43,341 @@ def match_target_hint_files(hints_path):
 
     not_found_hint_files = target_hint_files
 
-    print(f'Found target hint files: {found_hint_files}')
-    print(f'Not found target hint files: {not_found_hint_files}')
-
     return found_hint_files
 
 
-def optimize_file_name(raw_path, bot_hints_path, hints_path):
+def get_abs_paths(matched_list, upload_dir):
     """
-    Takes a file path and reworks it to be used as a cleaner name.
-    @param [str] raw_path: the raw file path that is to be reworked.
-    @param [str] bot_hints_path: the path to the bot_hints folder, so it can be removed from the path string.
-    @param [str] hints_path: the path to the hints folder, so it can be removed from the path string.
-    @return [str] target_name: the optimized string to be used as a file name.
+    Adds the upload directory file path to the 
+
+    @param matched_paths: absolute paths to the matched target csv files that are used in the tech audit.
+
+    @return final_data_obj: our custom data object that is a dictionary ({target_file_name: data}) that includes data as pandas dataframe/series objects.
     """
-    if bot_hints_path in raw_path:
-        raw_path = raw_path.replace(bot_hints_path + '/', '')
-    elif hints_path in raw_path:
-        raw_path = raw_path.replace(hints_path + '/', '')
-    if raw_path.endswith('.csv'):
-        raw_path = raw_path[:-4]
-    elif raw_path.endswith('.xlsx'):
-        raw_path = raw_path[:-5]
-    while len(raw_path) > 31:
-        raw_path = raw_path[1:]
-
-    target_name = raw_path
-
-    return target_name
+    abs_paths_list = []
+    for file_name in matched_list:
+        abs_path = upload_dir + '/' + file_name
+        abs_paths_list.append(abs_path)
+    
+    return abs_paths_list
 
 
-def calc_totals(master_xls_obj):
+def get_data_obj(matched_paths):
     """
-    Takes the master xls object and calculates various totals that are presented in the tech audit. Mostly counts rows.
-    @param master_xls_obj:
+    Takes the matched paths to the target csv files, reads into each file using Pandas, forms our custom data object, and returns it.
+
+    @param matched_paths: absolute paths to the matched target csv files that are used in the tech audit.
+
+    @return final_data_obj: our custom data object that is a dictionary ({target_file_name: data}) that includes data as pandas dataframe/series objects.
     """
-    for sheet in master_xls_obj:
-        print(f'Calculating Totals for: {sheet.title}')
-        if 'broken__4xx_or_5xx' in sheet.title:
-            for row in sheet.rows:
-                pp.broken_4xx_5xx += 1
-            pp.broken_4xx_5xx -= 1
+    
+    final_data_obj = {}
+    
+    for path in matched_paths:
 
-        if 'broken_internal_urls' in sheet.title:
-            for row in sheet.rows:
-                pp.broken_int_links += 1
-            pp.broken_int_links -= 1
+        if 'broken__4xx_or_5xx' in path:
+            data_obj, data = {}, []
+            df = pd.read_csv(path)
 
-        if 'broken_external_urls' in sheet.title:
-            for row in sheet.rows:
-                pp.broken_ext_links += 1
-            pp.broken_ext_links -= 1
+            urls = df['URL']
+            parent_urls = df['First Parent URL']
 
-        if 'h1__tag_is_empty' in sheet.title:
-            for row in sheet.rows:
-                pp.h1_tag_empty += 1
-            pp.h1_tag_empty -= 1
+            pp.broken_4xx_5xx = urls.count()
 
-        if 'urls_with_duplicate_h1' in sheet.title:
-            for row in sheet.rows:
-                pp.duplicate_h1_tags += 1
-            pp.duplicate_h1_tags -= 1
+            data.append(urls)
+            data.append(parent_urls)
+            data_obj.update({'broken__4xx_or_5xx': data})
 
-        if 'external_redirected_urls' in sheet.title:
-            for row in sheet.rows:
-                pp.ext_redirect_links += 1
-            pp.ext_redirect_links -= 1
+            final_data_obj.update(data_obj)
 
-        if 'missing_alt_text' in sheet.title:
-            for row in sheet.rows:
-                pp.img_alt_text += 1
-            pp.img_alt_text -= 1
 
-        if 'internal_redirected_urls' in sheet.title:
-            for row in sheet.rows:
-                pp.int_redirect_links += 1
-            pp.int_redirect_links -= 1
+        if 'broken_internal_urls' in path:
+            data_obj, data = {}, []
+            df = pd.read_csv(path)
 
-        if 'description_is_empty' in sheet.title:
-            for row in sheet.rows:
-                pp.desc_empty += 1
-            pp.desc_empty -= 1
+            urls = df['URL']
+            parent_urls = df['First Parent URL']
 
-        if 'description_is_missing' in sheet.title:
-            for row in sheet.rows:
-                pp.desc_missing += 1
-            pp.desc_missing -= 1
+            pp.broken_int_links = urls.count()
 
-        if 'description_length_too_long' in sheet.title:
-            for row in sheet.rows:
-                pp.desc_too_long += 1
-            pp.desc_too_long -= 1
+            data.append(urls)
+            data.append(parent_urls)
+            data_obj.update({'broken_internal_urls': data})
 
-        if 'description_length_too_short' in sheet.title:
-            for row in sheet.rows:
-                pp.desc_too_short += 1
-            pp.desc_too_short -= 1
+            final_data_obj.update(data_obj)
+            
 
-        if 'not_found_by_the_crawler' in sheet.title:
-            for row in sheet.rows:
-                pp.sitemap_errors += 1
-                pp.orphaned_pages += 1
-            pp.orphaned_pages -= 1
-            pp.sitemap_errors -= 1
+        if 'broken_external_urls' in path:
+            data_obj, data = {}, []
+            df = pd.read_csv(path)
 
-        if 'duplicate_meta_descriptions' in sheet.title:
-            for row in sheet.rows:
-                pp.duplicate_desc += 1
-            pp.duplicate_desc -= 1
+            urls = df['URL']
+            parent_urls = df['First Parent URL']
 
-        if 'title_tag_length_too_long' in sheet.title:
-            for row in sheet.rows:
-                pp.titles_too_long += 1
-            pp.titles_too_long -= 1
+            pp.broken_ext_links = urls.count()
 
-        if 'title_tag_length_too_short' in sheet.title:
-            for row in sheet.rows:
-                pp.titles_too_short += 1
-            pp.titles_too_short -= 1
+            data.append(urls)
+            data.append(parent_urls)
+            data_obj.update({'broken_external_urls': data})
 
-        if 'duplicate_page_titles' in sheet.title:
-            for row in sheet.rows:
-                pp.duplicate_titles += 1
-            pp.duplicate_titles -= 1
+            final_data_obj.update(data_obj)
 
-        if 'url_in_multiple_xml_sitemaps' in sheet.title:
-            for row in sheet.rows:
-                pp.sitemap_errors += 1
-                pp.urls_in_multiple_sitemaps += 1
-            pp.sitemap_errors -= 1
-            pp.urls_in_multiple_sitemaps -= 1
 
-        if 'noindex_url_in_xml_sitemaps' in sheet.title:
-            for row in sheet.rows:
-                pp.sitemap_errors += 1
-                pp.noindex_urls_in_sitemap += 1
-            pp.sitemap_errors -= 1
-            pp.noindex_urls_in_sitemap -= 1
+        if 'h1__tag_is_empty' in path:
+            data_obj, data = {}, []
+            df = pd.read_csv(path)
 
-        if 'redirect__3xx__url_in_xml_sitemaps' in sheet.title:
-            for row in sheet.rows:
-                pp.sitemap_errors += 1
-                pp.redirects_in_sitemap += 1
-            pp.sitemap_errors -= 1
-            pp.redirects_in_sitemap -= 1
+            urls = df['URL']
+
+            pp.h1_tag_empty = urls.count()
+
+            data.append(urls)
+            data_obj.update({'h1__tag_is_empty': data})
+
+            final_data_obj.update(data_obj)
+
+
+        if 'urls_with_duplicate_h1' in path:
+            data_obj, data = {}, []
+            df = pd.read_csv(path)
+
+            urls = df['URL']
+            dup_urls = df['Duplicate URL']
+
+            pp.duplicate_h1_tags = urls.count()
+
+            data.append(urls)
+            data.append(dup_urls)
+            data_obj.update({'urls_with_duplicate_h1': data})
+
+            final_data_obj.update(data_obj)
+
+
+        if 'external_redirected_urls' in path:
+            data_obj, data = {}, []
+            df = pd.read_csv(path)
+
+            urls = df['URL']
+            parent_urls = df['First Parent URL']
+
+            pp.ext_redirect_links = urls.count()
+
+            data.append(urls)
+            data.append(parent_urls)
+            data_obj.update({'external_redirected_urls': data})
+
+            final_data_obj.update(data_obj)
+
+
+        if 'missing_alt_text' in path:
+            data_obj, data = {}, []
+            df = pd.read_csv(path)
+
+            urls = df['HTML URL']
+            image_urls = df['Image URL']
+
+            pp.img_alt_text = urls.count()
+
+            data.append(urls)
+            data.append(image_urls)
+            data_obj.update({'missing_alt_text': data})
+
+            final_data_obj.update(data_obj)
+
+
+        if 'internal_redirected_urls' in path:
+            data_obj, data = {}, []
+            df = pd.read_csv(path)
+
+            urls = df['URL']
+            parent_urls = df['First Parent URL']
+
+            pp.int_redirect_links = urls.count()
+
+            data.append(urls)
+            data.append(parent_urls)
+            data_obj.update({'internal_redirected_urls': data})
+
+            final_data_obj.update(data_obj)
+
+
+        if 'description_is_empty' in path:
+            data_obj, data = {}, []
+            df = pd.read_csv(path)
+
+            urls = df['URL']
+
+            pp.desc_empty = urls.count()
+
+            data.append(urls)
+            data_obj.update({'description_is_empty': data})
+
+            final_data_obj.update(data_obj)
+
+
+        if 'description_is_missing' in path:
+            data_obj, data = {}, []
+            df = pd.read_csv(path)
+
+            urls = df['URL']
+
+            pp.desc_missing = urls.count()
+
+            data.append(urls)
+            data_obj.update({'description_is_missing': data})
+
+            final_data_obj.update(data_obj)
+
+
+        if 'description_length_too_long' in path:
+            data_obj, data = {}, []
+            df = pd.read_csv(path)
+
+            urls = df['URL']
+
+            pp.desc_too_long = urls.count()
+
+            data.append(urls)
+            data_obj.update({'description_length_is_too_long': data})
+
+            final_data_obj.update(data_obj)
+
+
+        if 'description_length_too_short' in path:
+            data_obj, data = {}, []
+            df = pd.read_csv(path)
+
+            urls = df['URL']
+
+            pp.desc_too_short = urls.count()
+
+            data.append(urls)
+            data_obj.update({'description_length_is_too_short': data})
+
+            final_data_obj.update(data_obj)
+
+
+        if 'not_found_by_the_crawler' in path:
+            data_obj, data = {}, []
+            df = pd.read_csv(path)
+
+            urls = df['URL']
+
+            pp.orphaned_pages = urls.count()
+            pp.sitemap_errors += urls.count()
+
+            data.append(urls)
+            data_obj.update({'not_found_by_the_crawler': data})
+
+            final_data_obj.update(data_obj)
+
+
+        if 'duplicate_meta_descriptions' in path:
+            data_obj, data = {}, []
+            df = pd.read_csv(path)
+
+            urls = df['URL']
+            dup_urls = df['Duplicate URL']
+
+            pp.duplicate_desc = urls.count()
+
+            data.append(urls)
+            data.append(dup_urls)
+            data_obj.update({'duplicate_meta_descriptions': data})
+
+            final_data_obj.update(data_obj)
+
+
+        if 'title_tag_length_too_long' in path:
+            data_obj, data = {}, []
+            df = pd.read_csv(path)
+
+            urls = df['URL']
+
+            pp.titles_too_long = urls.count()
+
+            data.append(urls)
+            data_obj.update({'title_tag_length_too_long': data})
+
+            final_data_obj.update(data_obj)
+
+
+        if 'title_tag_length_too_short' in path:
+            data_obj, data = {}, []
+            df = pd.read_csv(path)
+
+            urls = df['URL']
+
+            pp.titles_too_short = urls.count()
+
+            data.append(urls)
+            data_obj.update({'title_tag_length_too_short': data})
+
+            final_data_obj.update(data_obj)
+
+
+        if 'duplicate_page_titles' in path:
+            data_obj, data = {}, []
+            df = pd.read_csv(path)
+
+            urls = df['URL']
+            dup_urls = df['Duplicate URL']
+
+            pp.duplicate_titles = urls.count()
+
+            data.append(urls)
+            data.append(dup_urls)
+            data_obj.update({'duplicate_page_titles': data})
+
+            final_data_obj.update(data_obj)
+
+
+        if 'url_in_multiple_xml_sitemaps' in path:
+            data_obj, data = {}, []
+            df = pd.read_csv(path)
+
+            urls = df['URL']
+
+            pp.urls_in_multiple_sitemaps = urls.count()
+            pp.sitemap_errors += urls.count()
+
+            data.append(urls)
+            data_obj.update({'url_in_multiple_xml_sitemaps': data})
+
+            final_data_obj.update(data_obj)
+
+
+        if 'noindex_url_in_xml_sitemaps' in path:
+            data_obj, data = {}, []
+            df = pd.read_csv(path)
+
+            urls = df['URL']
+
+            pp.noindex_urls_in_sitemap = urls.count()
+            pp.sitemap_errors += urls.count()
+
+            data.append(urls)
+            data_obj.update({'noindex_url_in_xml_sitemaps': data})
+
+            final_data_obj.update(data_obj)
+
+
+        if 'redirect__3xx__url_in_xml_sitemaps' in path:
+            data_obj, data = {}, []
+            df = pd.read_csv(path)
+
+            urls = df['URL']
+
+            pp.redirects_in_sitemap = urls.count()
+            pp.sitemap_errors += urls.count()
+
+            data.append(urls)
+            data_obj.update({'redirect__3xx__url_in_xml_sitemaps': data})
+
+            final_data_obj.update(data_obj)
+
+
+    return final_data_obj
+
 
 

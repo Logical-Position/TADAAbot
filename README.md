@@ -5,23 +5,13 @@
 An automation assistant for tech audits! Tadaa!!
 
 ## Here's what it does. (TADAAbot)
-1. Prompts for the location of the Sitebulb exports folder and the domain of the target site. 
-2. Matches files in the hints folder that are used in the tech audit.
-3. Creates a new master Excel file that will contain all data used in the tech audit, and lots more.
-4. Makes API requests to Search Console, Siteliner, Pagespeed insights, and other sources of data used in tech audit, and more.
-5. Scrapes homepage for any existing Google Analytics tags, Search Console Tags, robots.txt, and sitemap.
-6. Checks if the client site is GA/SC verified under a target LP Google account.
-7. Calculates totals for various tech audit metrics (broken links, images missing alt text, ect.)
-8. Organizes master Excel file with a main overview sheet that contains data totals, as well as a sub-sheet for each export file/api object and all its raw data.
-9. Populates all PowerPoint slides with data.
-10. Adjusts SEO recommendation text based on data.
-11. Displays current status messages during the operation.
+
 
 ## Here's what it can't do. (TADAAbot Limitations)
 1. Screenshots.
 2. Think critically.
-3. Access certain data sources, such as broken backlinks from AHREFs. (for now)
-4. Link resources in ppt slides
+3. Access certain data sources, such as broken backlinks from AHREFs.
+4. Link OneDrive resources in ppt slides
 5. ??
 
 
@@ -53,7 +43,6 @@ An automation assistant for tech audits! Tadaa!!
 - openpyxl - for Excel shenanigans.
 - csv - for.. csv shenanigans.
 - requests - for making API requests.
-- os - for file management.
 
 ### Possible Future Functionalities
 - Utilize a database and store historical TA data. 

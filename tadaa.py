@@ -1,60 +1,39 @@
 import os.path
 import utils
-import xls
 import ppt
 
-export_path, hints_path, bot_hints_path, master_xls_path = utils.walk_exports_folder('exports_folder')
-# TODO: set these to be local paths on server
-#export_path, hints_path, bot_hints_path, master_xls_path = utils.walk_exports_folder('exports_folder')
+def parse_data(upload_dir):
+    """
+    Takes the upload directory and organizes the data necessary for the tech audit. Returns our custom data object.
 
-def test_run():
-    return ppt.create_empty_ppt()
+    @param [str] upload_dir: path to the server's upload directory.
+
+    @return [dict] final_data_obj: our custom data object {target_file: [data]} that contains Pandas dataframe/series objects.
+    """
+
+    all_uploaded_files = os.listdir(upload_dir)
+
+    matched_list = utils.match_target_hint_files(all_uploaded_files)
+    matched_paths = utils.get_abs_paths(matched_list, upload_dir)
+
+    final_data_obj = utils.get_data_obj(matched_paths)
+    
+    for key in final_data_obj.keys():
+        print(key)
+
+    return final_data_obj
 
 
-def get_data():
-    return None
+def generate_audit(final_data_obj, root_path):
+    """
+    Generates a populated Powerpoint document using the custom data object.
 
-# TODO: add parameter to function def
-#def generate_audit(exports_filepath):
-def generate_audit():
-    if export_path:
-        is_bot_hints_created = os.path.exists(bot_hints_path)
-        if not is_bot_hints_created:
-            os.mkdir(bot_hints_path)
-        else:
-            print('Bot hints folder already exists.')
+    @param [dict] final_data_obj: our custom data object {target_file: [data]} that contains Pandas dataframe/series objects.
+    @param [str] root_path: path to the server's root directory.
 
-        matched_hint_files = utils.match_target_hint_files(hints_path)
+    @return [list] pop_ppt: a Powerpoint doc populated with values calculated using the custom data object.
+    """
+    pop_ppt = ppt.populate_powerpoint(final_data_obj, root_path)
+    
+    return pop_ppt
 
-        if 'master.xlsx' not in os.listdir(export_path):
-            master_xls_obj = xls.create_master_xls(matched_hint_files, export_path, hints_path, bot_hints_path)
-        else:
-            print('Master spreadsheet already exists.')
-            master_xls_obj = xls.get_master_xls_obj(master_xls_path)
-
-        csv_file_paths = xls.get_csv_paths(matched_hint_files, hints_path)
-
-        xl_file_paths = xls.create_target_xls_paths(csv_file_paths)
-
-        num_files_in_bot_hints = len(os.listdir(bot_hints_path))
-
-        if num_files_in_bot_hints < 2:
-            xls.create_xls_from_csv_paths(csv_file_paths, xl_file_paths)
-        else:
-            print('bot-hints folder is not empty.')
-
-        xls_data = xls.get_all_xls_data(xl_file_paths, bot_hints_path, hints_path)
-
-        for sheet in master_xls_obj.worksheets[1:]:
-            if sheet.calculate_dimension() == 'A1:A1':
-                xls.transfer_xls_data_to_master(xls_data, master_xls_obj, export_path)
-                break
-            else:
-                print('Data already exists in master sub-sheets.')
-                break
-
-        utils.calc_totals(master_xls_obj)
-
-        ppt_path = '/Users/applehand/Documents/LP/TADAA-ppt-template.pptx'
-
-        populated_ppt = ppt.populate_powerpoint(ppt_path, export_path)

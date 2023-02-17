@@ -24,7 +24,7 @@ from oauth2client import file
 from oauth2client import tools
 from creds import *
 
-target_site = ''
+target_site = 'https://www.paragon-protection.com/'
 
 # ------------- Search Console--------------------
 
@@ -77,6 +77,9 @@ def authorize_sc_creds(creds, authorizedcreds='authorizedcreds.dat'):
     return webmasters_service
 
 
+authorize_sc_creds(sc_creds)
+
+
 # -----------------COPYSCAPE----------------------
 
 def copyscape(username, key):
@@ -85,8 +88,10 @@ def copyscape(username, key):
     copyscape_results_list = copyscape_response['result']
     copyscape_num_result_urls = copyscape_response['count']
 
+    print(copyscape_results_list)
 
 # ------------------Structured/Meta Data from Microlink----------------------
+
 
 def microlink(target_url):  # https://api.microlink.io
     params = {'url': f'{target_url}', 'meta': 'True'}
