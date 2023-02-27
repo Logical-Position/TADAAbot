@@ -78,3 +78,5 @@ TODO: write this up
 * Website Security - a multiple choice drop down for the options in slide notes
 * Mob/Desk Page Speed - two floats for mob/desktop page speed
 * # of Broken Backlinks - int 
+
+## Meta Data and Aggregate Analyses

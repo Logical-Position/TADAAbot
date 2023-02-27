@@ -68,7 +68,7 @@ function makeRequest(path, callback) {
 
 function saveBlob(blob) {
     // let assetRecord = this.getAssetRecord();
-    let fileName = 'empty.pptx'
+    let fileName = 'pop_ppt.pptx'
     let tempEl = document.createElement("a");
     document.body.appendChild(tempEl);
     tempEl.style = "display: none";

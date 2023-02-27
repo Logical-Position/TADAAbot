@@ -1,4 +1,3 @@
-import os
 import ppt as pp
 import pandas as pd
 
