@@ -5,67 +5,44 @@
 An automation assistant for tech audits! Tadaa!!
 
 ## Here's what it does. (TADAAbot)
-
-
-## Here's what it can't do. (TADAAbot Limitations)
-1. Screenshots.
-2. Think critically.
-3. Access certain data sources, such as broken backlinks from AHREFs.
-4. Link OneDrive resources in ppt slides
-5. ??
-
+* Takes the things
+* Organizes the data
+* Returns the stuff
 
 ## Here's what you do. (The Analyst)
-1. Get an impression of the target site; click around, read the words, search for noindex tags, swap your device view. How does it all make you feel?
-2. Go to the TADAAbot web app.
-3. Paste the target domain in its text field.
-4. Click the 'Select Sitebulb Exports Folder' button.
-5. Navigate to the extracted Sitebulb exports folder (must be extracted from ZIP).
-6. Begin the automation process by clicking the 'TADAA' button.
-7. Ponder the absurd nature of reality (And SEO) for a number of seconds.
-8. Input credentials for corresponding SEO service if prompted.
-9. Verify successful operation by checking status messages in main window.
-10. Get top-level breakdown in Overview tab of master Excel file created during the operation.
-11. Dig deeper in each individual sub-sheet to inspect the issues for their severity. Ex: Are the broken links on an unfinished lorem ipsum template page? Did Sitebulb act strangely and pick up something that isn't on the site anymore?
-12. Inspect the live site for examples of any detected issues, and search for noindex tags on all types of pages (homepage, collections, categories, products, blogs, etc.)
-13. Consult your favorite SEO tool (Sitebulb/Screaming Frog, GA/SC, SEMRUSH, etc.) or the raw Sitebulb exports to analyze more data.
-
-
-#### BONUS
-- Seek out and analyze competitor sites, if applicable to project and/or client.
-- Analyze historical dips or rises in traffic, keywords, or another metric to see if any reasonable connections might be made to any discovered technical issues.
-- Search for noindex tags!
-
-
-### Python Libraries Used
-- Flask - for creating the web framework.
-- python-pptx - for PowerPoint shenanigans.
-- openpyxl - for Excel shenanigans.
-- csv - for.. csv shenanigans.
-- requests - for making API requests.
-
-### Possible Future Functionalities
-- Utilize a database and store historical TA data. 
-- Run comparisons between current audit and historical audit data.
-- Data Visualization Templates.
-- Get additional API data not used in tech audit from sources like Moz, GA, etc.
-- Programmatically access SERPs results using the Custom Search API.
-
-### Possible Future Projects
-- Create an 'SEO Analyst Tools' web app dashboard where TADAAbot is only one of the included tools.
-- Site Migration Tool
-- Competitive Analysis Tool
-- Blog Strategy Tool
-- 
+* Input the things
+* Think about SEO
+* Get the stuff
 
 ## How to run locally
 
-TODO: write this up
+* Install Python (https://www.digitalocean.com/community/tutorials/install-python-windows-10)
+* Install VScode (https://code.visualstudio.com/)
+* Clone project from Github (https://github.com/Logical-Position/TADAAbot)
+    1. Make sure you have an account on GitHub and have been granted access to the private LP organization.
+    2. Once you are granted access, you can navigate to the repository you want to clone.
+    3. Click on the "Code" button on the right-hand side of the repository page.
+    4. Select the "Clone with HTTPS" option, and copy the HTTPS URL that appears.
+    5. Open your terminal or command prompt and navigate to the directory where you want to clone the repository.
+    6. Type git clone followed by the HTTPS URL you copied earlier, and press Enter.
+    7. You will be prompted to enter your GitHub username and password. Enter the credentials associated with the account that has access to the private organization.
+    8. Once you have entered your credentials, the repository will be cloned to your local machine.
+* Create virtual environment (https://docs.python.org/3/library/venv.html)
+    1. Open the cloned project directory using VS code, open a new terminal using the 'Terminal' tab, and run this command: python -m venv venv
+        This will create a new folder named "venv" in the project directory, which contains a copy of the Python executable, as well as the standard Python libraries.
+    2. To activate the virtual environment, run the following command: venv\Scripts\activate.bat ('source venv/bin/activate' on macOS)
+    3. You should now see a <venv> tag in front of your terminal.
+* Install the project dependencies by running this command: pip install -r requirements.txt
+* Start the server by running this command: python main.py
+* Open the app by following the 'Running on' local IP link located in the terminal.
+* Tadaa!
+
 
 ## Data Requiring Manual Input
+* CMS - possibly optional, just for internal data.
 * SC access - bool that adjusts Yes/No image
 * GA access - bool that adjusts Yes/No image
-* # of Mobile Usability Issues - Adjusts integer and text
+* Num of Mobile Usability Issues - Adjusts integer and text
 * Is Sitemap Submitted in SC - bool that adjusts Yes/No image
 * Sitemap URL - string to add to end of sitemap slide
 * Robots URL - string to add to end of robots slide
@@ -77,6 +54,7 @@ TODO: write this up
 * Canonicals - a multiple choice drop down for the options in slide notes
 * Website Security - a multiple choice drop down for the options in slide notes
 * Mob/Desk Page Speed - two floats for mob/desktop page speed
-* # of Broken Backlinks - int 
+* Num of Broken Backlinks - Adjusts integer and text 
 
 ## Meta Data and Aggregate Analyses
+## 
