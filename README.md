@@ -59,7 +59,7 @@ An automation assistant for tech audits! Tadaa!!
 ## Meta Data and Aggregate Analyses
 ## 
 ## Contributors
-*
-*
+* Jake Applehans
+* Mic Ruopp
 * Jordan Schwartz
 * Jack Ross
