@@ -62,3 +62,4 @@ An automation assistant for tech audits! Tadaa!!
 *
 *
 * Jordan Schwartz
+* Jack Ross
