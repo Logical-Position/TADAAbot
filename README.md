@@ -58,3 +58,7 @@ An automation assistant for tech audits! Tadaa!!
 
 ## Meta Data and Aggregate Analyses
 ## 
+## Contributors
+*
+*
+* Jordan Schwartz
