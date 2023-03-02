@@ -58,7 +58,7 @@ An automation assistant for tech audits! Tadaa!!
 
 ## Flow
 
-![TADAA Flow Diagram](https://github.com/Logical-Position/TADAAbot/blob/dev/tadaa-state-diagram.excalidraw)
+![TADAA Flow Diagram](https://github.com/Logical-Position/TADAAbot/blob/dev/tadaa-state-diagram.png)
 
 ## Meta Data and Aggregate Analyses
 ## 
