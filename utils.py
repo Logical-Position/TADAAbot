@@ -47,7 +47,7 @@ def match_target_hint_files(all_uploaded_files):
 
 def get_abs_paths(matched_list, upload_dir):
     """
-    Adds the upload directory file path to the 
+    Adds the upload directory file path to the file name.
 
     @param matched_paths: absolute paths to the matched target csv files that are used in the tech audit.
 
@@ -377,6 +377,3 @@ def get_data_obj(matched_paths):
 
 
     return final_data_obj
-
-
-

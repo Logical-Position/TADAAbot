@@ -1,24 +1,5 @@
 from pptx import Presentation
 
-"""
-Inputs for data to add to ppt generation
-SC access - bool that adjusts Yes/No image
-GA access - bool that adjusts Yes/No image
-# of Mobile Usability Issues - Adjusts integer and text
-Is Sitemap Submitted in SC - bool that adjusts Yes/No image
-Sitemap URL - string to add to end of sitemap slide
-Robots URL - string to add to end of robots slide
-Structured Data - a multiple choice drop down for the options in slide notes
-Site Content/UX - a multiple choice drop down for the options in slide notes
-Internal/External Dup Content - a multiple choice drop down for the options in slide notes
-Calls to Action - a multiple choice drop down for the options in slide notes
-Blog - a multiple choice drop down for the options in slide notes
-Canonicals - a multiple choice drop down for the options in slide notes
-Website Security - a multiple choice drop down for the options in slide notes
-Mob/Desk Page Speed - two floats for mob/desktop page speed
-# of Broken Backlinks - int 
-"""
-
 # Slide 7.
 has_sc_access = bool
 has_ga_access = bool
@@ -106,7 +87,7 @@ broken_backlinks = 0
 def populate_powerpoint(final_data_object, project_dir, root_path, project_name):
     """
     Goes through the template PowerPoint slide by slide, and adjusts the values/SEO recommendation text to correspond
-    to the calculated data.
+    to the calculated data and user inputs.
     @param exports_path: the path to the main exports folder.
     @param root_path: the path to the tech audit template ppt.
     """

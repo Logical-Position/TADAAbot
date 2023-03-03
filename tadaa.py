@@ -1,6 +1,7 @@
 import os.path
 import utils
 import ppt
+import data
 
 def parse_data(project_dir):
     """
@@ -37,3 +38,6 @@ def generate_audit(final_data_obj, project_dir, root_path, project_name):
     
     return pop_ppt
 
+
+def data_vis():
+    data.visualize()

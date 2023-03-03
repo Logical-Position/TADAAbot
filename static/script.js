@@ -32,19 +32,34 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     let downloadButton = document.querySelector('button#ppt-download-button');
+    let authButton = document.querySelector('button#auth-dance-button');
     downloadButton.addEventListener('click', (e) => {
         if (downloadButton.disabled) return;
         requestDownload();
     })
+    authButton.addEventListener('click', (e) => {
+        if (authButton.disabled) return;
+        authDance();
+    })
     function enableDownload() {
         downloadButton.disabled = false;
+        authButton.disabled = false;
     }
 
     function requestDownload() {
-        let downloadURL = '/download'
+        let downloadURL = '/download';
         makeRequest(downloadURL, (res) => {
             console.log("Request callback");
         });
+    }
+
+    function authDance() {
+        console.log('Starting Auth Dance.')
+        let authURL = '/auth'
+        let req = new XMLHttpRequest();
+
+        req.open("GET", authURL, true)
+        req.send()
     }
 });
 
