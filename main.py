@@ -48,6 +48,10 @@ def auth_dance():
     # assert resp.ok, resp.text
     return userRes.json()
 
+@app.route('/extras')
+def get_extras():
+    return render_template('extras.html')
+
 @app.route('/', methods=['POST'])
 def parse_upload():
     inputID = 'spreadsheet-selection'
