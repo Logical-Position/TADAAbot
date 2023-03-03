@@ -65,10 +65,14 @@ An automation assistant for tech audits! Tadaa!!
 * add <link rel="stylesheet" href="{{ url_for('static',filename='dist/css/output.css') }}"> to base.html
 * npx tailwindcss -i ./static/src/input.css -o ./static/dist/css/output.css --watch
 
+## Flow
+
+![TADAA Flow Diagram](https://github.com/Logical-Position/TADAAbot/blob/dev/tadaa-state-diagram.png)
+
 ## Meta Data and Aggregate Analyses
 ## 
 ## Contributors
-*
-*
+* Jake Applehans
+* Mic Ruopp
 * Jordan Schwartz
 * Jack Ross

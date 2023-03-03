@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, render_template, request, send_file
-# from flask_dance.contrib.google import make_google_blueprint, google
+from flask_dance.contrib.google import make_google_blueprint, googlegoogle
 
 
 import os
@@ -26,6 +26,10 @@ def get_main():
 def get_results():
     return render_template('results.html')
 
+@app.route('/auth')
+def auth_dance():
+    return 'Auth'
+
 @app.route('/extras')
 def get_extras():
     return render_template('extras.html')
@@ -48,13 +52,12 @@ def parse_upload():
     segments = proj_files[0].split('_')
     project_name = segments[0].split('.')[0]
 
-
     tadaabject = tadaa.parse_data(project_dir)
 
     root_path = app.root_path
     pop_ppt = tadaa.generate_audit(tadaabject, project_dir, root_path, project_name)
 
-    time.sleep(3)
+    time.sleep(1.5)
     return jsonify({"Choo Choo": "Welcome to your Flask app 🚅"})
 
 
