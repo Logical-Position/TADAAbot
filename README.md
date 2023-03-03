@@ -56,5 +56,14 @@ An automation assistant for tech audits! Tadaa!!
 * Mob/Desk Page Speed - two floats for mob/desktop page speed
 * Num of Broken Backlinks - Adjusts integer and text 
 
+## Flow
+
+![TADAA Flow Diagram](https://github.com/Logical-Position/TADAAbot/blob/dev/tadaa-state-diagram.png)
+
 ## Meta Data and Aggregate Analyses
 ## 
+## Contributors
+* Jake Applehans
+* Mic Ruopp
+* Jordan Schwartz
+* Jack Ross
