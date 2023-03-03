@@ -5,6 +5,7 @@
     * Use of `secure_filename` can be dropped while in development
 * Save final ppt to a dynamically (uniquely) named file
 * Better understand Flask filepaths
+* Fix scope issue with Google APIs
 
 ## Client-side
 * Discuss end vision of UI
