@@ -161,4 +161,7 @@ pip-selfcheck.json
 .DS_Store
 downloads/
 uploads/
+.vscode
 
+# NPM
+node_modules/

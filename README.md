@@ -54,7 +54,16 @@ An automation assistant for tech audits! Tadaa!!
 * Canonicals - a multiple choice drop down for the options in slide notes
 * Website Security - a multiple choice drop down for the options in slide notes
 * Mob/Desk Page Speed - two floats for mob/desktop page speed
-* Num of Broken Backlinks - Adjusts integer and text 
+* Num of Broken Backlinks - Adjusts integer and text
+
+## How To Install/Run tailwind
+* SOURCE: https://flowbite.com/docs/getting-started/flask/
+* npm install -D tailwindcss
+* npx tailwindcss init
+* > add './templates/**/*.html' to the content array
+* > import Tailwind CSS directives @tailwind base; @tailwind components; @tailwind utilities;
+* add <link rel="stylesheet" href="{{ url_for('static',filename='dist/css/output.css') }}"> to base.html
+* npx tailwindcss -i ./static/src/input.css -o ./static/dist/css/output.css --watch
 
 ## Meta Data and Aggregate Analyses
 ## 

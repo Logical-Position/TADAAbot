@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, render_template, request, send_file
-from flask_dance.contrib.google import make_google_blueprint, google
+# from flask_dance.contrib.google import make_google_blueprint, google
 
 
 import os
@@ -26,6 +26,9 @@ def get_main():
 def get_results():
     return render_template('results.html')
 
+@app.route('/extras')
+def get_extras():
+    return render_template('extras.html')
 
 @app.route('/', methods=['POST'])
 def parse_upload():
