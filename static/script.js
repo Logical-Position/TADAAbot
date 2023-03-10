@@ -55,11 +55,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function authDance() {
         console.log('Starting Auth Dance.')
-        let authURL = '/auth'
-        let req = new XMLHttpRequest();
+        window.location.href = "/auth";
+        // let authURL = '/auth'
+        // let req = new XMLHttpRequest();
 
-        req.open("GET", authURL, true)
-        req.send()
+        // req.open("GET", authURL, true)
+        // req.send()
     }
 });
 
