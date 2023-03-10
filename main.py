@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, render_template, request, redirect, send_file, url_for
-from flask_dance.contrib.google import make_google_blueprint, google
+# from flask_dance.contrib.google import make_google_blueprint, google
 
 import os
 import tadaa
@@ -13,19 +13,23 @@ app = Flask(__name__)
 app.config['UPLOAD_DIR'] = UPLOAD_DIR
 
 # Google OAuth dance setup
-app.secret_key = os.environ.get("FLASK_SECRET_KEY", "supersekrit")
-app.config["GOOGLE_OAUTH_CLIENT_ID"] = os.environ.get("GOOGLE_OAUTH_CLIENT_ID")
-app.config["GOOGLE_OAUTH_CLIENT_SECRET"] = os.environ.get("GOOGLE_OAUTH_CLIENT_SECRET")
-# We think the scopes provided are the cause of LACK OF PERMISSIONS error
-# TODO: Determine if these strings are defined by Google or Flask Dance
-# TODO: Discover needed scopes
-google_bp = make_google_blueprint(scope=["profile", "email"])
-app.register_blueprint(google_bp, url_prefix="/login")
+# app.secret_key = os.environ.get("FLASK_SECRET_KEY", "supersekrit")
+# app.config["GOOGLE_OAUTH_CLIENT_ID"] = os.environ.get("GOOGLE_OAUTH_CLIENT_ID")
+# app.config["GOOGLE_OAUTH_CLIENT_SECRET"] = os.environ.get("GOOGLE_OAUTH_CLIENT_SECRET")
+# # We think the scopes provided are the cause of LACK OF PERMISSIONS error
+# # TODO: Determine if these strings are defined by Google or Flask Dance
+# # TODO: Discover needed scopes
+# # google_bp = make_google_blueprint(scope=["profile", "email"])
+# app.register_blueprint(google_bp, url_prefix="/login")
 
 
 @app.route('/', methods=['GET'])
 def index():
     return render_template('index.html')
+
+@app.route('/login', methods=['GET'])
+def get_login():
+    return render_template('login.html')
 
 @app.route('/main')
 def get_main():
