@@ -19,14 +19,12 @@ An automation assistant for tech audits! Tadaa!!
 * Install Python (https://www.digitalocean.com/community/tutorials/install-python-windows-10)
 * Install VScode (https://code.visualstudio.com/)
 * Clone project from Github (https://github.com/Logical-Position/TADAAbot)
-    1. Make sure you have an account on GitHub and have been granted access to the private LP organization.
-    2. Once you are granted access, you can navigate to the repository you want to clone.
-    3. Click on the "Code" button on the right-hand side of the repository page.
-    4. Select the "Clone with HTTPS" option, and copy the HTTPS URL that appears.
-    5. Open your terminal or command prompt and navigate to the directory where you want to clone the repository.
-    6. Type git clone followed by the HTTPS URL you copied earlier, and press Enter.
-    7. You will be prompted to enter your GitHub username and password. Enter the credentials associated with the account that has access to the private organization.
-    8. Once you have entered your credentials, the repository will be cloned to your local machine.
+    1. Click on the "Code" button on the right-hand side of the Tadaa repository page.
+    2. Select the "Clone with HTTPS" option, and copy the HTTPS URL that appears.
+    3. Open your terminal or command prompt and navigate to the directory where you want to clone the repository.
+    4. Type git clone followed by the HTTPS URL you copied earlier, and press Enter.
+    5. You will be prompted to enter your GitHub username and password. Enter the credentials associated with the account that has access to the private organization.
+    6. Once you have entered your credentials, the repository will be cloned to your local machine.
 * Create virtual environment (https://docs.python.org/3/library/venv.html)
     1. Open the cloned project directory using VS code, open a new terminal using the 'Terminal' tab, and run this command: python -m venv venv
         This will create a new folder named "venv" in the project directory, which contains a copy of the Python executable, as well as the standard Python libraries.
