@@ -56,6 +56,10 @@ def auth_dance():
 def get_extras():
     return render_template('extras.html')
 
+@app.route('/faq')
+def get_faq():
+    return render_template('faq.html')
+
 @app.route('/', methods=['POST'])
 def parse_upload():
     inputID = 'spreadsheet-selection'
