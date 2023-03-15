@@ -6,7 +6,7 @@ TADAA
 
 {% block main %}
 <div class="flex justify-center">
-    <div class="w-4/5 md:w-1/2">
+    <div class="w-4/5 md:w-2/3">
         <p class="py-2 text-center font-normal text-lg text-neutral-500"><em>The "Technical Audit Documentation Automation Assistant", or TADAA!</em></p>
         <div class="py-4 flex justify-around">
             <label class="font-medium text-xl">Domain URL:</label> <input type="text" class="p-1 rounded-md border-2 border-neutral-400 w-2/3">
@@ -44,7 +44,202 @@ TADAA
                 <!-- <input id="spreadsheet-selection" class="bg-red-200" type="file" name="spreadsheet-selection" required accept=".csv, .xlsx, .xls, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" multiple webkitdirectory>
             </div> -->
 
-            <!-- <div>Manual Entry Fields will go here</div> -->
+            <details class="bg-neutral-200 w-full rounded-md border-2 border-neutral-700 font-medium text-lg mb-4 text-center transition transition-transform">
+                <summary class="list-none p-6 hover:cursor-pointer hover:bg-neutral-300">Edit Manual Inputs</summary>
+                <div class="flex flex-col gap-8">
+                    <ol>
+                        <li class="p-2 grid grid-cols-2 text-center even:bg-neutral-50 odd:bg-sky-100">
+                            <label class="text-left" for="cms">1. <span class="text-sm">CMS</span></label>
+                            <select id="cms" name="cms" class="w-full border border-neutral-400 p-1 rounded-md">
+                                <option value="wordpress">WordPress</option>
+                                <option value="shopify">Shopify</option>
+                                <option value="bigcommerce">BigCommerce</option>
+                                <option value="squarespace">SquareSpace</option>
+                                <option value="wix">Wix</option>
+                                <option value="weebly">Weebly</option>
+                                <option value="godaddy">GoDaddy</option>
+                                <option value="duda">Duda</option>
+                                <option value="square">Square</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </li>
+
+                        <li class="p-2 grid grid-cols-2 even:bg-neutral-50 odd:bg-sky-100">
+                            <label class="text-left">2. <span class="text-sm">SC access</span></label>
+                            <div class="w-full flex flex-row justify-around">
+                                <span>
+                                    <input type="radio" id="yes" name="sc_access" value="true">
+                                    <label for="yes">Yes</label>
+                                </span>
+                                <span>
+                                    <input type="radio" id="no" name="sc_access" value="false">
+                                    <label for="no">No</label>
+                                </span>
+                            </div>
+                        </li>
+
+                        <li class="p-2 grid grid-cols-2 even:bg-neutral-50 odd:bg-sky-100">
+                            <label class="text-left">3. <span class="text-sm">GA access</span></label>
+                            <div class="w-full flex flex-row justify-around">
+                                <span>
+                                    <input type="radio" id="yes" name="ga_access" value="true">
+                                    <label for="yes">Yes</label>
+                                </span>
+                                <span>
+                                    <input type="radio" id="no" name="ga_access" value="false">
+                                    <label for="no">No</label>
+                                </span>
+                            </div>
+                        </li>
+
+                        <li class="p-2 grid grid-cols-2 even:bg-neutral-50 odd:bg-sky-100">
+                            <label class="text-left" for="mobility_issues">4. <span class="text-sm">Num of Mobile Usability Issues</span></label>
+                            <div class="w-full flex flex-row justify-center">
+                                <input
+                                    type="number"
+                                    id="mobility_issues"
+                                    name="mobility_issues"
+                                    min="0"
+                                    value="0"
+                                    class="border border-neutral-400 p-1 rounded-md w-1/4 mr-2"
+                                />
+                                <p class="text-sm pt-4">Issues</p>
+                            </div>
+                        </li>
+
+                        <li class="p-2 grid grid-cols-2 even:bg-neutral-50 odd:bg-sky-100">
+                            <label class="text-left">5. <span class="text-sm">Is Sitemap Submitted in SC</span></label>
+                            <div class="w-full flex flex-row justify-around">
+                                <span>
+                                    <input type="radio" id="yes" name="ga_access" value="true">
+                                    <label for="yes">Yes</label>
+                                </span>
+                                <span>
+                                    <input type="radio" id="no" name="ga_access" value="false">
+                                    <label for="no">No</label>
+                                </span>
+                            </div>
+                        </li>
+
+                        <li class="p-2 grid grid-cols-2 even:bg-neutral-50 odd:bg-sky-100">
+                            <label class="text-left" for="sitemap_url">6. <span class="text-sm">Sitemap URL</span></label>
+                                <input
+                                    type="text"
+                                    id="sitemap_url"
+                                    name="sitemap_url"
+                                    class="border border-neutral-400 p-1 rounded-md font-normal"
+                                    placeholder="https://"
+                                />
+                        </li>
+
+                        <li class="p-2 grid grid-cols-2 even:bg-neutral-50 odd:bg-sky-100">
+                            <label class="text-left" for="robots_url">7. <span class="text-sm">Robots URL</span></label>
+                                <input
+                                    type="text"
+                                    id="robots_url"
+                                    name="robots_url"
+                                    class="border border-neutral-400 p-1 rounded-md font-normal"
+                                    placeholder="https://"
+                                />
+                        </li>
+
+                        <li class="p-2 grid grid-cols-2 text-center even:bg-neutral-50 odd:bg-sky-100">
+                            <label class="text-left" for="structured_data">8. <span class="text-sm">Structured Data*</span></label>
+                            <select id="structured_data" name="structured_data" class="w-full border border-neutral-400 p-1 rounded-md">
+                                <option value="placeholder">Placeholder</option>
+                            </select>
+                        </li>
+
+                        <li class="p-2 grid grid-cols-2 text-center even:bg-neutral-50 odd:bg-sky-100">
+                            <label class="text-left" for="site_content_ux">9. <span class="text-sm">Site Content/UX*</span></label>
+                            <select id="site_content_ux" name="site_content_ux" class="w-full border border-neutral-400 p-1 rounded-md">
+                                <option value="placeholder">Placeholder</option>
+                            </select>
+                        </li>
+
+                        <li class="p-2 grid grid-cols-2 text-center even:bg-neutral-50 odd:bg-sky-100">
+                            <label class="text-left" for="dupe_content">10. <span class="text-sm">Internal/External Dup Content*</span></label>
+                            <select id="dupe_content" name="dupe_content" class="w-full border border-neutral-400 p-1 rounded-md">
+                                <option value="placeholder">Placeholder</option>
+                            </select>
+                        </li>
+
+                        <li class="p-2 grid grid-cols-2 text-center even:bg-neutral-50 odd:bg-sky-100">
+                            <label class="text-left" for="calls_to_action">11. <span class="text-sm">Calls to Action*</span></label>
+                            <select id="calls_to_action" name="calls_to_action" class="w-full border border-neutral-400 p-1 rounded-md">
+                                <option value="placeholder">Placeholder</option>
+                            </select>
+                        </li>
+
+                        <li class="p-2 grid grid-cols-2 text-center even:bg-neutral-50 odd:bg-sky-100">
+                            <label class="text-left" for="blog">12. <span class="text-sm">Blog*</span></label>
+                            <select id="blog" name="blog" class="w-full border border-neutral-400 p-1 rounded-md">
+                                <option value="placeholder">Placeholder</option>
+                            </select>
+                        </li>
+
+                        <li class="p-2 grid grid-cols-2 text-center even:bg-neutral-50 odd:bg-sky-100">
+                            <label class="text-left" for="canonicals">13. <span class="text-sm">Canonicals*</span></label>
+                            <select id="canonicals" name="canonicals" class="w-full border border-neutral-400 p-1 rounded-md">
+                                <option value="placeholder">Placeholder</option>
+                            </select>
+                        </li>
+
+                        <li class="p-2 grid grid-cols-2 text-center even:bg-neutral-50 odd:bg-sky-100">
+                            <label class="text-left" for="web_security">14. <span class="text-sm">Website Security*</span></label>
+                            <select id="web_security" name="web_security" class="w-full border border-neutral-400 p-1 rounded-md">
+                                <option value="placeholder">Placeholder</option>
+                            </select>
+                        </li>
+
+                        <li class="p-2 grid grid-cols-2 even:bg-neutral-50 odd:bg-sky-100">
+                            <label class="text-left">16. <span class="text-sm">Mob/Desk Page Speed</span></label>
+                            <div class="w-full flex flex-row justify-around">
+                                <span>
+                                    <label for="mob_speed" class="text-sm">Mob</label>
+                                    <input
+                                        type="number"
+                                        id="mob_speed"
+                                        name="mob_speed"
+                                        min="0"
+                                        value="0"
+                                        class="border border-neutral-400 p-1 rounded-md w-1/2 mr-2"
+                                    />
+                                </span>
+                                <span>
+                                    <label for="desk_speed" class="text-sm">Desk</label>
+                                    <input
+                                        type="number"
+                                        id="desk_speed"
+                                        name="desk_speed"
+                                        min="0"
+                                        value="0"
+                                        class="border border-neutral-400 p-1 rounded-md w-1/2 mr-2"
+                                    />
+                                </span>
+                            </div>
+                            <div class="w-full flex flex-row ">
+                                
+                            </div>
+                        </li>
+
+                        <li class="p-2 grid grid-cols-2 even:bg-neutral-50 odd:bg-sky-100">
+                            <label class="text-left" for="broken_backlinks">16. <span class="text-sm">Num of Broken Backlinks</span></label>
+                            <div class="w-full flex flex-row justify-center">
+                                <input
+                                    type="number"
+                                    id="broken_backlinks"
+                                    name="broken_backlinks"
+                                    min="0"
+                                    value="0"
+                                    class="border border-neutral-400 p-1 rounded-md w-1/4 mr-2"
+                                />
+                                <p class="text-sm pt-4">Broken Backlinks</p>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+            </details>
 
             <input id="submit-input" class="text-center bg-green-200 w-full p-6 rounded-md border-2 border-green-700 font-medium text-lg mb-4 hover:cursor-pointer hover:drop-shadow-md" type="submit" value="Generate PPT">
         </form>
