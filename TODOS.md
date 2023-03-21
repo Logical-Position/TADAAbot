@@ -21,4 +21,4 @@
 * Dark Mode/Light Mode Toggles
 * Profile/Logout Buttons
 * Enable drag and drop folder upload
-* Remove header from login view
+* Remove header from login view by restructuring template files per [the hierarchy diagram](/tadaa_hierarchy-diagram.png)
