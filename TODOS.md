@@ -9,6 +9,7 @@
 * Connect Google Firestore Database
 * Connect Google Cloud Storage
 * Migrate Google Cloud Console project to lpseodeveloper@gmail.com account
+* Resolve Flask Dance issues
 
 ## Client-side
 * Discuss end vision of UI
@@ -22,3 +23,5 @@
 * Profile/Logout Buttons
 * Enable drag and drop folder upload
 * Remove header from login view by restructuring template files per [the hierarchy diagram](/tadaa_template-hierarchy.png)
+* Finish building out the Results view
+* Create drop down / select lists for manual data with multiple options
