@@ -70,6 +70,13 @@ An automation assistant for tech audits! Tadaa!!
 ## Meta Data and Aggregate Analyses
 TODO
 
+## Google Firestore Documentation
+
+* [Initialization](https://firebase.google.com/docs/firestore/quickstart#python)
+* [Adding data](https://firebase.google.com/docs/firestore/quickstart#add_data)
+* [Reading data](https://firebase.google.com/docs/firestore/quickstart#read_data)
+* TODO: Find a more detailed write-up than the "Quick Start"
+
 ## Contributors
 * Jake Applehans
 * Mic Ruopp
