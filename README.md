@@ -44,14 +44,14 @@ An automation assistant for tech audits! Tadaa!!
 * ~~Is Sitemap Submitted in SC - bool that adjusts Yes/No image~~
 * ~~Sitemap URL - string to add to end of sitemap slide~~
 * ~~Robots URL - string to add to end of robots slide~~
-* Structured Data - a multiple choice drop down for the options in slide notes*
-* Site Content/UX - a multiple choice drop down for the options in slide notes*
-* Internal/External Dup Content - a multiple choice drop down for the options in slide notes*
-* Calls to Action - a multiple choice drop down for the options in slide notes*
-* Blog - a multiple choice drop down for the options in slide notes*
-* Canonicals - a multiple choice drop down for the options in slide notes*
-* Website Security - a multiple choice drop down for the options in slide notes*
-* Mob/Desk Page Speed - two floats for mob/desktop page speed
+* ~~Structured Data - a multiple choice drop down for the options in slide notes*~~
+* ~~Site Content/UX - a multiple choice drop down for the options in slide notes*~~
+* ~~Internal/External Dup Content - a multiple choice drop down for the options in slide notes*~~
+* ~~Calls to Action - a multiple choice drop down for the options in slide notes*~~
+* ~~Blog - a multiple choice drop down for the options in slide notes*~~
+* ~~Canonicals - a multiple choice drop down for the options in slide notes*~~
+* ~~Website Security - a multiple choice drop down for the options in slide notes*~~
+* ~~Mob/Desk Page Speed - two floats for mob/desktop page speed~~
 * ~~Num of Broken Backlinks - Adjusts integer and text~~
 
 ## How To Install/Run tailwind
