@@ -5,21 +5,16 @@ TADAA
 {% endblock %}
 
 {% block main %}
-<div class="flex justify-center">
-    <div class="w-4/5 md:w-2/3">
-        <p class="py-2 text-center font-normal text-lg text-neutral-500"><em>The "Technical Audit Documentation Automation Assistant", or TADAA!</em></p>
-        <div class="py-4 flex justify-around">
-            <label class="font-medium text-xl">Domain URL:</label> <input type="text" class="p-1 rounded-md border-2 border-neutral-400 w-2/3">
-        </div>
+<div class="flex justify-center pb-12">
+    <div class="w-4/5 md:w-2/3 lg:w-1/2">
+        <p class="py-4 text-center font-medium text-xl text-neutral-500"><em>The "Technical Audit Documentation Automation Assistant", or TADAA!</em></p>
 
-        <hr class="h-[2px] mb-4 bg-neutral-900">
-
-        <form id="tadaa-form" action="/" method="post" enctype="multipart/form-data">
+        <form id="tadaa-form" action="/" method="post" enctype="multipart/form-data" class="py-4">
             
             <!-- STOLE THIS FROM https://flowbite.com/docs/forms/file-input/ -->
             <div class="flex items-center justify-center w-full">
                 <label for="spreadsheet-selection" class="flex flex-col items-center justify-center w-full h-64 border-2 border-neutral-300 border-dashed rounded-lg cursor-pointer bg-neutral-50 hover:bg-neutral-200 hover:border-neutral-400 mb-4">
-                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                    <div id="droparea" class="flex flex-col items-center justify-center pt-5 pb-6">
                         <svg aria-hidden="true" class="w-10 h-10 mb-3 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
                         <p class="mb-2 text-sm text-neutral-500"><span class="font-semibold">Click to upload</span> or drag and drop</p>
                         <p class="text-xs text-neutral-500">Only accepts folders/directories</p>
@@ -27,7 +22,14 @@ TADAA
                     <!-- The input seemingly can only accept files xor directories, not both. This is UI/UX problem, talk to Jake. -->
                     <!-- Asking users for the 'export' directory seems like it will be easiest. Directories it is. -->
                     <!-- <input id="dropzone-file" type="file" class="hidden" /> -->
-                    <input id="spreadsheet-selection" class="hidden" type="file" name="spreadsheet-selection" required accept=".csv, .xlsx, .xls, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" multiple webkitdirectory>
+                    <input
+                        id="spreadsheet-selection"
+                        class="hidden"
+                        type="file"
+                        name="spreadsheet-selection"
+                        required accept=".csv, .xlsx, .xls, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                        multiple webkitdirectory
+                    >
                 </label>
             </div>
 
@@ -44,12 +46,23 @@ TADAA
                 <!-- <input id="spreadsheet-selection" class="bg-red-200" type="file" name="spreadsheet-selection" required accept=".csv, .xlsx, .xls, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" multiple webkitdirectory>
             </div> -->
 
-            <details class="bg-neutral-200 w-full rounded-md border-2 border-neutral-700 font-medium text-lg mb-4 text-center transition transition-transform">
-                <summary class="list-none p-6 hover:cursor-pointer hover:bg-neutral-300">Edit Manual Inputs</summary>
+            <details class="bg-neutral-200 w-full rounded-md border-2 border-neutral-700 font-medium text-lg mb-4 my-4 text-center transition transition-transform">
+                <summary class="p-6 hover:cursor-pointer hover:bg-neutral-300">Edit Manual Inputs</summary>
                 <div class="flex flex-col gap-8">
                     <ol>
-                        <li class="p-2 grid grid-cols-2 text-center even:bg-neutral-50 odd:bg-sky-100">
-                            <label class="text-left" for="cms">1. <span class="text-sm">CMS</span></label>
+                        <li class="p-3 grid grid-cols-2 text-left even:bg-neutral-50 odd:bg-sky-200">
+                            <label class="text-left" for="domain_url">1. <span>Domain URL</span></label>
+                                <input
+                                    type="text"
+                                    id="domain_url"
+                                    name="domain_url"
+                                    class="border border-neutral-400 p-1 rounded-md font-normal"
+                                    placeholder="https://"
+                                />
+                        </li>
+
+                        <li class="p-3 grid grid-cols-2 text-left even:bg-neutral-50 odd:bg-sky-200">
+                            <label class="text-left" for="cms">2. <span>CMS</span></label>
                             <select id="cms" name="cms" class="w-full border border-neutral-400 p-1 rounded-md">
                                 <option value="wordpress">WordPress</option>
                                 <option value="shopify">Shopify</option>
@@ -64,36 +77,36 @@ TADAA
                             </select>
                         </li>
 
-                        <li class="p-2 grid grid-cols-2 even:bg-neutral-50 odd:bg-sky-100">
-                            <label class="text-left">2. <span class="text-sm">SC access</span></label>
-                            <div class="w-full flex flex-row justify-around">
+                        <li class="p-3 grid grid-cols-2 text-left even:bg-neutral-50 odd:bg-sky-200">
+                            <label class="text-left">3. <span>SC access</span></label>
+                            <div class="w-full flex justify-around">
                                 <span>
-                                    <input type="radio" id="yes" name="sc_access" value="true">
+                                    <input type="radio" id="yes" name="sc_access" value="true" class="scale-150 mr-1">
                                     <label for="yes">Yes</label>
                                 </span>
                                 <span>
-                                    <input type="radio" id="no" name="sc_access" value="false">
+                                    <input type="radio" id="no" name="sc_access" value="false" class="scale-150 mr-1">
                                     <label for="no">No</label>
                                 </span>
                             </div>
                         </li>
 
-                        <li class="p-2 grid grid-cols-2 even:bg-neutral-50 odd:bg-sky-100">
-                            <label class="text-left">3. <span class="text-sm">GA access</span></label>
-                            <div class="w-full flex flex-row justify-around">
+                        <li class="p-3 grid grid-cols-2 text-left even:bg-neutral-50 odd:bg-sky-200">
+                            <label class="text-left">4. <span>GA access</span></label>
+                            <div class="w-full flex justify-around">
                                 <span>
-                                    <input type="radio" id="yes" name="ga_access" value="true">
+                                    <input type="radio" id="yes" name="ga_access" value="true" class="scale-150 mr-1">
                                     <label for="yes">Yes</label>
                                 </span>
                                 <span>
-                                    <input type="radio" id="no" name="ga_access" value="false">
+                                    <input type="radio" id="no" name="ga_access" value="false" class="scale-150 mr-1">
                                     <label for="no">No</label>
                                 </span>
                             </div>
                         </li>
 
-                        <li class="p-2 grid grid-cols-2 even:bg-neutral-50 odd:bg-sky-100">
-                            <label class="text-left" for="mobility_issues">4. <span class="text-sm">Num of Mobile Usability Issues</span></label>
+                        <li class="p-3 grid grid-cols-2 even:bg-neutral-50 odd:bg-sky-200">
+                            <label class="text-left" for="mobility_issues">5. <span>Number of Mobile Usability Issues</span></label>
                             <div class="w-full flex flex-row justify-center">
                                 <input
                                     type="number"
@@ -103,26 +116,26 @@ TADAA
                                     value="0"
                                     class="border border-neutral-400 p-1 rounded-md w-1/4 mr-2"
                                 />
-                                <p class="text-sm pt-4">Issues</p>
+                                <p class="pt-4">Issues</p>
                             </div>
                         </li>
 
-                        <li class="p-2 grid grid-cols-2 even:bg-neutral-50 odd:bg-sky-100">
-                            <label class="text-left">5. <span class="text-sm">Is Sitemap Submitted in SC</span></label>
-                            <div class="w-full flex flex-row justify-around">
+                        <li class="p-3 grid grid-cols-2 text-left even:bg-neutral-50 odd:bg-sky-200">
+                            <label class="text-left">6. <span>Is Sitemap Submitted in SC</span></label>
+                            <div class="w-full flex justify-around">
                                 <span>
-                                    <input type="radio" id="yes" name="ga_access" value="true">
+                                    <input type="radio" id="yes" name="ga_access" value="true" class="scale-150 mr-1">
                                     <label for="yes">Yes</label>
                                 </span>
                                 <span>
-                                    <input type="radio" id="no" name="ga_access" value="false">
+                                    <input type="radio" id="no" name="ga_access" value="false" class="scale-150 mr-1">
                                     <label for="no">No</label>
                                 </span>
                             </div>
                         </li>
 
-                        <li class="p-2 grid grid-cols-2 even:bg-neutral-50 odd:bg-sky-100">
-                            <label class="text-left" for="sitemap_url">6. <span class="text-sm">Sitemap URL</span></label>
+                        <li class="p-3 grid grid-cols-2 even:bg-neutral-50 odd:bg-sky-200">
+                            <label class="text-left" for="sitemap_url">7. <span>Sitemap URL</span></label>
                                 <input
                                     type="text"
                                     id="sitemap_url"
@@ -132,8 +145,8 @@ TADAA
                                 />
                         </li>
 
-                        <li class="p-2 grid grid-cols-2 even:bg-neutral-50 odd:bg-sky-100">
-                            <label class="text-left" for="robots_url">7. <span class="text-sm">Robots URL</span></label>
+                        <li class="p-3 grid grid-cols-2 even:bg-neutral-50 odd:bg-sky-200">
+                            <label class="text-left" for="robots_url">8. <span>Robots URL</span></label>
                                 <input
                                     type="text"
                                     id="robots_url"
@@ -143,88 +156,218 @@ TADAA
                                 />
                         </li>
 
-                        <li class="p-2 grid grid-cols-2 text-center even:bg-neutral-50 odd:bg-sky-100">
-                            <label class="text-left" for="structured_data">8. <span class="text-sm">Structured Data*</span></label>
-                            <select id="structured_data" name="structured_data" class="w-full border border-neutral-400 p-1 rounded-md">
-                                <option value="placeholder">Placeholder</option>
-                            </select>
+                        <li class="p-3 grid grid-cols-2 text-left even:bg-neutral-50 odd:bg-sky-200">
+                            <label class="text-left">9. <span>Structured Data*</span></label>
+                            <div class="w-full flex flex-wrap">
+                                <span class="w-1/2 py-1">
+                                    <input type="radio" id="option1" name="structured_data" value="option1" class="scale-150 mr-1">
+                                    <label for="option1">Option 1</label>
+                                </span>
+                                <span class="w-1/2 py-1">
+                                    <input type="radio" id="option2" name="structured_data" value="option2" class="scale-150 mr-1">
+                                    <label for="option1">Option 2</label>
+                                </span>
+                                <span class="w-1/2 py-1">
+                                    <input type="radio" id="option3" name="structured_data" value="option3" class="scale-150 mr-1">
+                                    <label for="option3">Option 3</label>
+                                </span>
+                                <span class="w-1/2 py-1">
+                                    <input type="radio" id="option4" name="structured_data" value="option4" class="scale-150 mr-1">
+                                    <label for="option4">Option 4</label>
+                                </span>
+                                <span class="w-1/2 py-1">
+                                    <input type="radio" id="option5" name="structured_data" value="option5" class="scale-150 mr-1">
+                                    <label for="option5">Option 5</label>
+                                </span>
+                            </div>
                         </li>
 
-                        <li class="p-2 grid grid-cols-2 text-center even:bg-neutral-50 odd:bg-sky-100">
-                            <label class="text-left" for="site_content_ux">9. <span class="text-sm">Site Content/UX*</span></label>
-                            <select id="site_content_ux" name="site_content_ux" class="w-full border border-neutral-400 p-1 rounded-md">
-                                <option value="placeholder">Placeholder</option>
-                            </select>
+                        <li class="p-3 grid grid-cols-2 text-left even:bg-neutral-50 odd:bg-sky-200">
+                            <label class="text-left" for="site_content_ux">10. <span>Site Content/UX*</span></label>
+                            <div class="w-full flex flex-wrap">
+                                <span class="w-1/2 py-1">
+                                    <input type="radio" id="option1" name="structured_data" value="option1" class="scale-150 mr-1">
+                                    <label for="option1">Option 1</label>
+                                </span>
+                                <span class="w-1/2 py-1">
+                                    <input type="radio" id="option2" name="structured_data" value="option2" class="scale-150 mr-1">
+                                    <label for="option1">Option 2</label>
+                                </span>
+                                <span class="w-1/2 py-1">
+                                    <input type="radio" id="option3" name="structured_data" value="option3" class="scale-150 mr-1">
+                                    <label for="option3">Option 3</label>
+                                </span>
+                                <span class="w-1/2 py-1">
+                                    <input type="radio" id="option4" name="structured_data" value="option4" class="scale-150 mr-1">
+                                    <label for="option4">Option 4</label>
+                                </span>
+                                <span class="w-1/2 py-1">
+                                    <input type="radio" id="option5" name="structured_data" value="option5" class="scale-150 mr-1">
+                                    <label for="option5">Option 5</label>
+                                </span>
+                            </div>
                         </li>
 
-                        <li class="p-2 grid grid-cols-2 text-center even:bg-neutral-50 odd:bg-sky-100">
-                            <label class="text-left" for="dupe_content">10. <span class="text-sm">Internal/External Dup Content*</span></label>
-                            <select id="dupe_content" name="dupe_content" class="w-full border border-neutral-400 p-1 rounded-md">
-                                <option value="placeholder">Placeholder</option>
-                            </select>
+                        <li class="p-3 grid grid-cols-2 text-left even:bg-neutral-50 odd:bg-sky-200">
+                            <label class="text-left" for="dupe_content">11. <span>Internal/External Duplicate Content*</span></label>
+                            <div class="w-full flex flex-wrap">
+                                <span class="w-1/2 py-1">
+                                    <input type="radio" id="option1" name="structured_data" value="option1" class="scale-150 mr-1">
+                                    <label for="option1">Option 1</label>
+                                </span>
+                                <span class="w-1/2 py-1">
+                                    <input type="radio" id="option2" name="structured_data" value="option2" class="scale-150 mr-1">
+                                    <label for="option1">Option 2</label>
+                                </span>
+                                <span class="w-1/2 py-1">
+                                    <input type="radio" id="option3" name="structured_data" value="option3" class="scale-150 mr-1">
+                                    <label for="option3">Option 3</label>
+                                </span>
+                                <span class="w-1/2 py-1">
+                                    <input type="radio" id="option4" name="structured_data" value="option4" class="scale-150 mr-1">
+                                    <label for="option4">Option 4</label>
+                                </span>
+                                <span class="w-1/2 py-1">
+                                    <input type="radio" id="option5" name="structured_data" value="option5" class="scale-150 mr-1">
+                                    <label for="option5">Option 5</label>
+                                </span>
+                            </div>
                         </li>
 
-                        <li class="p-2 grid grid-cols-2 text-center even:bg-neutral-50 odd:bg-sky-100">
-                            <label class="text-left" for="calls_to_action">11. <span class="text-sm">Calls to Action*</span></label>
-                            <select id="calls_to_action" name="calls_to_action" class="w-full border border-neutral-400 p-1 rounded-md">
-                                <option value="placeholder">Placeholder</option>
-                            </select>
+                        <li class="p-3 grid grid-cols-2 text-left even:bg-neutral-50 odd:bg-sky-200">
+                            <label class="text-left" for="calls_to_action">12. <span>Calls to Action*</span></label>
+                            <div class="w-full flex flex-wrap">
+                                <span class="w-1/2 py-1">
+                                    <input type="radio" id="option1" name="structured_data" value="option1" class="scale-150 mr-1">
+                                    <label for="option1">Option 1</label>
+                                </span>
+                                <span class="w-1/2 py-1">
+                                    <input type="radio" id="option2" name="structured_data" value="option2" class="scale-150 mr-1">
+                                    <label for="option1">Option 2</label>
+                                </span>
+                                <span class="w-1/2 py-1">
+                                    <input type="radio" id="option3" name="structured_data" value="option3" class="scale-150 mr-1">
+                                    <label for="option3">Option 3</label>
+                                </span>
+                                <span class="w-1/2 py-1">
+                                    <input type="radio" id="option4" name="structured_data" value="option4" class="scale-150 mr-1">
+                                    <label for="option4">Option 4</label>
+                                </span>
+                                <span class="w-1/2 py-1">
+                                    <input type="radio" id="option5" name="structured_data" value="option5" class="scale-150 mr-1">
+                                    <label for="option5">Option 5</label>
+                                </span>
+                            </div>
                         </li>
 
-                        <li class="p-2 grid grid-cols-2 text-center even:bg-neutral-50 odd:bg-sky-100">
-                            <label class="text-left" for="blog">12. <span class="text-sm">Blog*</span></label>
-                            <select id="blog" name="blog" class="w-full border border-neutral-400 p-1 rounded-md">
-                                <option value="placeholder">Placeholder</option>
-                            </select>
+                        <li class="p-3 grid grid-cols-2 text-left even:bg-neutral-50 odd:bg-sky-200">
+                            <label class="text-left" for="blog">13. <span>Blog*</span></label>
+                            <div class="w-full flex flex-wrap">
+                                <span class="w-1/2 py-1">
+                                    <input type="radio" id="option1" name="structured_data" value="option1" class="scale-150 mr-1">
+                                    <label for="option1">Option 1</label>
+                                </span>
+                                <span class="w-1/2 py-1">
+                                    <input type="radio" id="option2" name="structured_data" value="option2" class="scale-150 mr-1">
+                                    <label for="option1">Option 2</label>
+                                </span>
+                                <span class="w-1/2 py-1">
+                                    <input type="radio" id="option3" name="structured_data" value="option3" class="scale-150 mr-1">
+                                    <label for="option3">Option 3</label>
+                                </span>
+                                <span class="w-1/2 py-1">
+                                    <input type="radio" id="option4" name="structured_data" value="option4" class="scale-150 mr-1">
+                                    <label for="option4">Option 4</label>
+                                </span>
+                                <span class="w-1/2 py-1">
+                                    <input type="radio" id="option5" name="structured_data" value="option5" class="scale-150 mr-1">
+                                    <label for="option5">Option 5</label>
+                                </span>
+                            </div>
                         </li>
 
-                        <li class="p-2 grid grid-cols-2 text-center even:bg-neutral-50 odd:bg-sky-100">
-                            <label class="text-left" for="canonicals">13. <span class="text-sm">Canonicals*</span></label>
-                            <select id="canonicals" name="canonicals" class="w-full border border-neutral-400 p-1 rounded-md">
-                                <option value="placeholder">Placeholder</option>
-                            </select>
+                        <li class="p-3 grid grid-cols-2 text-left even:bg-neutral-50 odd:bg-sky-200">
+                            <label class="text-left" for="canonicals">14. <span>Canonicals*</span></label>
+                            <div class="w-full flex flex-wrap">
+                                <span class="w-1/2 py-1">
+                                    <input type="radio" id="option1" name="structured_data" value="option1" class="scale-150 mr-1">
+                                    <label for="option1">Option 1</label>
+                                </span>
+                                <span class="w-1/2 py-1">
+                                    <input type="radio" id="option2" name="structured_data" value="option2" class="scale-150 mr-1">
+                                    <label for="option1">Option 2</label>
+                                </span>
+                                <span class="w-1/2 py-1">
+                                    <input type="radio" id="option3" name="structured_data" value="option3" class="scale-150 mr-1">
+                                    <label for="option3">Option 3</label>
+                                </span>
+                                <span class="w-1/2 py-1">
+                                    <input type="radio" id="option4" name="structured_data" value="option4" class="scale-150 mr-1">
+                                    <label for="option4">Option 4</label>
+                                </span>
+                                <span class="w-1/2 py-1">
+                                    <input type="radio" id="option5" name="structured_data" value="option5" class="scale-150 mr-1">
+                                    <label for="option5">Option 5</label>
+                                </span>
+                            </div>
                         </li>
 
-                        <li class="p-2 grid grid-cols-2 text-center even:bg-neutral-50 odd:bg-sky-100">
-                            <label class="text-left" for="web_security">14. <span class="text-sm">Website Security*</span></label>
-                            <select id="web_security" name="web_security" class="w-full border border-neutral-400 p-1 rounded-md">
-                                <option value="placeholder">Placeholder</option>
-                            </select>
+                        <li class="p-3 grid grid-cols-2 text-left even:bg-neutral-50 odd:bg-sky-200">
+                            <label class="text-left" for="web_security">15. <span>Website Security*</span></label>
+                            <div class="w-full flex flex-wrap">
+                                <span class="w-1/2 py-1">
+                                    <input type="radio" id="option1" name="structured_data" value="option1" class="scale-150 mr-1">
+                                    <label for="option1">Option 1</label>
+                                </span>
+                                <span class="w-1/2 py-1">
+                                    <input type="radio" id="option2" name="structured_data" value="option2" class="scale-150 mr-1">
+                                    <label for="option1">Option 2</label>
+                                </span>
+                                <span class="w-1/2 py-1">
+                                    <input type="radio" id="option3" name="structured_data" value="option3" class="scale-150 mr-1">
+                                    <label for="option3">Option 3</label>
+                                </span>
+                                <span class="w-1/2 py-1">
+                                    <input type="radio" id="option4" name="structured_data" value="option4" class="scale-150 mr-1">
+                                    <label for="option4">Option 4</label>
+                                </span>
+                                <span class="w-1/2 py-1">
+                                    <input type="radio" id="option5" name="structured_data" value="option5" class="scale-150 mr-1">
+                                    <label for="option5">Option 5</label>
+                                </span>
+                            </div>
                         </li>
 
-                        <li class="p-2 grid grid-cols-2 even:bg-neutral-50 odd:bg-sky-100">
-                            <label class="text-left">16. <span class="text-sm">Mob/Desk Page Speed</span></label>
+                        <li class="p-3 grid grid-cols-2 even:bg-neutral-50 odd:bg-sky-200">
+                            <label class="text-left">16. <span>Mobile/Desktop Page Speed</span></label>
                             <div class="w-full flex flex-row justify-around">
                                 <span>
-                                    <label for="mob_speed" class="text-sm">Mob</label>
+                                    <label for="mobile_speed">Mobile</label>
                                     <input
                                         type="number"
-                                        id="mob_speed"
-                                        name="mob_speed"
+                                        id="mobile_speed"
+                                        name="mobile_speed"
                                         min="0"
                                         value="0"
                                         class="border border-neutral-400 p-1 rounded-md w-1/2 mr-2"
                                     />
                                 </span>
                                 <span>
-                                    <label for="desk_speed" class="text-sm">Desk</label>
+                                    <label for="desktop_speed">Desktop</label>
                                     <input
                                         type="number"
-                                        id="desk_speed"
-                                        name="desk_speed"
+                                        id="desktop_speed"
+                                        name="desktop_speed"
                                         min="0"
                                         value="0"
                                         class="border border-neutral-400 p-1 rounded-md w-1/2 mr-2"
                                     />
                                 </span>
                             </div>
-                            <div class="w-full flex flex-row ">
-                                
-                            </div>
                         </li>
 
-                        <li class="p-2 grid grid-cols-2 even:bg-neutral-50 odd:bg-sky-100">
-                            <label class="text-left" for="broken_backlinks">16. <span class="text-sm">Num of Broken Backlinks</span></label>
+                        <li class="p-3 grid grid-cols-2 even:bg-neutral-50 odd:bg-sky-200">
+                            <label class="text-left" for="broken_backlinks">17. <span>Num of Broken Backlinks</span></label>
                             <div class="w-full flex flex-row justify-center">
                                 <input
                                     type="number"
@@ -234,21 +377,19 @@ TADAA
                                     value="0"
                                     class="border border-neutral-400 p-1 rounded-md w-1/4 mr-2"
                                 />
-                                <p class="text-sm pt-4">Broken Backlinks</p>
+                                <p class="pt-4">Broken Backlinks</p>
                             </div>
                         </li>
                     </ol>
                 </div>
             </details>
 
-            <input id="submit-input" class="text-center bg-green-200 w-full p-6 rounded-md border-2 border-green-700 font-medium text-lg mb-4 hover:cursor-pointer hover:drop-shadow-md" type="submit" value="Generate PPT">
+            <input id="submit-input" class="text-center bg-green-200 hover:bg-green-300 w-full p-6 rounded-md border border-green-700 font-medium text-lg my-4 hover:cursor-pointer hover:drop-shadow-md" type="submit" value="Generate PPT">
         </form>
 
         <div class="flex gap-4 justify-between">
-            <button id="ppt-download-button" class="text-center bg-neutral-200 w-full p-3 rounded-md border-2 border-neutral-700 font-medium text-lg hover:cursor-pointer hover:drop-shadow-md" disabled>Download Audit Powerpoint</button>
-            <button id="auth-dance-button" class="text-center bg-neutral-200 w-full p-3 rounded-md border-2 border-neutral-700 font-medium text-lg hover:cursor-pointer hover:drop-shadow-md" disabled>Start Auth Dance</button>
-        </div>
-        <div>
+            <button id="ppt-download-button" class="text-center bg-neutral-200 hover:bg-neutral-300 w-full p-3 rounded-md border border-neutral-700 font-medium text-lg hover:cursor-pointer hover:drop-shadow-md" disabled>Download Audit Powerpoint</button>
+            <button id="auth-dance-button" class="text-center bg-neutral-200 hover:bg-neutral-300 w-full p-3 rounded-md border border-neutral-700 font-medium text-lg hover:cursor-pointer hover:drop-shadow-md" disabled>Start Auth Dance</button>
         </div>
     </div>
 </div>
