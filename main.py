@@ -6,9 +6,9 @@ import tadaa
 import time
 import datetime
 
-import firebase_admin
-from firebase_admin import credentials
-from firebase_admin import firestore
+#import firebase_admin
+#from firebase_admin import credentials
+#from firebase_admin import firestore
 
 
 UPLOAD_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'uploads')
@@ -26,9 +26,9 @@ app.config['UPLOAD_DIR'] = UPLOAD_DIR
 # # google_bp = make_google_blueprint(scope=["profile", "email"])
 # app.register_blueprint(google_bp, url_prefix="/login")
 
-cred = credentials.Certificate('path/to/keys')
-fs_app = firebase_admin.initialize_app(cred)
-db = firestore.client()
+#cred = credentials.Certificate('path/to/keys')
+#fs_app = firebase_admin.initialize_app(cred)
+#db = firestore.client()
 
 
 @app.route('/', methods=['GET'])
