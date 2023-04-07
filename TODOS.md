@@ -25,3 +25,18 @@
 * Remove header from login view by restructuring template files per [the hierarchy diagram](/tadaa_template-hierarchy.png)
 * Finish building out the Results view
 * Create drop down / select lists for manual data with multiple options
+
+## Documents
+* Sort done TODOS to the bottom
+	- Maybe make a script to do this
+* Reformat README into:
+	- Overview
+	- Resources
+	- Local Installation
+	- Move Contributors to a new file
+* Create a `docs` folder
+	- Move TODOS into it
+	- Move CONTRIBUTORS
+	- Move diagrams and Excalidraw files
+* Think of place for PPT template
+	- `static/assets` is for frontend files, so that doesn't work
