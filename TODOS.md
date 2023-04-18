@@ -32,6 +32,12 @@
 * Format arrows across the site to match FAQ page arrows
 * Move "Start Auth Dance" button from Home to page to Extras page
 * Add disabled state to "Download Audit PPT" button on Home page
+* Fix bug with manual input radio buttons preventing all questions from being answered
+	* The problem was too much copy paste -- the solution lies in the "names" of the inputs.
+	* Read here for another hint: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/radio#defining_a_radio_group
+* Remove id duplication from manual input fields
+	* We don't want two different radio buttons to have the id="yes"; we can differentiate this with more specific id's, like id="sc-access-yes" and id="sc-access-no".
+	* IDs are meant to be global identifiers: https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/id
 
 ## Documents
 * Sort done TODOS to the bottom
