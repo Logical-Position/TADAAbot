@@ -25,6 +25,13 @@
 * Remove header from login view by restructuring template files per [the hierarchy diagram](/tadaa_template-hierarchy.png)
 * Finish building out the Results view
 * Create drop down / select lists for manual data with multiple options
+* Normalize <main> container (or a child <div> container) across site
+* Adjust padding at top of FAQ page
+* Remove horizontal scroll on FAQ page
+* Add arrows to results tabs to indicate interaction
+* Format arrows across the site to match FAQ page arrows
+* Move "Start Auth Dance" button from Home to page to Extras page
+* Add disabled state to "Download Audit PPT" button on Home page
 
 ## Documents
 * Sort done TODOS to the bottom
