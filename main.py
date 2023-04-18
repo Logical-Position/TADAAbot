@@ -72,6 +72,8 @@ def get_faq():
 def parse_upload():
     inputID = 'spreadsheet-selection'
 
+    print(request.form['domain_url'])
+
     now = datetime.datetime.now()
     timestamp = now.strftime("%Y-%m-%d_%H-%M-%S")
     project_dir = os.path.join(app.config['UPLOAD_DIR'], timestamp)
