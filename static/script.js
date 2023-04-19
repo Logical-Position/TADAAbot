@@ -32,18 +32,18 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     let downloadButton = document.querySelector('button#ppt-download-button');
-    let authButton = document.querySelector('button#auth-dance-button');
+    // let authButton = document.querySelector('button#auth-dance-button');
     downloadButton.addEventListener('click', (e) => {
         if (downloadButton.disabled) return;
         requestDownload();
     })
-    authButton.addEventListener('click', (e) => {
-        if (authButton.disabled) return;
-        authDance();
-    })
+    // authButton.addEventListener('click', (e) => {
+    //     if (authButton.disabled) return;
+    //     authDance();
+    // })
     function enableDownload() {
         downloadButton.disabled = false;
-        authButton.disabled = false;
+        // authButton.disabled = false;
     }
 
     function requestDownload() {
@@ -62,6 +62,22 @@ document.addEventListener("DOMContentLoaded", function() {
         // req.open("GET", authURL, true)
         // req.send()
     }
+
+    // Handles enabling/disabling the submit buttons and very basic verification.
+    let spreadsheetSelection = document.querySelector("#spreadsheet-selection");
+    let generateButton = document.querySelector('input[name="generate_ppt"]');
+    spreadsheetSelection.addEventListener('change', function(event) {
+        if (spreadsheetSelection.value != "") {
+            let parentFolder = spreadsheetSelection.files[0].webkitRelativePath.split("/")[0];
+            if (parentFolder == "exports") {
+                generateButton.disabled = false;
+            }
+            else {
+                window.alert("Uploaded folder is not named 'exports'.");
+                generateButton.disabled = true;
+            }
+        }
+    });
 });
 
 function makeRequest(path, callback) {
@@ -108,4 +124,3 @@ function saveBlob(blob) {
 //         alert(req.responseText);
 //     });
 // }
-
