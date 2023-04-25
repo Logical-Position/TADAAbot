@@ -1,6 +1,6 @@
 # T.A.D.A.A bot
 
- ### A Technical Audit Documentation Automation Assistant
+ ### A Technical Audit Documentation Automation Assistant.
  
 An automation assistant for tech audits! Tadaa!!
 
