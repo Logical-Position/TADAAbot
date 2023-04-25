@@ -36,20 +36,34 @@
 * ~~Integrate tailwind.css~~
 * ~~Create list of routes / pages / views needed~~
 * ~~Adjust /results view to be single-column~~
-* ~~Create inputs for all manual data; see "Data Requiring Manual Input" section in [README.md](/README.md#data-requiring-manual-input)~~
-* ~~Reformat Home page/create Login page template.~~
+* ~~Create inputs for all manual data:~~
+	* ~~CMS - possibly optional, just for internal data.~~
+	* ~~SC access - bool that adjusts Yes/No image~~
+	* ~~GA access - bool that adjusts Yes/No image~~
+	* ~~Num of Mobile Usability Issues - Adjusts integer and text~~
+	* ~~Is Sitemap Submitted in SC - bool that adjusts Yes/No image~~
+	* ~~Sitemap URL - string to add to end of sitemap slide~~
+	* ~~Robots URL - string to add to end of robots slide~~
+	* ~~Structured Data - a multiple choice drop down for the options in slide notes*~~
+	* ~~Site Content/UX - a multiple choice drop down for the options in slide notes*~~
+	* ~~Internal/External Dup Content - a multiple choice drop down for the options in slide notes*~~
+	* ~~Calls to Action - a multiple choice drop down for the options in slide notes*~~
+	* ~~Blog - a multiple choice drop down for the options in slide notes*~~
+	* ~~Canonicals - a multiple choice drop down for the options in slide notes*~~
+	* ~~Website Security - a multiple choice drop down for the options in slide notes*~~
+	* ~~Mob/Desk Page Speed - two floats for mob/desktop page speed~~
+	* ~~Num of Broken Backlinks - Adjusts integer and text~~
+	* ~~Reformat Home page/create Login page template.~~
 
 ## Documents
-* Sort done TODOS to the bottom
-	- Maybe make a script to do this
-* Reformat README into:
-	- Overview
-	- Resources
-	- Local Installation
-	- Move Contributors to a new file
-* Create a `docs` folder
-	- Move TODOS into it
-	- Move CONTRIBUTORS
-	- Move diagrams and Excalidraw files
 * Think of place for PPT template
 	- `static/assets` is for frontend files, so that doesn't work
+* ~~Sort done TODOS to the bottom~~
+	- ~~Maybe make a script to do this~~
+* ~~Reformat README into:~~
+	- ~~Overview~~
+	- ~~Resources~~
+	- ~~Local Installation~~
+	- ~~Move Contributors to a new file~~
+* ~~Create a `docs` folder~~
+	- ~~Move diagrams and Excalidraw files~~

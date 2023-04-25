@@ -1,20 +1,24 @@
 # T.A.D.A.A bot
 
- ### A Technical Audit Documentation Automation Assistant.
+### A Technical Audit Documentation Automation Assistant.
  
-An automation assistant for tech audits! Tadaa!!
+An automation assistant for tech audits! _Tadaa!!_
 
-## Here's what it does. (TADAAbot)
+## Overview
+
+### Here's what it does. (TADAAbot)
 * Takes the things
 * Organizes the data
 * Returns the stuff
 
-## Here's what you do. (The Analyst)
+### Here's what you do. (The Analyst)
 * Input the things
 * Think about SEO
 * Get the stuff
 
-## How to run locally
+## Installation
+
+### Local
 
 * Install Python (https://www.digitalocean.com/community/tutorials/install-python-windows-10)
 * Install VScode (https://code.visualstudio.com/)
@@ -35,26 +39,8 @@ An automation assistant for tech audits! Tadaa!!
 * Open the app by following the 'Running on' local IP link located in the terminal.
 * Tadaa!
 
+#### Tailwind Integration
 
-## Data Requiring Manual Input
-* ~~CMS - possibly optional, just for internal data.~~
-* ~~SC access - bool that adjusts Yes/No image~~
-* ~~GA access - bool that adjusts Yes/No image~~
-* ~~Num of Mobile Usability Issues - Adjusts integer and text~~
-* ~~Is Sitemap Submitted in SC - bool that adjusts Yes/No image~~
-* ~~Sitemap URL - string to add to end of sitemap slide~~
-* ~~Robots URL - string to add to end of robots slide~~
-* ~~Structured Data - a multiple choice drop down for the options in slide notes*~~
-* ~~Site Content/UX - a multiple choice drop down for the options in slide notes*~~
-* ~~Internal/External Dup Content - a multiple choice drop down for the options in slide notes*~~
-* ~~Calls to Action - a multiple choice drop down for the options in slide notes*~~
-* ~~Blog - a multiple choice drop down for the options in slide notes*~~
-* ~~Canonicals - a multiple choice drop down for the options in slide notes*~~
-* ~~Website Security - a multiple choice drop down for the options in slide notes*~~
-* ~~Mob/Desk Page Speed - two floats for mob/desktop page speed~~
-* ~~Num of Broken Backlinks - Adjusts integer and text~~
-
-## How To Install/Run tailwind
 * SOURCE: https://flowbite.com/docs/getting-started/flask/
 * npm install -D tailwindcss
 * npx tailwindcss init
@@ -63,22 +49,27 @@ An automation assistant for tech audits! Tadaa!!
 * add <link rel="stylesheet" href="{{ url_for('static',filename='dist/css/output.css') }}"> to base.html
 * run `npx tailwindcss -i ./static/src/input.css -o ./static/dist/css/output.css --watch`
 
-## Flow
+### Server
 
-![TADAA Flow Diagram](https://github.com/Logical-Position/TADAAbot/blob/dev/tadaa-state-diagram.png)
-
-## Meta Data and Aggregate Analyses
 TODO
 
-## Google Firestore Documentation
+## Resources
+
+https://excalidraw.com/
+
+https://www.makeareadme.com/
+
+### Google Firestore Documentation
 
 * [Initialization](https://firebase.google.com/docs/firestore/quickstart#python)
 * [Adding data](https://firebase.google.com/docs/firestore/quickstart#add_data)
 * [Reading data](https://firebase.google.com/docs/firestore/quickstart#read_data)
 * TODO: Find a more detailed write-up than the "Quick Start"
 
-## Contributors
-* Jake Applehans
-* Mic Ruopp
-* Jordan Schwartz
-* Jack Ross
+### Application Flow
+
+![TADAA Flow Diagram](https://github.com/Logical-Position/TADAAbot/blob/dev/docs/tadaa-state-diagram.png)
+
+## Meta Data and Aggregate Analyses
+
+TODO
