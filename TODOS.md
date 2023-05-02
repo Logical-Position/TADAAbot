@@ -12,6 +12,7 @@
 * ~~Better understand Flask filepaths~~
 
 ## Client-side
+* Add a "tadaa!" animation once a file is uploaded
 * Discuss end vision of UI
 * Change download filename from `empty.pptx` to sent filename
 * Dark Mode/Light Mode Toggles
@@ -67,3 +68,20 @@
 	- ~~Move Contributors to a new file~~
 * ~~Create a `docs` folder~~
 	- ~~Move diagrams and Excalidraw files~~
+
+## Production
+### Front End
+* Remove navigation links from header
+* Make 'Generate PPT' button the "end of the road"
+	* PPT should automatically download once finished
+	* Remove 'Download Audit Powerpoint' button from UI
+* Add feedback to file upload input
+	* Above the input, add text saying what folder to upload
+	* Below, display text describing the files currently uploaded
+	* Create an image representation of the folder and files
+	* Add outline / shadow / something to describe the state (e.g. red and green)
+
+### Back End
+* Connect Firebase and Storage
+* Connect Search Console API
+ 
