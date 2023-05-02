@@ -70,6 +70,8 @@
 	- ~~Move diagrams and Excalidraw files~~
 
 ## Production
+* Launch date scheduled for June 6th!
+
 ### Front End
 * Remove navigation links from header
 * Make 'Generate PPT' button the "end of the road"
