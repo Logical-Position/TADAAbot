@@ -8,3 +8,21 @@ cred = credentials.Certificate('path/to/serviceAccount.json')
 app = firebase_admin.initialize_app(cred)
 
 db = firestore.client()
+
+def connect():
+    pass
+
+def disconnect():
+    pass
+
+def create():
+    pass
+
+def read():
+    pass
+
+def update():
+    pass
+
+def delete():
+    pass
