@@ -5,6 +5,7 @@ import os
 import tadaa
 import time
 import datetime
+import db
 
 #import firebase_admin
 #from firebase_admin import credentials
@@ -30,6 +31,9 @@ app.config['UPLOAD_DIR'] = UPLOAD_DIR
 #fs_app = firebase_admin.initialize_app(cred)
 #db = firestore.client()
 
+@app.route('/test/read', methods=['GET'])
+def getData():
+    return db.read()
 
 @app.route('/', methods=['GET'])
 def index():
