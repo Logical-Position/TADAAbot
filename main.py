@@ -31,9 +31,26 @@ app.config['UPLOAD_DIR'] = UPLOAD_DIR
 #fs_app = firebase_admin.initialize_app(cred)
 #db = firestore.client()
 
+@app.route('/test/create', methods=['POST'])
+def createData():
+    return db.create()
+
+@app.route('/test/update', methods=['POST', 'PUT'])
+def createData():
+    return db.update()
+
+@app.route('/test/delete', methods=['GET', 'DELETE'])
+def createData():
+    return db.delete()
+
 @app.route('/test/read', methods=['GET'])
-def getData():
+def readData():
     return db.read()
+
+
+
+
+
 
 @app.route('/', methods=['GET'])
 def index():

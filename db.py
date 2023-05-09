@@ -2,6 +2,8 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
 from flask import jsonify
+from requests import request
+
 
 # Use a service account.
 cred = credentials.Certificate('key.json')
@@ -18,7 +20,17 @@ def disconnect():
     pass
 
 def create():
-    pass
+    """
+        create() : Add document to Firestore collection with request body.
+        Ensure you pass a custom ID as part of json body in post request,
+        e.g. json={'id': '1', 'title': 'Write a blog post'}
+    """
+    try:
+        id = request.json['test']
+        ref.document(id).set(request.json)
+        return jsonify({"success": True}), 200
+    except Exception as e:
+        return f"An Error Occurred: {e}"
 
 def read():
     try:
@@ -34,7 +46,23 @@ def read():
         return f"An Error Occurred: {e}"
 
 def update():
-    pass
-
+    """
+        update() : Update document in Firestore collection with request body.
+        Ensure you pass a custom ID as part of json body in post request,
+        e.g. json={'id': '1', 'title': 'Write a blog post today'}
+    """
+    try:
+        id = request.json['id']
+        ref.document(id).update(request.json)
+        return jsonify({"success": True}), 200
+    except Exception as e:
+        return f"An Error Occurred: {e}"
+    
 def delete():
-    pass
+    try:
+        # Check for ID in URL query
+        todo_id = request.args.get('id')
+        ref.document(todo_id).delete()
+        return jsonify({"success": True}), 200
+    except Exception as e:
+        return f"An Error Occurred: {e}"
