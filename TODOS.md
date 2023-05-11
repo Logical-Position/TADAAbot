@@ -2,6 +2,9 @@
 
 * Launch date scheduled for June 6th!
 
+## General
+* Remove unused comments and code
+
 ## Server-side
 * Connect Search Console API
 	* Fix scope issue with Google APIs
