@@ -6,6 +6,32 @@ TADAA
 
 {% block main %}
 <h1 class="">Extras Loaded</h1>
-
+<h1>File Uploader</h1>
+	<form enctype="multipart/form-data" method="post">
+		<input type="file" name="file" id="file" onchange="displayImage()" />
+		<input type="submit" value="Upload" />
+	</form>
+	<div id="image-preview"></div>
+	<script>
+		function displayImage() {
+			var fileInput = document.getElementById('file');
+			var preview = document.getElementById('image-preview');
+			preview.innerHTML = '';
+			if (fileInput.files && fileInput.files[0]) {
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					var img = document.createElement('img');
+					img.src = e.target.result;
+					img.style.width = '200px';
+					img.style.height = '200px';
+					preview.appendChild(img);
+					var filename = document.createElement('p');
+					filename.innerHTML = fileInput.files[0].name;
+					preview.appendChild(filename);
+				}
+				reader.readAsDataURL(fileInput.files[0]);
+			}
+		}
+	</script>
 <button id="auth-dance-button" class="text-center bg-neutral-200 hover:bg-neutral-300 w-full p-3 rounded-md border border-neutral-700 font-medium text-lg hover:cursor-pointer hover:drop-shadow-md active:bg-neutral-400" disabled>Start Auth Dance</button>
 {% endblock %}

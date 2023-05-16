@@ -5,7 +5,7 @@ import os
 import tadaa
 import time
 import datetime
-import db
+# import db
 
 #import firebase_admin
 #from firebase_admin import credentials
