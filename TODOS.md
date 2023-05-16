@@ -18,7 +18,7 @@
 * [x] Remove navigation links from header
 * [] Make 'Generate PPT' button the "end of the road"
 	* [] PPT should automatically download once finished
-	* [ ] Remove 'Download Audit Powerpoint' button from UI
+	* [] Remove 'Download Audit Powerpoint' button from UI
 * [x] Add feedback to file upload input
 	* [x] Above the input, add text saying what folder to upload
 	* [x] Below, display text describing the files currently uploaded
