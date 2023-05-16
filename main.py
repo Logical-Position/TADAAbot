@@ -5,7 +5,7 @@ import os
 import tadaa
 import time
 import datetime
-# import db
+import db_controller as db
 
 #import firebase_admin
 #from firebase_admin import credentials
@@ -31,9 +31,35 @@ app.config['UPLOAD_DIR'] = UPLOAD_DIR
 #fs_app = firebase_admin.initialize_app(cred)
 #db = firestore.client()
 
+# Database Routes
+
+@app.route('/test/create', methods=['GET', 'POST'])
+def db_createData():
+    if request.method == 'POST':
+        print("POST request")
+        return db.create()
+    elif request.method == 'GET':
+        print("GET request")
+        return db.create()
+    else:
+        return "Some other request"
+
 @app.route('/test/read', methods=['GET'])
-def getData():
+def db_readData():
     return db.read()
+
+@app.route('/test/update', methods=['POST', 'PUT'])
+def db_updateData():
+    return db.update()
+
+@app.route('/test/delete', methods=['GET', 'DELETE'])
+def db_deleteData():
+    return db.delete()
+
+
+
+
+# Main Routes
 
 @app.route('/', methods=['GET'])
 def index():
