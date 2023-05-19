@@ -4,6 +4,8 @@
 
 ## General
 * [ ] Remove unused comments and code
+* [ ] Remove `console.log` and `print` statements
+* [ ] Upload test data to repo
 
 ## Server-side
 * [ ] Connect Search Console API
