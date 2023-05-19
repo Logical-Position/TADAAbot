@@ -3,27 +3,51 @@ import pandas as pd
 
 # TODO Get complete list of all possible export files that analysts use in TA
 
-target_hint_files = ['external_url_redirect_broken__4xx_or_5xx',
-                     'broken_internal_urls',
-                     'broken_external_urls',
-                     'h1__tag_is_empty',
-                     'external_redirected_urls',
-                     'images_with_missing_alt_text',
-                     'internal_redirected_urls',
-                     'meta_description_is_empty',
-                     'meta_description_is_missing',
-                     'url_is_orphaned_and_was_not_found_by_the_crawler',
-                     'urls_with_duplicate_meta_descriptions',
-                     'urls_with_duplicate_page_titles',
-                     'url_in_multiple_xml_sitemaps',
-                     'noindex_url_in_xml_sitemaps',
-                     'redirect__3xx__url_in_xml_sitemaps',
-                     'title_tag_length_too_long',
-                     'title_tag_length_too_short',
-                     'description_length_too_long',
-                     'description_length_too_short',
-                     'urls_with_duplicate_h1s'
-                     ]
+target_hint_files = [
+    'external_url_redirect_broken__4xx_or_5xx',
+    'broken_internal_urls',
+    'broken_external_urls',
+    'h1__tag_is_empty',
+    'external_redirected_urls',
+    'images_with_missing_alt_text',
+    'internal_redirected_urls',
+    'meta_description_is_empty',
+    'meta_description_is_missing',
+    'url_is_orphaned_and_was_not_found_by_the_crawler',
+    'urls_with_duplicate_meta_descriptions',
+    'urls_with_duplicate_page_titles',
+    'url_in_multiple_xml_sitemaps',
+    'noindex_url_in_xml_sitemaps',
+    'redirect__3xx__url_in_xml_sitemaps',
+    'title_tag_length_too_long',
+    'title_tag_length_too_short',
+    'description_length_too_long',
+    'description_length_too_short',
+    'urls_with_duplicate_h1s'
+]
+
+data_fields = [
+    'broken__4xx_or_5xx',
+    'broken_internal_urls',
+    'broken_external_urls',
+    'h1__tag_is_empty',
+    'urls_with_duplicate_h1',
+    'external_redirected_urls',
+    'missing_alt_text',
+    'internal_redirected_urls',
+    'description_is_empty',
+    'description_is_missing',
+    'description_length_too_long',
+    'description_length_too_short',
+    'not_found_by_the_crawler',
+    'duplicate_meta_descriptions',
+    'title_tag_length_too_long',
+    'title_tag_length_too_short',
+    'duplicate_page_titles',
+    'url_in_multiple_xml_sitemaps',
+    'noindex_url_in_xml_sitemaps',
+    'redirect__3xx__url_in_xml_sitemaps'
+]
 
 
 def match_target_hint_files(all_uploaded_files):

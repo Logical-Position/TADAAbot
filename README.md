@@ -59,6 +59,10 @@ https://excalidraw.com/
 
 https://www.makeareadme.com/
 
+Data types in SQLite: https://www.sqlite.org/datatype3.html
+
+Creating UUIDs in Python: https://stackoverflow.com/questions/534839/how-to-create-a-guid-uuid-in-python
+
 ### Google Firestore Documentation
 
 * [Initialization](https://firebase.google.com/docs/firestore/quickstart#python)

@@ -7,14 +7,11 @@ import time
 import datetime
 import db_controller as db
 
-#import firebase_admin
-#from firebase_admin import credentials
-#from firebase_admin import firestore
-
-
-UPLOAD_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'uploads')
 
 app = Flask(__name__)
+
+# For user-uploaded Excel files
+UPLOAD_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'uploads')
 app.config['UPLOAD_DIR'] = UPLOAD_DIR
 
 # Google OAuth dance setup
@@ -31,72 +28,14 @@ app.config['UPLOAD_DIR'] = UPLOAD_DIR
 #fs_app = firebase_admin.initialize_app(cred)
 #db = firestore.client()
 
-# Database Routes
-
-@app.route('/test/create', methods=['GET', 'POST'])
-def db_createData():
-    if request.method == 'POST':
-        print("POST request")
-        return db.create()
-    elif request.method == 'GET':
-        print("GET request")
-        return db.create()
-    else:
-        return "Some other request"
-
-@app.route('/test/read', methods=['GET'])
-def db_readData():
-    return db.read()
-
-@app.route('/test/update', methods=['POST', 'PUT'])
-def db_updateData():
-    return db.update()
-
-@app.route('/test/delete', methods=['GET', 'DELETE'])
-def db_deleteData():
-    return db.delete()
 
 
+# TADAA Routes
 
-
-# Main Routes
-
+# TODO: Combine these '/' routes
 @app.route('/', methods=['GET'])
 def index():
     return render_template('index.html')
-
-@app.route('/login', methods=['GET'])
-def get_login():
-    return render_template('login.html')
-
-@app.route('/main')
-def get_main():
-    return render_template('main.html')
-
-@app.route('/results')
-def get_results():
-    return render_template('results.html')
-
-@app.route('/auth')
-def auth_dance():
-    if not google.authorized:
-        return redirect(url_for("google.login"))
-    userRes = google.get("/oauth2/v1/userinfo")
-    print("You are {email} on Google".format(email=userRes.json()["email"]))
-    # print(resp.json())
-    # assert resp.ok, resp.text
-    # return "You are {email} on Google".format(email=resp.json()["email"])
-    #resp = google.get("/webmasters/v3/sites")
-    # assert resp.ok, resp.text
-    return userRes.json()
-
-@app.route('/extras')
-def get_extras():
-    return render_template('extras.html')
-
-@app.route('/faq')
-def get_faq():
-    return render_template('faq.html')
 
 @app.route('/', methods=['POST'])
 def parse_upload():
@@ -126,7 +65,6 @@ def parse_upload():
     time.sleep(1.5)
     return jsonify({"Choo Choo": "Welcome to your Flask app 🚅"})
 
-
 @app.route('/download', methods=['GET'])
 def download_audit():
     dirs = os.listdir(UPLOAD_DIR)
@@ -139,6 +77,50 @@ def download_audit():
 
     return send_file(ppt_path)
 
+
+# API Routes
+
+@app.route('/auth')
+def auth_dance():
+    if not google.authorized:
+        return redirect(url_for("google.login"))
+    userRes = google.get("/oauth2/v1/userinfo")
+    print("You are {email} on Google".format(email=userRes.json()["email"]))
+    # print(resp.json())
+    # assert resp.ok, resp.text
+    # return "You are {email} on Google".format(email=resp.json()["email"])
+    #resp = google.get("/webmasters/v3/sites")
+    # assert resp.ok, resp.text
+    return userRes.json()
+
+
+# Database Routes
+
+@app.route('/test/create', methods=['GET', 'POST'])
+def db_createData():
+    if request.method == 'POST':
+        print("POST request")
+        return db.create()
+    elif request.method == 'GET':
+        print("GET request")
+        return db.create()
+    else:
+        return "Some other request"
+
+@app.route('/test/read', methods=['GET'])
+def db_readData():
+    return db.read()
+
+@app.route('/test/update', methods=['POST', 'PUT'])
+def db_updateData():
+    return db.update()
+
+@app.route('/test/delete', methods=['GET', 'DELETE'])
+def db_deleteData():
+    return db.delete()
+
+
+# Main Function
 
 if __name__ == '__main__':
     app.run(debug=True, port=os.getenv("PORT", default=5000))
