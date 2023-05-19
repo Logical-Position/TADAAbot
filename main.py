@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, render_template, request, redirect, send_file, url_for
-# from flask_dance.contrib.google import make_google_blueprint, google
+
+from flask_dance.contrib.google import make_google_blueprint, google
 
 import os
 import tadaa
@@ -15,19 +16,14 @@ UPLOAD_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'uploads')
 app.config['UPLOAD_DIR'] = UPLOAD_DIR
 
 # Google OAuth dance setup
-# app.secret_key = os.environ.get("FLASK_SECRET_KEY", "supersekrit")
-# app.config["GOOGLE_OAUTH_CLIENT_ID"] = os.environ.get("GOOGLE_OAUTH_CLIENT_ID")
-# app.config["GOOGLE_OAUTH_CLIENT_SECRET"] = os.environ.get("GOOGLE_OAUTH_CLIENT_SECRET")
-# # We think the scopes provided are the cause of LACK OF PERMISSIONS error
-# # TODO: Determine if these strings are defined by Google or Flask Dance
-# # TODO: Discover needed scopes
-# # google_bp = make_google_blueprint(scope=["profile", "email"])
-# app.register_blueprint(google_bp, url_prefix="/login")
-
-#cred = credentials.Certificate('path/to/keys')
-#fs_app = firebase_admin.initialize_app(cred)
-#db = firestore.client()
-
+app.secret_key = os.environ.get("FLASK_SECRET_KEY", "supersekrit")
+app.config["GOOGLE_OAUTH_CLIENT_ID"] = os.environ.get("GOOGLE_OAUTH_CLIENT_ID")
+app.config["GOOGLE_OAUTH_CLIENT_SECRET"] = os.environ.get("GOOGLE_OAUTH_CLIENT_SECRET")
+# We think the scopes provided are the cause of LACK OF PERMISSIONS error
+# TODO: Determine if these strings are defined by Google or Flask Dance
+# TODO: Discover needed scopes
+google_bp = make_google_blueprint(scope=["profile", "email"])
+app.register_blueprint(google_bp, url_prefix="/login")
 
 
 # TADAA Routes
@@ -85,13 +81,11 @@ def auth_dance():
     if not google.authorized:
         return redirect(url_for("google.login"))
     userRes = google.get("/oauth2/v1/userinfo")
+    siteList = google.get("/webmasters/v3/sites")
+    print(siteList.json())
     print("You are {email} on Google".format(email=userRes.json()["email"]))
-    # print(resp.json())
-    # assert resp.ok, resp.text
-    # return "You are {email} on Google".format(email=resp.json()["email"])
-    #resp = google.get("/webmasters/v3/sites")
-    # assert resp.ok, resp.text
-    return userRes.json()
+    return siteList.json()
+    # return "You are {email} on Google".format(email=userRes.json()["email"])
 
 
 # Database Routes
