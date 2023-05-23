@@ -17,16 +17,16 @@
 * [ ] Resolve Flask Dance issues
 
 ## Client-side
+* [ ] Make 'Generate PPT' button the "end of the road"
+	* [ ] PPT should automatically download once finished
+	* [ ] Remove 'Download Audit Powerpoint' button from UI
+* [ ] Change ppt filename to same as sent over server
 * [x] Remove navigation links from header
-* [] Make 'Generate PPT' button the "end of the road"
-	* [] PPT should automatically download once finished
-	* [] Remove 'Download Audit Powerpoint' button from UI
 * [x] Add feedback to file upload input
 	* [x] Above the input, add text saying what folder to upload
 	* [x] Below, display text describing the files currently uploaded
 	* [x] Create an image representation of the folder and files
 	* [x] Add outline / shadow / something to describe the state (e.g. red and green)
-* [ ] Change ppt filename to same as sent over server
 * [x] Remove id duplication from manual input fields
 	* The problem was too much copy paste -- the solution lies in the "names" of the inputs.
 	* Read here for another hint: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/radio#defining_a_radio_group
