@@ -10,11 +10,9 @@
 ## Server-side
 * [ ] Connect Search Console API
 	* [ ] Fix scope issue with Google APIs
-* [ ] Connect Google Firestore Database
-* [ ] Connect Google Cloud Storage
+	* [ ] Resolve Flask Dance issues
 * [ ] Migrate Google Cloud Console project to lpseodeveloper@gmail.com account
 	* [ ] Ensure there's nothing left in personal account
-* [ ] Resolve Flask Dance issues
 
 ## Client-side
 * [ ] Make 'Generate PPT' button the "end of the road"
