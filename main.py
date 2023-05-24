@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, render_template, request, redirect, send_file, url_for
 
+
 from flask_dance.contrib.google import make_google_blueprint, google
 
 import os
@@ -7,6 +8,7 @@ import tadaa
 import time
 import datetime
 import db_controller as db
+import json
 
 
 app = Flask(__name__)
@@ -26,12 +28,18 @@ google_bp = make_google_blueprint(scope=["profile", "email"])
 app.register_blueprint(google_bp, url_prefix="/login")
 
 
+
 # TADAA Routes
 
 # TODO: Combine these '/' routes
 @app.route('/', methods=['GET'])
 def index():
-    return render_template('index.html')
+    
+    # Accessing manual input options in json file
+    with open('ta_decisions.json') as t:
+        ta_decisions = json.load(t)
+
+    return render_template('index.html', ta_decisions=ta_decisions)
 
 @app.route('/', methods=['POST'])
 def parse_upload():

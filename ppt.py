@@ -19,6 +19,8 @@ urls_in_multiple_sitemaps = 0
 
 # Slide 11.
 has_robots = bool
+blocks_good_pages = bool
+should_block_bad_pages = bool
 robots_location = "robots_location"
 
 # Slide 12.
@@ -130,7 +132,7 @@ def populate_powerpoint(final_data_object, project_dir, root_path, project_name)
                                    f'{noindex_urls_in_sitemap} | URLs in Multiple Sitemaps: {urls_in_multiple_sitemaps}'
                 if 'sc_sitemap_submitted_bool' == shape.name:
                     if not is_sitemap_submitted_sc:
-                        runs[0].text = "We could not find a sitemap. We recommend creating a sitemap and submitting it through Google Search Console. "
+                        runs[0].text = "We could not find a sitemap. We recommend creating a sitemap and submitting it through Google Search Console."
                     print(shape.name)
                 if 'sitemap_errors_bool' == shape.name:
                     print(shape.name)
@@ -140,9 +142,14 @@ def populate_powerpoint(final_data_object, project_dir, root_path, project_name)
                 # Slide 11
                 if 'robots_analyst_notes' == shape.name:
                     if not has_robots:
-                        runs[0].text = "We found that your site does not have a robots.txt file. We recommend creating a robots.txt file, so you can block pages that do not need to be indexed. "
+                        runs[0].text = "We found that your site does not have a robots.txt file. We recommend creating a robots.txt file, so you can block pages that do not need to be indexed."   
                     else:
-                        runs[0].text += (f"Your robots.txt is located here: " + robots_location)
+                        if blocks_good_pages:
+                            runs[0].text = 'We found that your site has pages that should be indexed being blocked by noindex tags. We recommend removing the noindex tags to prevent this.'
+                        if should_block_bad_pages:
+                            runs[0].text = 'We found that your site has a robots.txt file; however, it does not block shopping cart pages, pages that contain login information, and other account pages. We recommend updating the robots.txt file to block these pages.'
+                        else:
+                            runs[0].text += (f"Your robots.txt is located here: " + robots_location)
 
                     print(shape.name)
 
@@ -204,7 +211,7 @@ def populate_powerpoint(final_data_object, project_dir, root_path, project_name)
                     print(shape.name)
                     runs[0].text = f"We found that {img_alt_text} of your website's images do not have image alt-text. We recommend adding alt-text to your images. This will give a keyword-focused image description to users and search engines. You can view the images that do not have alt-text here."
                     if img_alt_text == 0:
-                        runs[0].text = "We found that your website’s images have image alt-text."
+                        runs[0].text = "We found that your website's images have image alt-text."
 
                 # Slide 23
                 if '404s_analyst_notes' == shape.name:
@@ -217,11 +224,11 @@ def populate_powerpoint(final_data_object, project_dir, root_path, project_name)
                 # Slide 24
                 if 'canonical_analyst_notes' == shape.name:
                     if not has_canonicals and canonical_has_errors:
-                        runs[0].text = "We found that your canonicals are not set up properly. We recommend pointing filtered or paginated pages back to the first page to avoid duplicate content.  This includes tagged collection pages, which are dynamically generated and cannot be edited. We recommend pointing tagged pages back to the original collection page. "
+                        runs[0].text = "We found that your canonicals are not set up properly. We recommend pointing filtered or paginated pages back to the first page to avoid duplicate content. This includes tagged collection pages, which are dynamically generated and cannot be edited. We recommend pointing tagged pages back to the original collection page."
                     elif not has_canonicals:
                         runs[0].text = "We found that your pages do not have canonicals; however, it looks like canonicals are unnecessary at the moment since you do not have a lot of duplicate content. If you add a blog, canonicals may be necessary."
                         if canonical_has_errors:
-                            runs[0].text = "We found that your pages do not have canonicals. We recommend pointing filtered or paginated pages back to the first page to avoid duplicate content. "
+                            runs[0].text = "We found that your pages do not have canonicals. We recommend pointing filtered or paginated pages back to the first page to avoid duplicate content."
                     print(shape.name)
 
                 # Slide 25
@@ -258,7 +265,7 @@ def populate_powerpoint(final_data_object, project_dir, root_path, project_name)
                 # Slide 30
                 if 'backlinks_analyst_notes' == shape.name:
                     if broken_backlinks > 0:
-                        runs[0].text = f"We found {broken_backlinks} broken backlinks. You can view them here. To help maintain your website’s authority, we recommend fixing broken backlinks from relevant, high-authority domains. "
+                        runs[0].text = f"We found {broken_backlinks} broken backlinks. You can view them here. To help maintain your website's authority, we recommend fixing broken backlinks from relevant, high-authority domains."
                     print(shape.name)
 
     output_path = project_dir + f'/{project_name}.pptx'

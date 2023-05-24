@@ -1,0 +1,24 @@
+{
+    "structuredData": {
+      "option1": "We found that your website does not have structured data..",
+      "option2": "We found that your website has structured data; however, there are errors.."
+    },
+    "robots": {
+      "option1": "Good pages are being noindexed.",
+      "option2": "Bad pages are being indexed."
+    },
+    "siteUX": {
+      "option1": "Good amount of content but not keyword focused.",
+      "option2": "We found that you have unique and substantial content on your site."
+    },
+    "canonicals": {
+      "option1": "Doesn't have canonicals but they aren't necessary",
+      "option2": "Doesn't have canonicals be should have them",
+      "option3": "Does have canonicals but it's not setup correctly."
+    },
+    "security": {
+      "option1": "Unsecure http site.",
+      "option2": "Has https but it is expired.",
+      "option3": "Has https but loads mixed resources."
+    }
+  }
