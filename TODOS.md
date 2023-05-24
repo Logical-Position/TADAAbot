@@ -1,11 +1,14 @@
 # TADAAbot TODOs
 
 * [ ] Launch date scheduled for June 6th!
+	* [ ] Schedule meeting with Tursi.
 
 ## General
 * [ ] Remove unused comments and code
 * [ ] Remove `console.log` and `print` statements
 * [ ] Upload test data to repo
+* [ ] Make `prod` default branch once `0.0` is pushed
+	* [ ] Delete `main` branch
 
 ## Server-side
 * [ ] Connect Search Console API
@@ -22,10 +25,12 @@
 
 ### Manual Input Fixes
 
-* [ ] Change Robot manual inputs to multiple radio options. If yes, give text field to paste in location . (# 7/8)
-* [ ] Change Calls to Action to yes/no radio.
-* [ ] Change Blog to Yes/No radio - If yes, another yes/no radio for if it's updated regularly
-* [ ] Change Duplicate content to Yes/No radio - If yes, give field to explain where the duplicate content is mostly located.
+* [ ] Change Robot (#8) manual inputs to multiple radio options.
+* [ ] Change Calls to Action (#12) to yes/no radio.
+* [ ] Change Blog (#13) to Yes/No radio
+	* [ ] If yes, another yes/no radio for if it's updated regularly
+* [ ] Change Duplicate Content (#11) to Yes/No radio
+	* [ ] If yes, give field to explain where the duplicate content is mostly located.
 
 * [x] Remove navigation links from header
 * [x] Add feedback to file upload input
