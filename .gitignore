@@ -163,6 +163,7 @@ pip-selfcheck.json
 downloads/
 uploads/
 .vscode
+~$*
 
 # NPM
 node_modules/
