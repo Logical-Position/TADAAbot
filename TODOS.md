@@ -11,11 +11,10 @@
 	* [ ] Delete `main` branch
 
 ## Server-side
-* [ ] Connect Search Console API
-	* [ ] Fix scope issue with Google APIs
-	* [ ] Resolve Flask Dance issues
-* [ ] Migrate Google Cloud Console project to lpseodeveloper@gmail.com account
-	* [ ] Ensure there's nothing left in personal account
+* [ ] Implement database API
+* [ ] Migrate Railway project to lpseodeveloper@gmail.com
+* [X] Migrate Google Cloud Console project to lpseodeveloper@gmail.com account
+	* [X] Ensure there's nothing left in personal account
 
 ## Client-side
 * [ ] Make 'Generate PPT' button the "end of the road"
