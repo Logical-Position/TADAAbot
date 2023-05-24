@@ -26,10 +26,10 @@
 ### Manual Input Fixes
 
 * [ ] Change Robot (#8) manual inputs to multiple radio options.
-* [ ] Change Calls to Action (#12) to yes/no radio.
-* [ ] Change Blog (#13) to Yes/No radio
+* [x] Change Calls to Action (#12) to yes/no radio.
+* [x] Change Blog (#13) to Yes/No radio
 	* [ ] If yes, another yes/no radio for if it's updated regularly
-* [ ] Change Duplicate Content (#11) to Yes/No radio
+* [x] Change Duplicate Content (#11) to Yes/No radio
 	* [ ] If yes, give field to explain where the duplicate content is mostly located.
 
 * [x] Remove navigation links from header

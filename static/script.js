@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", function() {
         
         let folderIsUploaded = spreadsheetSelection.value != "";
         let folderIsExports = folderName === "exports";
-        
+
         let isUploadValid = folderIsUploaded && folderIsExports;
         if (isUploadValid) {
             console.log(spreadsheetSelection.files.length)
@@ -117,20 +117,18 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Function for handling updating the border color of the upload file container when a valid file is uploaded.
     function outlineFileInput() {
-        // Code to outline file input
         let uploadFileContainer = document.querySelector("#upload-file-container");
         uploadFileContainer.style.borderColor = "green";
     }
-    
+
     // Function for removing file upload image/text and replacing it with placeholder folder image and folder name
     function updateFileInputImage(filename) {
         const uploadedFile = document.querySelector("#uploaded-file-name");
-        // Code to remove excess text/upload image from file uploader once a file is uploaded
+
+        // Remove excess text/upload image from file uploader once a file is uploaded
         let fileContainerContent = document.querySelector("#droparea")
         fileContainerContent.remove();
         
-        // Code to add placeholder folder image along with folder name. Couldn't figure this out.
-        // Appending text/image to this field results in an empty file uploader
         // Create placeholder folder image element
         let placeholderFolderImage = document.createElement("img");
         placeholderFolderImage.src = "static/assets/folder-upload-overwrite.svg";
@@ -138,21 +136,21 @@ document.addEventListener("DOMContentLoaded", function() {
         // Create folder name element
         let folderName = document.createElement("span");
         folderName.innerText = filename;
-        folderName.classList.add("text-xl", "pt-4")
+        folderName.classList.add("text-xl", "font-semibold", "pt-4")
         
         // Create container for the placeholder folder image and folder name
         let placeholderContainer = document.createElement("div");
+        placeholderContainer.classList.add("flex", "flex-col","justify-center",);
         placeholderContainer.appendChild(placeholderFolderImage);
         placeholderContainer.appendChild(folderName);
-
+        
         // Add the placeholder container to the file uploader
         let uploadFileContainer = document.querySelector("#upload-file-container");
         uploadFileContainer.appendChild(placeholderContainer);
-    }
-    
-    
+    }  
 
 });
+
 
 function makeRequest(path, callback) {
     let req = new XMLHttpRequest();
