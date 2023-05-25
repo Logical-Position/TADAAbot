@@ -119,6 +119,7 @@ document.addEventListener("DOMContentLoaded", function() {
     function outlineFileInput() {
         let uploadFileContainer = document.querySelector("#upload-file-container");
         uploadFileContainer.style.borderColor = "green";
+        uploadFileContainer.classList.add("completed-indicator");
     }
 
     // Function for removing file upload image/text and replacing it with placeholder folder image and folder name
