@@ -12,3 +12,5 @@ seaborn==0.12.2
 python-dotenv
 flask_dance
 firebase-admin
+google-api-python-client
+oauth2client

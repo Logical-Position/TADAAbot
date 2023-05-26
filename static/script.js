@@ -84,20 +84,20 @@ document.addEventListener("DOMContentLoaded", function() {
     spreadsheetSelection.addEventListener('change', handleFileUpload);
 
     function handleFileUpload() {
-        console.log('Hello, file upload');
-        // 1. Verifying folder is exports folder and there are more than 0 files.
+        // 1. Verify folder has more than 0 files, and is named `exports`.
         // 2. Uploaded file text is updated to "File Name"
         // 3. Outline the file uploader in green.
-        // 4. Update the file uploader to display a placeholder folder image along with the file name/number of files/ display text "uploaded Folder is not exports".
+        // 4. Update the file uploader to display a placeholder folder image 
+        //      along with the file name/number of files/ display text 
+        //      "uploaded Folder is not exports".
         let filename = spreadsheetSelection.files[0].name;
         let folderName = spreadsheetSelection.files[0].webkitRelativePath.split("/")[0];
         
-        let folderIsUploaded = spreadsheetSelection.value != "";
+        let folderIsUploaded = spreadsheetSelection.value !== "";
         let folderIsExports = folderName === "exports";
         
         let isUploadValid = folderIsUploaded && folderIsExports;
         if (isUploadValid) {
-            console.log(spreadsheetSelection.files.length)
             filename = filename.split("_")[0];
             filename = filename.charAt(0).toUpperCase() + filename.slice(1);
             updateUploadedFileLabel(filename);
@@ -124,7 +124,6 @@ document.addEventListener("DOMContentLoaded", function() {
     
     // Function for removing file upload image/text and replacing it with placeholder folder image and folder name
     function updateFileInputImage(filename) {
-        const uploadedFile = document.querySelector("#uploaded-file-name");
         // Code to remove excess text/upload image from file uploader once a file is uploaded
         let fileContainerContent = document.querySelector("#droparea")
         fileContainerContent.remove();
@@ -174,7 +173,7 @@ function makeRequest(path, callback) {
 
 function saveBlob(blob) {
     // let assetRecord = this.getAssetRecord();
-    let fileName = 'pop_ppt.pptx'
+    let fileName = 'pop_ppt.pptx';
     let tempEl = document.createElement("a");
     document.body.appendChild(tempEl);
     tempEl.style = "display: none";

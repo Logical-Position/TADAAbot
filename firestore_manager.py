@@ -7,7 +7,7 @@ from requests import request
 # Use a service account.
 # TODO: Refactor this to the connect function
 # This code currently runs when the dp.py file is imported by main.py
-cred = credentials.Certificate('key.json')
+#cred = credentials.Certificate('key.json')
 
 app = firebase_admin.initialize_app(cred)
 

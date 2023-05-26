@@ -1,8 +1,10 @@
 import sqlite3
 
 class SqliteManager:
-    def __init__(self, dbName):
-        self.name = dbName
+    def __init__(self, name, schema):
+        self.name = name
+        self.schema = schema
+
         self.table = 'audits'
         self.cols = [
             'client',
@@ -12,6 +14,29 @@ class SqliteManager:
 
     def connect(self):
         return sqlite3.connect(self.name)
+
+    def initialize_database(self):
+        db = self.connect()
+        cur = db.cursor()
+
+        # Check if the table exists
+        # Create it if it doesn't
+        cur.execute(f"SELECT name FROM sqlite_master WHERE type='table' AND name='{self.table}'")
+        if (cur.rowcount == 0):
+            cur.execute(f"CREATE TABLE {self.table}({self.cols[0]}, {self.cols[1]}, {self.cols[2]})")
+            db.commit() 
+        
+        db.commit()
+
+        cur.close()
+        db.close()
+
+
+
+
+
+    # Starter CRUD Functions
+    # -- Deprecated --
 
     def create(self):
         db = self.connect()
