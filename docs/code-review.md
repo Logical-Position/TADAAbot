@@ -1,5 +1,7 @@
 # Code Reviews
 
+For now, code reviews are happening as needed.
+
 * Discuss what piece of the application to review
 * Determine what files (or functions) and in what order to read through
 
