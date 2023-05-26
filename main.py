@@ -47,8 +47,10 @@ def index():
 
 @app.route('/', methods=['POST'])
 def parse_upload():
+    # FIXME: Refactor this value
     inputID = 'spreadsheet-selection'
 
+    # An example of getting "Manual Input Data" from form
     print(request.form['domain_url'])
 
     now = datetime.datetime.now()
