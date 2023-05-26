@@ -21,11 +21,13 @@ document.addEventListener("DOMContentLoaded", function() {
             method: 'POST',
             body: formData,
         }).then(function(response) {
-            // Do something with the response  
-
-        }).finally(() => {
+            // Do something with the response
+            console.log("POST response here");
+            
+        }).finally((res) => {
             document.body.style.cursor = 'auto';
             enableDownload();
+            console.log(res);
         });
     });
 
