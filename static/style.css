@@ -149,6 +149,6 @@ nav a:hover {
 */
 .completed-indicator {
   box-shadow: rgb(26 80 28 / 20%) 0px 7px 29px 0px !important;
-  border: solid;
+  border: solid green;
   transition: 2s all;
 }

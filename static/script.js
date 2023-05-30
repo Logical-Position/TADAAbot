@@ -117,7 +117,6 @@ document.addEventListener("DOMContentLoaded", function() {
     // Function for handling updating the border color of the upload file container when a valid file is uploaded.
     function outlineFileInput() {
         let uploadFileContainer = document.querySelector("#upload-file-container");
-        uploadFileContainer.style.borderColor = "green";
         uploadFileContainer.classList.add("completed-indicator");
     }
 
