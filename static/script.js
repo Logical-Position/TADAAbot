@@ -1,14 +1,4 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // let button = document.querySelector('button#something-button');
-    // button.addEventListener("click", (e) => {
-    //     doSomething(e);
-    // });
-
-    // let auditButton = document.querySelector('button#audit-button');
-    // auditButton.addEventListener("click", (e) => {
-    //     runAudit(e);
-    // });
-
     let tadaaForm = document.querySelector('form#tadaa-form');
     tadaaForm.addEventListener('submit', function(event) {
         event.preventDefault();
@@ -16,52 +6,26 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // set cursor to show progress
         document.body.style.cursor = 'progress';
+        updatePptButton("Generating PPT...");
 
         fetch('/', {
             method: 'POST',
             body: formData,
         }).then(function(response) {
-            // Do something with the response  
-            console.log('hello');
-            console.log(response.json());
-            console.log(response);
+            // Do something with the response
+
         }).finally(() => {
             document.body.style.cursor = 'auto';
             requestDownload();
-            // enableDownload();
+            updatePptButton("Downloaded PPT");
         });
     });
-
-    // let downloadButton = document.querySelector('button#ppt-download-button');
-    // // let authButton = document.querySelector('button#auth-dance-button');
-    // downloadButton.addEventListener('click', (e) => {
-    //     if (downloadButton.disabled) return;
-    //     requestDownload();
-    // })
-    // authButton.addEventListener('click', (e) => {
-    //     if (authButton.disabled) return;
-    //     authDance();
-    // })
-    // function enableDownload() {
-    //     downloadButton.disabled = false;
-    //     // authButton.disabled = false;
-    // }
 
     function requestDownload() {
         let downloadURL = '/download';
         makeRequest(downloadURL, (res) => {
             console.log("Request callback");
         });
-    }
-
-    function authDance() {
-        console.log('Starting Auth Dance.')
-        window.location.href = "/auth";
-        // let authURL = '/auth'
-        // let req = new XMLHttpRequest();
-
-        // req.open("GET", authURL, true)
-        // req.send()
     }
 
     // Handles enabling/disabling the submit buttons and very basic verification.
@@ -85,7 +49,6 @@ document.addEventListener("DOMContentLoaded", function() {
     spreadsheetSelection.addEventListener('change', handleFileUpload);
 
     function handleFileUpload() {
-        console.log('Hello, file upload');
         // 1. Verifying folder is exports folder and there are more than 0 files.
         // 2. Uploaded file text is updated to "File Name"
         // 3. Outline the file uploader in green.
@@ -126,10 +89,6 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Function for removing file upload image/text and replacing it with placeholder folder image and folder name
-    // FIXME: Folder name does not update when uploaded folder is replaced. 
-    // *FIXED* (Solution was defining a blank variable outside of the function and then setting the value of the folderName var initially and then also when a new file is uploaded.)
-    // FIXME: Potential issue with image sizing -- sometimes is extra large 
-    // *FIXED?* (I took a crack at this one however I had a hard time replicating the issue. I set a w/h for the image and I didn't notice it becoming larger or smaller anymore.)
     function updateFileInputImage(filename) {
         const uploadedFile = document.querySelector("#uploaded-file-name");
 
@@ -156,8 +115,7 @@ document.addEventListener("DOMContentLoaded", function() {
         // Add the placeholder container to the file uploader
         let uploadFileContainer = document.querySelector("#upload-file-container");
         uploadFileContainer.appendChild(placeholderContainer);
-    }  
-
+    }
 });
 
 function makeRequest(path, callback) {
@@ -191,16 +149,8 @@ function saveBlob(blob) {
     window.URL.revokeObjectURL(url);
 }
 
-// function doSomething(event) {
-//     event.preventDefault();
-//     makeRequest("/", (req) => {
-//         alert(req.responseText);
-//     });
-// }
+function updatePptButton (text) {
+    const pptButton = document.querySelector("#submit-input");
+    pptButton.value = text;
+};
 
-// function runAudit(event) {
-//     event.preventDefault();
-//     makeRequest("/audit", (req) => {
-//         alert(req.responseText);
-//     });
-// }
