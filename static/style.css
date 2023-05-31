@@ -152,3 +152,17 @@ nav a:hover {
   border: solid green;
   transition: 2s all;
 }
+
+.hidden {
+  visibility:hidden;
+}
+
+progress {
+  width: 100%;
+  background-color: rgb(69 194 177);
+}
+
+progress::-webkit-progress-value {
+  width: 100%;
+  background-color: rgb(62, 165, 151);
+}

@@ -9,40 +9,68 @@ document.addEventListener("DOMContentLoaded", function() {
     //     runAudit(e);
     // });
 
+
     let tadaaForm = document.querySelector('form#tadaa-form');
     tadaaForm.addEventListener('submit', function(event) {
         event.preventDefault();
         const formData = new FormData(tadaaForm);
 
         // set cursor to show progress
+        // progess bar goes through stages of completion
         document.body.style.cursor = 'progress';
+        handleProgressBar("15");
 
         fetch('/', {
             method: 'POST',
             body: formData,
+            
         }).then(function(response) {
             // Do something with the response  
-
+            handleProgressBar("25");
         }).finally(() => {
             document.body.style.cursor = 'auto';
-            enableDownload();
+            handleProgressBar("50");
+            requestDownload();
+            handleProgressBar("100");
         });
     });
 
-    let downloadButton = document.querySelector('button#ppt-download-button');
-    // let authButton = document.querySelector('button#auth-dance-button');
-    downloadButton.addEventListener('click', (e) => {
-        if (downloadButton.disabled) return;
-        requestDownload();
-    })
+
+    function handleProgressBar(percentage) {
+        const progressContainer = document.querySelector(".progress-container");
+        const progressBar = document.querySelector("#progress-bar");
+        const progressLabel = document.querySelector("#progress-label");
+
+
+        if(percentage === "100") {
+            progressLabel.innerText = "Powerpoint Finished!";
+            progressBar.value = "100";
+            // progressContainer.classList.add("hidden");
+        }
+        else if(percentage === "0") {
+            progressContainer.classList.add("hidden");
+            progressBar.value = "0";
+        }
+        else {
+            progressContainer.classList.remove("hidden");
+            progressBar.value = percentage;
+        }
+    }
+
+    // let downloadButton = document.querySelector('button#ppt-download-button');
+    // // let authButton = document.querySelector('button#auth-dance-button');
+    // downloadButton.addEventListener('click', (e) => {
+    //     if (downloadButton.disabled) return;
+    //     requestDownload();
+    // })
     // authButton.addEventListener('click', (e) => {
     //     if (authButton.disabled) return;
     //     authDance();
     // })
-    function enableDownload() {
-        downloadButton.disabled = false;
-        // authButton.disabled = false;
-    }
+    // function enableDownload() {
+    //     // downloadButton.disabled = false;
+    //     // authButton.disabled = false;
+    // }
 
     function requestDownload() {
         let downloadURL = '/download';
@@ -89,6 +117,10 @@ document.addEventListener("DOMContentLoaded", function() {
         //      along with the file name/number of files/ display text 
         //      "uploaded Folder is not exports".
         // 5. Enable "Generate PPT button"
+
+        // Reset progress bar 
+        handleProgressBar("0");
+        
         let filename = spreadsheetSelection.files[0].name;
         let folderName = spreadsheetSelection.files[0].webkitRelativePath.split("/")[0];
         
@@ -126,9 +158,14 @@ document.addEventListener("DOMContentLoaded", function() {
     function updateFileInputImage(filename) {
         const uploadedFile = document.querySelector("#uploaded-file-name");
 
+        
         // Remove excess text/upload image from file uploader once a file is uploaded
+        // The issue is when you .remove() the element #droparea, you no longer have this element on the DOM for future reference.
+        // Temp fix: loop #droparea to check and see if it has children until it has none, then proceed.
         let fileContainerContent = document.querySelector("#droparea")
-        fileContainerContent.remove();
+        while(fileContainerContent.firstChild) {
+            fileContainerContent.removeChild(fileContainerContent.firstChild);
+        }
         
         // Create placeholder folder image element
         let placeholderFolderImage = document.createElement("img");
@@ -146,8 +183,7 @@ document.addEventListener("DOMContentLoaded", function() {
         placeholderContainer.appendChild(folderName);
         
         // Add the placeholder container to the file uploader
-        let uploadFileContainer = document.querySelector("#upload-file-container");
-        uploadFileContainer.appendChild(placeholderContainer);
+        fileContainerContent.appendChild(placeholderContainer);
     }  
 
 });
