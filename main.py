@@ -4,8 +4,8 @@ from flask import Flask, jsonify, render_template, request, redirect, send_file,
 from flask_dance.contrib.google import make_google_blueprint, google
 
 # Google API
-from apiclient.discovery import build
-from oauth2client.service_account import ServiceAccountCredentials
+# from apiclient.discovery import build
+# from oauth2client.service_account import ServiceAccountCredentials
 
 import os
 import tadaa
