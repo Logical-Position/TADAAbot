@@ -3,7 +3,7 @@ import utils
 import ppt
 import data
 
-def parse_data(project_dir):
+def parse_data(project_dir, manual_data):
     """
     Takes the upload directory and organizes the data necessary for the tech audit. Returns our custom data object.
 

@@ -71,14 +71,11 @@ def parse_upload():
     inputID = 'spreadsheet-selection'
 
     for label in manual_data_labels:
-        data = request.form[label]
-        print(data)
+        data = request.form.get(label, '')
         if (data):
             manual_data[label] = data
         else:
             manual_data[label] = ""
-
-    print(manual_data)
 
     now = datetime.datetime.now()
     timestamp = now.strftime("%Y-%m-%d_%H-%M-%S")
