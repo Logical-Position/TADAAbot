@@ -32,7 +32,27 @@ app.config['UPLOAD_DIR'] = UPLOAD_DIR
 # google_bp = make_google_blueprint(scope=["profile", "email"])
 # app.register_blueprint(google_bp, url_prefix="/login")
 
+manual_data_labels = [
+    'domain_url',
+    'cms',
+    'sc_access',
+    'ga_access',
+    'mobility_issues',
+    'sitemap_submitted',
+    'sitemap_url',
+    'robots_url',
+    'structured_data',
+    'site_content_ux',
+    'dupe_content',
+    'calls_to_action',
+    'blog',
+    'canonicals',
+    'web_security',
+    'desktop_speed',
+    'broken_backlinks',
+]
 
+manual_data = {}
 
 # TADAA Routes
 
@@ -50,8 +70,15 @@ def parse_upload():
     # FIXME: Refactor this value
     inputID = 'spreadsheet-selection'
 
-    # An example of getting "Manual Input Data" from form
-    print(request.form['domain_url'])
+    for label in manual_data_labels:
+        data = request.form[label]
+        print(data)
+        if (data):
+            manual_data[label] = data
+        else:
+            manual_data[label] = ""
+
+    print(manual_data)
 
     now = datetime.datetime.now()
     timestamp = now.strftime("%Y-%m-%d_%H-%M-%S")
@@ -67,7 +94,8 @@ def parse_upload():
     segments = proj_files[0].split('_')
     project_name = segments[0].split('.')[0]
 
-    tadaabject = tadaa.parse_data(project_dir)
+    # TODO: parse_data needs to do something with manual_data
+    tadaabject = tadaa.parse_data(project_dir, manual_data)
 
     root_path = app.root_path
     pop_ppt = tadaa.generate_audit(tadaabject, project_dir, root_path, project_name)

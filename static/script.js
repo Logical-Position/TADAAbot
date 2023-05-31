@@ -109,12 +109,13 @@ document.addEventListener("DOMContentLoaded", function() {
             alert("Uploaded folder is not named exports.")
         }
     }
+
     let folderName = "";
     // Function for handling updating "Uploaded File" text once file has been uploaded.
     function updateUploadedFileLabel(filename) {
         const uploadedFile = document.querySelector("#uploaded-file-name");
         uploadedFile.innerText = filename;
-        folderName.innerText = filename;
+        folderName.innerText = filename;       
     }
 
     // Function for handling updating the border color of the upload file container when a valid file is uploaded.
@@ -133,7 +134,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const uploadedFile = document.querySelector("#uploaded-file-name");
 
         // Remove excess text/upload image from file uploader once a file is uploaded
-        let fileContainerContent = document.querySelector("#droparea")
+        let fileContainerContent = document.querySelector("#droparea");
         fileContainerContent.remove();
         
         // Create placeholder folder image element
