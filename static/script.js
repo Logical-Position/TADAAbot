@@ -6,16 +6,18 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // set cursor to show progress
         document.body.style.cursor = 'progress';
+        updatePptButton("Generating PPT...");
 
         fetch('/', {
             method: 'POST',
             body: formData,
         }).then(function(response) {
             // Do something with the response
-            
+
         }).finally(() => {
             document.body.style.cursor = 'auto';
             requestDownload();
+            updatePptButton("Downloaded PPT");
         });
     });
 
@@ -145,3 +147,9 @@ function saveBlob(blob) {
     tempEl.click();
     window.URL.revokeObjectURL(url);
 }
+
+function updatePptButton (text) {
+    const pptButton = document.querySelector("#submit-input");
+    pptButton.value = text;
+};
+
