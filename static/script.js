@@ -170,6 +170,7 @@ document.addEventListener("DOMContentLoaded", function() {
         // Create placeholder folder image element
         let placeholderFolderImage = document.createElement("img");
         placeholderFolderImage.src = "static/assets/folder-upload-overwrite.svg";
+        placeholderFolderImage.classList.add("w-10");
 
         // Create folder name element
         let folderName = document.createElement("span");
@@ -178,7 +179,7 @@ document.addEventListener("DOMContentLoaded", function() {
         
         // Create container for the placeholder folder image and folder name
         let placeholderContainer = document.createElement("div");
-        placeholderContainer.classList.add("flex", "flex-col","justify-center",);
+        placeholderContainer.classList.add("flex", "flex-col","items-center");
         placeholderContainer.appendChild(placeholderFolderImage);
         placeholderContainer.appendChild(folderName);
         
