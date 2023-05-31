@@ -17,9 +17,9 @@
 	* [X] Ensure there's nothing left in personal account
 
 ## Client-side
-* [ ] Make 'Generate PPT' button the "end of the road"
-	* [ ] PPT should automatically download once finished
-	* [ ] Remove 'Download Audit Powerpoint' button from UI
+* [X] Make 'Generate PPT' button the "end of the road"
+	* [X] PPT should automatically download once finished
+	* [X] Remove 'Download Audit Powerpoint' button from UI
 * [ ] Change ppt filename to same as sent over server
 
 ### Manual Input Fixes
