@@ -29,6 +29,7 @@ document.addEventListener("DOMContentLoaded", function() {
             handleProgressBar("25");
         }).finally(() => {
             document.body.style.cursor = 'auto';
+            updatePptButton("Downloaded PPT");
             handleProgressBar("50");
             requestDownload();
             handleProgressBar("100");
@@ -76,25 +77,16 @@ document.addEventListener("DOMContentLoaded", function() {
         let downloadURL = '/download';
         makeRequest(downloadURL, (res) => {
             console.log("Request callback");
+            console.log(res);
         });
     }
 
-    function authDance() {
-        console.log('Starting Auth Dance.')
-        window.location.href = "/auth";
-        // let authURL = '/auth'
-        // let req = new XMLHttpRequest();
-
-        // req.open("GET", authURL, true)
-        // req.send()
-    }
-
     // Handles enabling/disabling the submit buttons and very basic verification.
-    let __renameThis = document.querySelector("#spreadsheet-selection");
+    let test = document.querySelector("#spreadsheet-selection");
     let generateButton = document.querySelector('input[name="generate_ppt"]');
-    __renameThis.addEventListener('change', function(event) {
-        if (__renameThis.value != "") {
-            let parentFolder = __renameThis.files[0].webkitRelativePath.split("/")[0];
+    test.addEventListener('change', function(event) {
+        if (test.value != "") {
+            let parentFolder = test.files[0].webkitRelativePath.split("/")[0];
             if (parentFolder == "exports") {
                 generateButton.disabled = false;
             }
@@ -110,7 +102,7 @@ document.addEventListener("DOMContentLoaded", function() {
     spreadsheetSelection.addEventListener('change', handleFileUpload);
 
     function handleFileUpload() {
-        // 1. Verify folder has more than 0 files, and is named `exports`.
+        // 1. Verifying folder is exports folder and there are more than 0 files.
         // 2. Uploaded file text is updated to "File Name"
         // 3. Outline the file uploader in green.
         // 4. Update the file uploader to display a placeholder folder image 
@@ -120,11 +112,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Reset progress bar 
         handleProgressBar("0");
-        
+
         let filename = spreadsheetSelection.files[0].name;
         let folderName = spreadsheetSelection.files[0].webkitRelativePath.split("/")[0];
         
-        let folderIsUploaded = spreadsheetSelection.value !== "";
+        let folderIsUploaded = spreadsheetSelection.value != "";
         let folderIsExports = folderName === "exports";
 
         let isUploadValid = folderIsUploaded && folderIsExports;
@@ -140,10 +132,12 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
+    let folderName = "";
     // Function for handling updating "Uploaded File" text once file has been uploaded.
     function updateUploadedFileLabel(filename) {
         const uploadedFile = document.querySelector("#uploaded-file-name");
-        uploadedFile.innerText = filename + " exports folder";
+        uploadedFile.innerText = filename;
+        folderName.innerText = filename;       
     }
 
     // Function for handling updating the border color of the upload file container when a valid file is uploaded.
@@ -153,11 +147,8 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Function for removing file upload image/text and replacing it with placeholder folder image and folder name
-    // FIXME: Folder name does not update when uploaded folder is replaced
-    // FIXME: Potential issue with image sizing -- sometimes is extra large
     function updateFileInputImage(filename) {
         const uploadedFile = document.querySelector("#uploaded-file-name");
-
         
         // Remove excess text/upload image from file uploader once a file is uploaded
         // The issue is when you .remove() the element #droparea, you no longer have this element on the DOM for future reference.
@@ -173,9 +164,9 @@ document.addEventListener("DOMContentLoaded", function() {
         placeholderFolderImage.classList.add("w-10");
 
         // Create folder name element
-        let folderName = document.createElement("span");
+        folderName = document.createElement("span");
         folderName.innerText = filename;
-        folderName.classList.add("text-xl", "font-semibold", "pt-4")
+        folderName.classList.add("text-xl", "font-semibold", "pt-4");
         
         // Create container for the placeholder folder image and folder name
         let placeholderContainer = document.createElement("div");
@@ -185,22 +176,22 @@ document.addEventListener("DOMContentLoaded", function() {
         
         // Add the placeholder container to the file uploader
         fileContainerContent.appendChild(placeholderContainer);
-    }  
-
+    }
 });
-
 
 function makeRequest(path, callback) {
     let req = new XMLHttpRequest();
     req.responseType = 'blob';
     req.onload = function(e) {
         // https://stackoverflow.com/questions/22724070/prompt-file-download-with-xmlhttprequest
+        // https://stackoverflow.com/questions/29192301/how-to-download-a-file-via-url-then-get-its-name
         let blob = e.target.response;
         let contentDispo = e.currentTarget.getResponseHeader('Content-Disposition');
+        let fileName = contentDispo.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/)[1];
+        console.log(fileName);
         console.log(e.currentTarget);
         console.log(contentDispo);
         console.log(blob);
-        saveBlob(blob);
         //callback(e);
     };
 
@@ -210,7 +201,7 @@ function makeRequest(path, callback) {
 
 function saveBlob(blob) {
     // let assetRecord = this.getAssetRecord();
-    let fileName = 'pop_ppt.pptx';
+    let fileName = 'pop_ppt.pptx'
     let tempEl = document.createElement("a");
     document.body.appendChild(tempEl);
     tempEl.style = "display: none";
@@ -221,16 +212,8 @@ function saveBlob(blob) {
     window.URL.revokeObjectURL(url);
 }
 
-// function doSomething(event) {
-//     event.preventDefault();
-//     makeRequest("/", (req) => {
-//         alert(req.responseText);
-//     });
-// }
+function updatePptButton (text) {
+    const pptButton = document.querySelector("#submit-input");
+    pptButton.value = text;
+};
 
-// function runAudit(event) {
-//     event.preventDefault();
-//     makeRequest("/audit", (req) => {
-//         alert(req.responseText);
-//     });
-// }

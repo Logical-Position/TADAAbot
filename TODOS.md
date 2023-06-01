@@ -12,7 +12,7 @@
 
 ## Server-side
 * [ ] Implement database API
-* [ ] Migrate Railway project to lpseodeveloper@gmail.com
+* [ ] Connect manual input data to TADAA
 * [X] Migrate Google Cloud Console project to lpseodeveloper@gmail.com account
 	* [X] Ensure there's nothing left in personal account
 
