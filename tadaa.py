@@ -1,13 +1,13 @@
 import os.path
 import utils
 import ppt
-import data
 
 def parse_data(project_dir, manual_data):
     """
     Takes the upload directory and organizes the data necessary for the tech audit. Returns our custom data object.
 
     @param [str] upload_dir: path to the server's upload directory.
+    @param [dict] manual_data: 
 
     @return [dict] final_data_obj: our custom data object {target_file: [data]} that contains Pandas dataframe/series objects.
     """
@@ -20,7 +20,7 @@ def parse_data(project_dir, manual_data):
     final_data_obj = utils.get_data_obj(matched_paths)
     
     for key in final_data_obj.keys():
-        print(key)
+        pass
 
     return final_data_obj
 
@@ -37,7 +37,3 @@ def generate_audit(final_data_obj, project_dir, root_path, project_name):
     pop_ppt = ppt.populate_powerpoint(final_data_obj, project_dir, root_path, project_name)
     
     return pop_ppt
-
-
-def data_vis():
-    data.visualize()
