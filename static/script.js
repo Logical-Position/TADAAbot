@@ -93,8 +93,12 @@ document.addEventListener("DOMContentLoaded", function() {
         const uploadedFile = document.querySelector("#uploaded-file-name");
 
         // Remove excess text/upload image from file uploader once a file is uploaded
-        let fileContainerContent = document.querySelector("#droparea");
-        fileContainerContent.remove();
+        // The issue is when you .remove() the element #droparea, you no longer have this element on the DOM for future reference.
+        // Temp fix: loop #droparea to check and see if it has children until it has none, then proceed.
+        let fileContainerContent = document.querySelector("#droparea")
+        while(fileContainerContent.firstChild) {
+            fileContainerContent.removeChild(fileContainerContent.firstChild);
+        }
         
         // Create placeholder folder image element
         let placeholderFolderImage = document.createElement("img");
@@ -113,8 +117,7 @@ document.addEventListener("DOMContentLoaded", function() {
         placeholderContainer.appendChild(folderName);
         
         // Add the placeholder container to the file uploader
-        let uploadFileContainer = document.querySelector("#upload-file-container");
-        uploadFileContainer.appendChild(placeholderContainer);
+        fileContainerContent.appendChild(placeholderContainer);
     }
 });
 
