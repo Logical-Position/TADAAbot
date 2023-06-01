@@ -31,8 +31,8 @@ class SqliteManager:
         cur.close()
         db.close()
 
-
-
+    def create_audit(self):
+        return {"create_result": True}
 
 
     # Starter CRUD Functions

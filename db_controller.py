@@ -2,7 +2,7 @@ from sqlite_manager import SqliteManager
 from flask import jsonify
 from requests import request
 
-dbName = 'test_full-schema.db'
+dbName = 'test.db'
 # dbSchema = [
 #     {
 #         'name': 'clients',
@@ -56,7 +56,8 @@ db = SqliteManager(dbName, None)
 
 # API - Creating Data
 def create_audit(clientName, domain, data):
-    pass
+    res = db.create_audit()
+    return jsonify(res), 200
 
 # API - Reading Data
 def get_all_clients():

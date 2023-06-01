@@ -13,6 +13,9 @@ app = Flask(__name__)
 UPLOAD_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'uploads')
 app.config['UPLOAD_DIR'] = UPLOAD_DIR
 
+# TODO: Code the options and labels here instead.
+#   Keys should be used as IDs.
+# tadaaptions = ta_decisions.json 
 
 manual_data_labels = [
     'domain_url',
@@ -52,32 +55,38 @@ def parse_upload():
     # FIXME: Refactor this value
     inputID = 'spreadsheet-selection'
 
+    # Get data from form
     for label in manual_data_labels:
         data = request.form.get(label, '')
         manual_data[label] = data
     
     print(manual_data)
 
+    # Create folder for assets
     now = datetime.datetime.now()
     timestamp = now.strftime("%Y-%m-%d_%H-%M-%S")
     project_dir = os.path.join(app.config['UPLOAD_DIR'], timestamp)
 
+    # Save uploaded files
     os.makedirs(project_dir, exist_ok=True)
     files = [file for file in request.files.getlist(inputID) if file.filename]
     for file in files:
         filename = os.path.basename(file.filename)
         file.save(os.path.join(project_dir, filename))
 
+    # Create project name
     proj_files = os.listdir(project_dir)
     segments = proj_files[0].split('_')
     project_name = segments[0].split('.')[0]
 
-    # TODO: parse_data needs to do something with manual_data
+    # TADAA does it's thing
     tadaabject = tadaa.parse_data(project_dir, manual_data)
-
     root_path = app.root_path
     pop_ppt = tadaa.generate_audit(tadaabject, project_dir, root_path, project_name)
 
+    # Have to return something...
+    # TODO: Find out how to use this value on the frontend
+    # TODO: Replace it with the tadaabject and use this to populate a 'Results' view
     time.sleep(1.5)
     return jsonify({"Choo Choo": "Welcome to your Flask app 🚅"})
 
@@ -100,14 +109,7 @@ db_root = '/test'
 
 @app.route(f'{db_root}/create', methods=['GET', 'POST'])
 def db_createData():
-    if request.method == 'POST':
-        print("POST request")
-        return db.create()
-    elif request.method == 'GET':
-        print("GET request")
-        return db.create()
-    else:
-        return "Some other request"
+    return db.create_audit('example.com', 'Example', {'data': 'something'})
 
 @app.route(f'{db_root}/read', methods=['GET'])
 def db_readData():
