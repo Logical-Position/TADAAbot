@@ -52,17 +52,11 @@ def index():
 
 @app.route('/', methods=['POST'])
 def parse_upload():
-<<<<<<< HEAD
     # 1. Gather uploaded data: files and fields
     # 2. Call tadaa to parse and compile data
     # 3. Send compiled data to:
     #       - Frontend
     #       - Database
-=======
-    print("U P L O A D   P O S T")
-    # FIXME: Refactor this value
-    inputID = 'spreadsheet-selection'
->>>>>>> hotfix-form-submission
 
     # Get data from form
     for label in manual_data_labels:
@@ -89,18 +83,11 @@ def parse_upload():
     segments = proj_files[0].split('_')
     project_name = segments[0].split('.')[0]
 
-<<<<<<< HEAD
     # Let TADAA do it's thing
-=======
-    print(project_name)
-
-    # TODO: parse_data needs to do something with manual_data
->>>>>>> hotfix-form-submission
     tadaabject = tadaa.parse_data(project_dir, manual_data)
     root_path = app.root_path
     pop_ppt = tadaa.generate_audit(tadaabject, project_dir, root_path, project_name)
 
-<<<<<<< HEAD
     # Save tadaabject to database
     # TODO: Make it save to the database
     project_type = "InvalidType"
@@ -114,39 +101,27 @@ def parse_upload():
 
     db_insert_new_audit(data)
 
-    # It needs to return something...
-    # TODO: Find out how to use this response on the frontend
-    # TODO: Return the tadaabject instead and use this to populate a 'Results' view
-=======
-    print("")
+    return jsonify(data)
 
-    time.sleep(1.5)
->>>>>>> hotfix-form-submission
-    return jsonify({"Choo Choo": "Welcome to your Flask app 🚅"})
-
-@app.route('/download', methods=['GET'])
-def download_audit():
+@app.route('/download/<ts>', methods=['GET'])
+def download_audit(ts):
     print("D O W N L O A D   R O U T E")
     dirs = os.listdir(UPLOAD_DIR)
     # FIXME: This has not been getting the correct ppts
     # Per the documentation, os.listdir returns a list,
     #   but "The list is in arbitrary order"
     # https://docs.python.org/3/library/os.html?highlight=listdir#os.listdir
-    last_dir = dirs[-1]
-    print(dirs)
-    print(last_dir)
-    abs_path_proj_dir = app.root_path + '/uploads/' + last_dir
+    # last_dir = dirs[-1]
+    # print(dirs)
+    # print(last_dir)
+    requested_audit = ts
+    abs_path_proj_dir = app.root_path + '/uploads/' + requested_audit
     files = os.listdir(abs_path_proj_dir)
     segments = files[0].split('_')
     project_name = segments[0].split('.')[0]
     print(project_name)
     ppt_path = os.path.join(UPLOAD_DIR, abs_path_proj_dir + f'/{project_name}.pptx')
-<<<<<<< HEAD
     #print(ppt_path)
-=======
-    print(ppt_path)
-    print("")
->>>>>>> hotfix-form-submission
     return send_file(ppt_path)
 
 

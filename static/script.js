@@ -17,7 +17,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
         }).then((data) => {
             // TODO: Get timestamp from data, pass that as download URI
-            requestDownload();
+            console.log(data)
+            console.log(data['ts'])
+            const ts = data['ts']
+            requestDownload(ts);
 
         }).finally(() => {
             document.body.style.cursor = 'auto';
@@ -26,8 +29,8 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
-    function requestDownload() {
-        let downloadURL = '/download';
+    function requestDownload(ts) {
+        let downloadURL = `/download/${ts}`;
         makeRequest(downloadURL, (res) => {
             console.log("Request callback");
             console.log(res);
