@@ -129,27 +129,22 @@ function makeRequest(path, callback) {
         // https://stackoverflow.com/questions/29192301/how-to-download-a-file-via-url-then-get-its-name
         let blob = e.target.response;
         let contentDispo = e.currentTarget.getResponseHeader('Content-Disposition');
-        let fileName = contentDispo.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/)[1];
-        console.log(fileName);
-        console.log(e.currentTarget);
-        console.log(contentDispo);
-        console.log(blob);
-        //callback(e);
+        let filename = contentDispo.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/)[1];
+        saveBlob(blob, filename)
     };
 
     req.open("GET", path, true);
     req.send();
 }
 
-function saveBlob(blob) {
+function saveBlob(blob, filename) {
     // let assetRecord = this.getAssetRecord();
-    let fileName = 'pop_ppt.pptx'
     let tempEl = document.createElement("a");
     document.body.appendChild(tempEl);
     tempEl.style = "display: none";
     let url = window.URL.createObjectURL(blob);
     tempEl.href = url;
-    tempEl.download = fileName;
+    tempEl.download = filename;
     tempEl.click();
     window.URL.revokeObjectURL(url);
 }
