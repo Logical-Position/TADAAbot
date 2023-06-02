@@ -54,6 +54,8 @@ document.addEventListener("DOMContentLoaded", function() {
         // 2. Uploaded file text is updated to "File Name"
         // 3. Outline the file uploader in green.
         // 4. Update the file uploader to display a placeholder folder image along with the file name/number of files/ display text "uploaded Folder is not exports".
+        
+        // FIXME: Errors if this runs when no files are uploaded.
         let filename = spreadsheetSelection.files[0].name;
         let folderName = spreadsheetSelection.files[0].webkitRelativePath.split("/")[0];
         
