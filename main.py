@@ -90,11 +90,6 @@ def parse_upload():
 
     # Save tadaabject to database
     # TODO: Make it save to the database
-    print("")
-    print("T A D A A B J E C T")
-    #print(tadaabject)
-    print("")
-
     project_type = "InvalidType"
     data = {
         "client_name": project_name,
@@ -365,6 +360,8 @@ def db_insert_new_audit(data):
         ppt_url,
     ]
 
+    print(client_data)
+    print(audits_data)
     # Insert into database
     #db_insert_into("clients", client_data)
     #db_insert_into("audits", audits_data)
