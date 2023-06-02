@@ -49,6 +49,7 @@ def index():
 
 @app.route('/', methods=['POST'])
 def parse_upload():
+    print("U P L O A D   P O S T")
     # FIXME: Refactor this value
     inputID = 'spreadsheet-selection'
 
@@ -72,25 +73,38 @@ def parse_upload():
     segments = proj_files[0].split('_')
     project_name = segments[0].split('.')[0]
 
+    print(project_name)
+
     # TODO: parse_data needs to do something with manual_data
     tadaabject = tadaa.parse_data(project_dir, manual_data)
 
     root_path = app.root_path
     pop_ppt = tadaa.generate_audit(tadaabject, project_dir, root_path, project_name)
 
+    print("")
+
     time.sleep(1.5)
     return jsonify({"Choo Choo": "Welcome to your Flask app 🚅"})
 
 @app.route('/download', methods=['GET'])
 def download_audit():
+    print("D O W N L O A D   R O U T E")
     dirs = os.listdir(UPLOAD_DIR)
+    # FIXME: This has not been getting the correct ppts
+    # Per the documentation, os.listdir returns a list,
+    #   but "The list is in arbitrary order"
+    # https://docs.python.org/3/library/os.html?highlight=listdir#os.listdir
     last_dir = dirs[-1]
+    print(dirs)
+    print(last_dir)
     abs_path_proj_dir = app.root_path + '/uploads/' + last_dir
     files = os.listdir(abs_path_proj_dir)
     segments = files[0].split('_')
     project_name = segments[0].split('.')[0]
+    print(project_name)
     ppt_path = os.path.join(UPLOAD_DIR, abs_path_proj_dir + f'/{project_name}.pptx')
     print(ppt_path)
+    print("")
     return send_file(ppt_path)
 
 

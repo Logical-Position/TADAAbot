@@ -11,12 +11,17 @@ document.addEventListener("DOMContentLoaded", function() {
         fetch('/', {
             method: 'POST',
             body: formData,
-        }).then(function(response) {
+        }).then(function(res) {
             // Do something with the response
+            return res.json();
+
+        }).then((data) => {
+            // TODO: Get timestamp from data, pass that as download URI
+            requestDownload();
 
         }).finally(() => {
             document.body.style.cursor = 'auto';
-            requestDownload();
+            
             updatePptButton("Downloaded PPT");
         });
     });
@@ -130,7 +135,9 @@ function makeRequest(path, callback) {
         let blob = e.target.response;
         let contentDispo = e.currentTarget.getResponseHeader('Content-Disposition');
         let filename = contentDispo.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/)[1];
-        saveBlob(blob, filename)
+        console.log(filename);
+        console.log(contentDispo);
+        saveBlob(blob, filename);
     };
 
     req.open("GET", path, true);
@@ -139,6 +146,7 @@ function makeRequest(path, callback) {
 
 function saveBlob(blob, filename) {
     // let assetRecord = this.getAssetRecord();
+    console.log(filename);
     let tempEl = document.createElement("a");
     document.body.appendChild(tempEl);
     tempEl.style = "display: none";
