@@ -317,7 +317,7 @@ def db_table_exists(name):
     cur.close()
     return exists
 
-def db_value_exists_in_table(val, table_name):
+def db_id_exists_in_table(val, table_name):
     db = db_connect()
     cur = db.cursor()
     q = f"SELECT * FROM {table_name} WHERE id = '{val}'"
@@ -329,10 +329,10 @@ def db_value_exists_in_table(val, table_name):
     return exists
 
 def db_client_exists(val):
-    return db_value_exists_in_table(val, "clients")
+    return db_id_exists_in_table(val, "clients")
 
 def db_audit_exists(val):
-    return db_value_exists_in_table(val, "audits")
+    return db_id_exists_in_table(val, "audits")
 
 def db_insert_into(table_name, data):
     # TODO: Check if data length is equal to num cols for table
