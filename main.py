@@ -5,10 +5,10 @@ import json
 import os
 import time
 import sqlite3
+from uuid import uuid4
+
 # import db_controller as db
 import tadaa
-
-from uuid import uuid4
 
 app = Flask(__name__)
 
@@ -63,8 +63,6 @@ def parse_upload():
         data = request.form.get(label, '')
         manual_data[label] = data
     
-    #print(manual_data)
-
     # Create folder for audit assets
     now = datetime.datetime.now()
     timestamp = now.strftime("%Y-%m-%d_%H-%M-%S")
@@ -84,36 +82,47 @@ def parse_upload():
     project_name = segments[0].split('.')[0]
 
     # Let TADAA do it's thing
+    # TODO: Refactor tadaa to return the final tadaabject in one line
     tadaabject = tadaa.parse_data(project_dir, manual_data)
     root_path = app.root_path
     pop_ppt = tadaa.generate_audit(tadaabject, project_dir, root_path, project_name)
 
     # Save tadaabject to database
-    # TODO: Make it save to the database
+    # TODO: Refactor this into tadaa
+    audits_id = str(uuid4())
+    client_id = str(uuid4())
+    domain = manual_data["domain_url"]
     project_type = "InvalidType"
+
+    # TODO: Refactor this into the final tadaabject
     data = {
+        "audits_id": audits_id,
+        "client_id": client_id,
         "client_name": project_name,
-        "domain": manual_data["domain_url"],
+        "domain": domain,
         "ts": timestamp,
         "project_type": project_type,
         "ppt_url": pop_ppt,
     }
-
+    db_init(DB_SCHEMA)
     db_insert_new_audit(data)
 
+    # And also return it to the client
     return jsonify(data)
 
 @app.route('/download/<ts>', methods=['GET'])
 def download_audit(ts):
-    print("D O W N L O A D   R O U T E")
     dirs = os.listdir(UPLOAD_DIR)
     # FIXME: This has not been getting the correct ppts
+    # FIXED: but leaving temporarily for discussion purposes.
     # Per the documentation, os.listdir returns a list,
     #   but "The list is in arbitrary order"
     # https://docs.python.org/3/library/os.html?highlight=listdir#os.listdir
     # last_dir = dirs[-1]
     # print(dirs)
     # print(last_dir)
+
+    # TODO: This can likely be simplified by just getting the full download path from the client
     requested_audit = ts
     abs_path_proj_dir = app.root_path + '/uploads/' + requested_audit
     files = os.listdir(abs_path_proj_dir)
@@ -155,8 +164,8 @@ def download_audit(ts):
 # wHY ARE THEY SO SIMPLE IN THEORY, BUT IMPLEMENTING THEM IS
 # SUCH. A. BITCH.
 
-DB_NAME = 'test'
-DB_FILENAME = f'{DB_NAME}.db'
+DB_NAME = 'db'
+DB_FILENAME = f'{DB_NAME}_partial-schema.db'
 DB_ROUTE = f'/{DB_NAME}'
 
 # Schema
@@ -172,6 +181,9 @@ DB_ROUTE = f'/{DB_NAME}'
 #   timestamp: Timestamp
 #   projectType: ProjectType
 #   pptUrl: URL
+#
+# audit_data
+#   TODO
 #
 DB_SCHEMA = [
     {
@@ -193,7 +205,7 @@ DB_SCHEMA = [
         ],
     },
     {
-        'table': 'auditData',
+        'table': 'audit_data',
         'columns': [
             'auditId',
             'clientId',
@@ -223,32 +235,34 @@ DB_SCHEMA = [
     },
 ]
 
-"""
-Creates a connection to the database.
-Creates a row factory to return data as dictionaries.
-@return A database connection.
-"""
 def db_connect():
+    """
+    Creates a connection to the database.
+    @return A database connection.
+    """
     db = getattr(g, '_database', None)
     if db is None:
         db = g._database = sqlite3.connect(DB_FILENAME)
     return db
 
-"""
-Properly disconnects from database.
-Call at app close.
-"""
+
 def db_disconnect():
+    """
+    Properly disconnects from database.
+    This function should be called at app close.
+    @return None
+    """
     db = getattr(g, '_database', None)
     if db is not None:
         db.close()
 
-"""
-Initializes the database with the given schema.
-@param schema: The schema with which to structure the database.
-@return None
-"""
+
 def db_init(schema):
+    """
+    Initializes the database with the given schema.
+    @param schema: The schema with which to structure the database.
+    @return None
+    """
     db = db_connect()
     cur = db.cursor()
     for table in schema:
@@ -286,6 +300,7 @@ def db_create_table(name, cols):
     db.commit()
     cur.close()
 
+
 """
 Checks if the given table exists in the database.
 @param [str] name: The name of the table to verify.
@@ -301,6 +316,23 @@ def db_table_exists(name):
     exists = True if count == 1 else False
     cur.close()
     return exists
+
+def db_value_exists_in_table(val, table_name):
+    db = db_connect()
+    cur = db.cursor()
+    q = f"SELECT * FROM {table_name} WHERE id = '{val}'"
+    cur.execute(q)
+    res = cur.fetchall()
+    count = len(res)
+    exists = True if count == 1 else False
+    cur.close()
+    return exists
+
+def db_client_exists(val):
+    return db_value_exists_in_table(val, "clients")
+
+def db_audit_exists(val):
+    return db_value_exists_in_table(val, "audits")
 
 def db_insert_into(table_name, data):
     # TODO: Check if data length is equal to num cols for table
@@ -329,11 +361,9 @@ def db_insert_new_audit(data):
     #     "ppt_url": pop_ppt,
     # }
 
-    # Generate needed IDs
-    client_id = str(uuid4())
-    audits_id = str(uuid4())
-
     # Pull data from input
+    audits_id = data['audits_id']
+    client_id = data['client_id']
     client_name = data['client_name']
     domain = data['domain']
     ts = data['ts']
@@ -366,16 +396,9 @@ def db_insert_new_audit(data):
         ppt_url,
     ]
 
-    print(client_data)
-    print(audits_data)
     # Insert into database
-    #db_insert_into("clients", client_data)
-    #db_insert_into("audits", audits_data)
-
-
-
-
-
+    db_insert_into("clients", client_data)
+    db_insert_into("audits", audits_data)
 
 
 def db_query(query, args=(), one=False):
@@ -400,8 +423,19 @@ def db_read_table(table_name):
         data = db_query(q, a)
     return data
 
-def db_read_col_from_table(table_name, col_name):
-    pass
+def db_read_id_from_table(id, table_name):
+    db = db_connect()
+    cur = db.cursor()
+    q = f"SELECT * FROM {table_name} WHERE id = '{id}'"
+    cur.execute(q)
+    res = cur.fetchone()
+    return res
+
+def db_read_audit(ts):
+    q = f""
+    a = []
+    data = db_query(q, a)
+    return data
 
 def db_delete_all():
     db = db_connect()
@@ -414,56 +448,30 @@ def db_delete_all():
     
 # Database Testing Routes
 
-@app.route(f'{DB_ROUTE}/create', methods=['GET', 'POST'])
-def db_createData():
+@app.route(f'{DB_ROUTE}/all', methods=['GET'])
+def db_route_read_all():
     db_init(DB_SCHEMA)
-    #print(db_table_exists("clients"))
+    data = db_read_all()
+    return jsonify(data)
 
-    # Audit 1
-    # db_insert_into("clients", ['0', "Bobby's Browns"])
-    # db_insert_into("audits", ['a', '0', 'bobbysbrowns.com', 'NOW', 'Campaign', 'https://ppt.url/'])
-    # db_insert_into("auditData", {'0', "Bobby's Browns"})
-
-    # Audit 2
-    # db_insert_into("clients", ['1', "Sally's Seashells"])
-    # db_insert_into("audits", ['b', '1', 'seashellsbytheseashore.com', 'NOW', 'Consulting', 'https://ppt.url/'])
-    # db_insert_into("auditData", {'1', "Sally's Seashells"})
-
-    # Audit 3
-    # db_insert_into("clients", ['2', "Ace Adventure Supplies"])
-    # db_insert_into("audits", ['c', '2', 'strangeguy.ca', 'NOW', 'InvalidType', 'https://ppt.url/'])
-    # db_insert_into("auditData", {'2', "Ace Adventure Supplies"})
-
-
-    return jsonify({"create": "we put it in"})
-
-@app.route(f'{DB_ROUTE}/read', methods=['GET'])
-def db_readData():
+@app.route(f'{DB_ROUTE}/<val>', methods=['GET'])
+def db_route_read_data(val):
     db_init(DB_SCHEMA)
-    res = db_read_all()
-    return jsonify(res)
-
-@app.route(f'{DB_ROUTE}/update', methods=['GET', 'POST', 'PUT'])
-def db_updateData():
-    db_init(DB_SCHEMA)
-    return jsonify({"update": "not implemented"})
-
-@app.route(f'{DB_ROUTE}/delete', methods=['GET', 'DELETE'])
-def db_deleteData():
-    db_init(DB_SCHEMA)
-    db_delete_all()
-    return jsonify({"delete": "it's all gone"})
+    if db_table_exists(val):
+        # Fetch table data
+        data = { "table": db_read_table(val) }
+    elif db_client_exists(val):
+        data = { "client": db_read_id_from_table(val, "clients") }
+    elif db_audit_exists(val):
+        data = { "audit": db_read_id_from_table(val, "audits") }
+    else:
+        data = {"error": f"{val} does not exist as a table, or client ID, or audit ID"}
+    return jsonify(data)
 
 
-
-@app.route(f'{DB_ROUTE}/<table_name>', methods=['GET'])
-def get_audit_data(table_name):
-    return jsonify({"requested": table_name})
-
-
-# @app.teardown_appcontext
-# def close_connection(exception):
-#     db.close_connection(exception)
+@app.teardown_appcontext
+def close_connection(exception):
+    db_disconnect()
 
 
 
