@@ -57,6 +57,8 @@ TODO
 
 Google's Python Style Guide: https://google.github.io/styleguide/pyguide.html
 
+Conventional Commits: https://www.conventionalcommits.org/en/v1.0.0/
+
 https://excalidraw.com/
 
 https://www.makeareadme.com/
