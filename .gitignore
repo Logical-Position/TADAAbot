@@ -164,6 +164,7 @@ downloads/
 uploads/
 .vscode
 ~$*
+*.db
 
 # NPM
 node_modules/
