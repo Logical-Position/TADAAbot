@@ -16,11 +16,11 @@ document.addEventListener("DOMContentLoaded", function() {
             return res.json();
 
         }).then((data) => {
-            // TODO: Get timestamp from data, pass that as download URI
-            console.log(data)
-            console.log(data['ts'])
-            const ts = data['ts']
+            const ts = data['ts'];
             requestDownload(ts);
+
+            const auditsId = data['audits_id'];
+            updateRawDataLink(auditsId);
 
         }).finally(() => {
             document.body.style.cursor = 'auto';
@@ -32,8 +32,8 @@ document.addEventListener("DOMContentLoaded", function() {
     function requestDownload(ts) {
         let downloadURL = `/download/${ts}`;
         makeRequest(downloadURL, (res) => {
-            console.log("Request callback");
-            console.log(res);
+            // console.log("Request callback");
+            // console.log(res);
         });
     }
 
@@ -140,8 +140,8 @@ function makeRequest(path, callback) {
         let blob = e.target.response;
         let contentDispo = e.currentTarget.getResponseHeader('Content-Disposition');
         let filename = contentDispo.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/)[1];
-        console.log(filename);
-        console.log(contentDispo);
+        // console.log(filename);
+        // console.log(contentDispo);
         saveBlob(blob, filename);
     };
 
@@ -151,7 +151,7 @@ function makeRequest(path, callback) {
 
 function saveBlob(blob, filename) {
     // let assetRecord = this.getAssetRecord();
-    console.log(filename);
+    // console.log(filename);
     let tempEl = document.createElement("a");
     document.body.appendChild(tempEl);
     tempEl.style = "display: none";
@@ -167,3 +167,12 @@ function updatePptButton (text) {
     pptButton.value = text;
 };
 
+function updateRawDataLink(id) {
+    const elId = "raw-data-link";
+    const disabledClass = "disabled-raw-data-link";
+    const anchor = document.getElementById(elId);
+    if (anchor) {
+        anchor.href = `/db/${id}`;
+        anchor.classList.remove(disabledClass);
+    }
+}

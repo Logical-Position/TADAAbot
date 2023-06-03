@@ -3,3 +3,22 @@
   border: solid;
   transition: 2s all;
 }
+
+#raw-data-link {
+  font-style: italic;
+}
+
+#raw-data-link:hover {
+  font-style: italic;
+  text-decoration: underline;
+}
+
+#raw-data-link.disabled-raw-data-link {
+  color: rgb(150, 150, 150);
+  pointer-events: none;
+  cursor: default;
+}
+
+#raw-data-link.disabled-raw-data-link:hover {
+  text-decoration: none;
+}
