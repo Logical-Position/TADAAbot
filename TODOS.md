@@ -28,7 +28,7 @@
 * [ ] Change Robot (#8) manual inputs to multiple radio options.
 * [x] Change Calls to Action (#12) to yes/no radio.
 * [x] Change Blog (#13) to Yes/No radio
-	* [ ] If yes, another yes/no radio for if it's updated regularly
+	* [x] If yes, another yes/no radio for if it's updated regularly
 * [x] Change Duplicate Content (#11) to Yes/No radio
 	* [ ] If yes, give field to explain where the duplicate content is mostly located.
 

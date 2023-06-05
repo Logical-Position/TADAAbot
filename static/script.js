@@ -53,6 +53,24 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
+    const blogCheckElem = document.querySelectorAll("input[name='blog']");
+    // Apply listener to blog options listening for change
+    
+    blogCheckElem.forEach((item) => {
+        item.addEventListener("change", function(e) {
+            // Secondary options become available once yes is checked, might be a cleaner way to do this later.
+        const secondaryBlogOptions = document.querySelectorAll("input[name='blog_updated_regularly']");
+
+            if(blogCheckElem[0].checked) {
+            secondaryBlogOptions.forEach(item => item.disabled = false);
+            }
+            else if (!blogCheckElem[0].checked) {
+            secondaryBlogOptions.forEach(item => item.disabled = true);
+            }
+        });
+        
+    });
+
     // MARK: File Upload Listener
     const spreadsheetSelection = document.querySelector("#spreadsheet-selection");
     spreadsheetSelection.addEventListener('change', handleFileUpload);
