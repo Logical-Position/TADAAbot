@@ -59,6 +59,8 @@ Google's Python Style Guide: https://google.github.io/styleguide/pyguide.html
 
 Conventional Commits: https://www.conventionalcommits.org/en/v1.0.0/
 
+Commit Label Types: https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#-commit-message-guidelines
+
 https://excalidraw.com/
 
 https://www.makeareadme.com/
