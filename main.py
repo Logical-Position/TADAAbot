@@ -271,13 +271,14 @@ def db_init(schema):
             cols = table['columns']
             db_create_table(table_name, cols)
 
-"""
-Creates a table with the given name and columns.
-@param [str] name: The name of the table to create.
-@param [array] cols: An array of string.
-@return None
-"""
+
 def db_create_table(name, cols):
+    """
+    Creates a table with the given name and columns.
+    @param [str] name: The name of the table to create.
+    @param [array] cols: An array of string.
+    @return None
+    """
     db = db_connect()
     cur = db.cursor()
     # It is not advised to interpolate strings in a query like this, 
