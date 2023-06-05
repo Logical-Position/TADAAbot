@@ -7,20 +7,21 @@
 * [ ] Remove unused comments and code
 * [ ] Remove `console.log` and `print` statements
 * [ ] Upload test data to repo
-* [ ] Make `prod` default branch once `0.0` is pushed
-	* [ ] Delete `main` branch
+* [x] Make `prod` default branch once `0.0` is pushed
+	* [x] Delete `main` branch
 
 ## Server-side
-* [ ] Implement database API
-* [ ] Connect manual input data to TADAA
+* [ ] Clean up tadaabject
+* [x] Connect manual input data to TADAA
+* [x] Implement database API
 * [X] Migrate Google Cloud Console project to lpseodeveloper@gmail.com account
 	* [X] Ensure there's nothing left in personal account
 
 ## Client-side
-* [ ] Make 'Generate PPT' button the "end of the road"
-	* [ ] PPT should automatically download once finished
-	* [ ] Remove 'Download Audit Powerpoint' button from UI
-* [ ] Change ppt filename to same as sent over server
+* [x] Make 'Generate PPT' button the "end of the road"
+	* [x] PPT should automatically download once finished
+	* [x] Remove 'Download Audit Powerpoint' button from UI
+* [x] Change ppt filename to same as sent over server
 
 ### Manual Input Fixes
 
