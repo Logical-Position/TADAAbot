@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function() {
             return res.json();
 
         }).then((data) => {
-            console.log(data);
+            // console.log(data);
             
             const ts = data['ts'];
             // TODO: This still isn't great; the server and client should 
