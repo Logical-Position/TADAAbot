@@ -3,10 +3,11 @@ document.addEventListener("DOMContentLoaded", function() {
     tadaaForm.addEventListener('submit', function(event) {
         event.preventDefault();
         const formData = new FormData(tadaaForm);
-
         // set cursor to show progress
         document.body.style.cursor = 'progress';
         updatePptButton("Generating PPT...");
+
+        console.log(formData);
 
         fetch('/', {
             method: 'POST',
@@ -18,7 +19,6 @@ document.addEventListener("DOMContentLoaded", function() {
         }).then((data) => {
             const ts = data['ts'];
             requestDownload(ts);
-
             const auditsId = data['audits_id'];
             updateRawDataLink(auditsId);
 
@@ -69,6 +69,20 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
         
+    });
+
+    const duplicateContentCheck = document.querySelectorAll("input[name='duplicate_content']");
+
+    duplicateContentCheck.forEach((item) => {
+        item.addEventListener("change", function(e) {
+            const duplicateTextBox = document.querySelector("#duplicate_text");
+            if(duplicateContentCheck[0].checked) {
+                duplicateTextBox.disabled = false;
+            }
+            else if(!duplicateContentCheck[0].checked) {
+                duplicateTextBox.disabled = true;
+            }
+        });
     });
 
     // MARK: File Upload Listener
