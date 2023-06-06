@@ -128,9 +128,9 @@ def download_audit(ts):
     files = os.listdir(abs_path_proj_dir)
     segments = files[0].split('_')
     project_name = segments[0].split('.')[0]
-    print(project_name)
+    # print(project_name)
     ppt_path = os.path.join(UPLOAD_DIR, abs_path_proj_dir + f'/{project_name}.pptx')
-    #print(ppt_path)
+    print(ppt_path)
     return send_file(ppt_path)
 
 

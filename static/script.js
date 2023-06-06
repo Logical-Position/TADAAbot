@@ -17,6 +17,8 @@ document.addEventListener("DOMContentLoaded", function() {
             return res.json();
 
         }).then((data) => {
+            console.log(data);
+            
             const ts = data['ts'];
             requestDownload(ts);
             const auditsId = data['audits_id'];
@@ -145,7 +147,7 @@ document.addEventListener("DOMContentLoaded", function() {
         // Create placeholder folder image element
         let placeholderFolderImage = document.createElement("img");
         placeholderFolderImage.src = "static/assets/folder-upload-overwrite.svg";
-        placeholderFolderImage.classList.add("w-16", "h-16");
+        placeholderFolderImage.classList.add("w-10");
 
         // Create folder name element
         folderName = document.createElement("span");
@@ -154,7 +156,7 @@ document.addEventListener("DOMContentLoaded", function() {
         
         // Create container for the placeholder folder image and folder name
         let placeholderContainer = document.createElement("div");
-        placeholderContainer.classList.add("flex", "flex-col","justify-center",);
+        placeholderContainer.classList.add("flex", "flex-col","items-center");
         placeholderContainer.appendChild(placeholderFolderImage);
         placeholderContainer.appendChild(folderName);
         
