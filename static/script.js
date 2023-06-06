@@ -16,6 +16,8 @@ document.addEventListener("DOMContentLoaded", function() {
             return res.json();
 
         }).then((data) => {
+            console.log(data);
+            
             const ts = data['ts'];
             requestDownload(ts);
 
