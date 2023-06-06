@@ -7,7 +7,10 @@ document.addEventListener("DOMContentLoaded", function() {
         document.body.style.cursor = 'progress';
         updatePptButton("Generating PPT...");
 
-        console.log(formData);
+        // logs what is being sent on the form.
+        // for(let pair of formData.entries()) {
+        //     console.log(pair[0]+ ', '+ pair[1]); 
+        // }
 
         fetch('/', {
             method: 'POST',
