@@ -19,7 +19,12 @@ document.addEventListener("DOMContentLoaded", function() {
             console.log(data);
             
             const ts = data['ts'];
-            requestDownload(ts);
+            // TODO: This still isn't great; the server and client should 
+            //      coordinate the exact file to be downloaded. This is still
+            //      just educated guessing.
+            const client = data['client_name'];
+            const pptName = `${client}-${ts}.pptx`
+            requestDownload(ts, pptName);
 
             const auditsId = data['audits_id'];
             updateRawDataLink(auditsId);
@@ -31,11 +36,14 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 
-    function requestDownload(ts) {
+    function requestDownload(ts, filename) {
         let downloadURL = `/download/${ts}`;
         makeRequest(downloadURL, (res) => {
-            // console.log("Request callback");
-            // console.log(res);
+            // https://stackoverflow.com/questions/22724070/prompt-file-download-with-xmlhttprequest
+            // https://stackoverflow.com/questions/29192301/how-to-download-a-file-via-url-then-get-its-name
+            // let contentDispo = e.currentTarget.getResponseHeader('Content-Disposition');
+            // let filename = contentDispo.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/)[1];
+            saveBlob(res, filename);
         });
     }
 
@@ -155,14 +163,8 @@ function makeRequest(path, callback) {
     let req = new XMLHttpRequest();
     req.responseType = 'blob';
     req.onload = function(e) {
-        // https://stackoverflow.com/questions/22724070/prompt-file-download-with-xmlhttprequest
-        // https://stackoverflow.com/questions/29192301/how-to-download-a-file-via-url-then-get-its-name
         let blob = e.target.response;
-        let contentDispo = e.currentTarget.getResponseHeader('Content-Disposition');
-        let filename = contentDispo.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/)[1];
-        // console.log(filename);
-        // console.log(contentDispo);
-        saveBlob(blob, filename);
+        callback(blob);
     };
 
     req.open("GET", path, true);
