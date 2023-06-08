@@ -61,6 +61,8 @@ Conventional Commits: https://www.conventionalcommits.org/en/v1.0.0/
 
 Commit Label Types: https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#-commit-message-guidelines
 
+A good description of what an 'alpha' phase is: https://www.geeksforgeeks.org/alpha-testing-software-testing
+
 https://excalidraw.com/
 
 https://www.makeareadme.com/
