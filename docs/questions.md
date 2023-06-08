@@ -13,6 +13,9 @@
 * How will the web-app be hosted?
     * Possibly internally on something like AWS
     * Google Hosting
+* What is our MVP (minimum viable product) and how are we defining it?
+    * What bugs remain in the code that prevent this from going to production?
+    * What features are missing that are needed for production?
 
 
 ## For Testing
@@ -41,3 +44,5 @@
     * What feedback are we specifically looking for, if any?
     * Should we create any specific channels for testers to submit feedback? Perhaps like an email link on the application itself.
     * Where and how should we compile this feedback?
+* What is the line between 0.0 and 0.1? 
+    * I think we'll retroactively define a commit as '0.0'. After this, we'll have more to talk about in regards to what 0.1 is (but 0.1 will also probably be tagged retroactively).
