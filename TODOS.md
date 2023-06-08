@@ -7,11 +7,14 @@
 * [ ] Remove unused comments and code
 * [ ] Remove `console.log` and `print` statements
 * [ ] Upload test data to repo
+* [ ] Setup branch protections for `prod`
+    * [ ] Pick and add software license
 * [x] Make `prod` default branch once `0.0` is pushed
 	* [x] Delete `main` branch
 
 ## Server-side
 * [ ] Clean up tadaabject
+	* [ ] Reduce interface (API) for TADAA 
 * [x] Connect manual input data to TADAA
 * [x] Implement database API
 * [X] Migrate Google Cloud Console project to lpseodeveloper@gmail.com account
