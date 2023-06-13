@@ -103,6 +103,10 @@ document.addEventListener("DOMContentLoaded", function() {
     const spreadsheetSelection = document.querySelector("#spreadsheet-selection");
     spreadsheetSelection.addEventListener('change', handleFileUpload);
 
+    const fileImage = document.getElementById("file-upload-image");
+    const folderName = document.getElementById("folder-name");
+    const exportsWarning = document.getElementById("exports-only-warning");
+
     function handleFileUpload() {
         // 1. Verifying folder is exports folder and there are more than 0 files.
         // 2. Uploaded file text is updated to "File Name"
@@ -110,26 +114,43 @@ document.addEventListener("DOMContentLoaded", function() {
         // 4. Update the file uploader to display a placeholder folder image along with the file name/number of files/ display text "uploaded Folder is not exports".
         
         // FIXME: Errors if this runs when no files are uploaded.
-        let filename = spreadsheetSelection.files[0].name;
-        let folderName = spreadsheetSelection.files[0].webkitRelativePath.split("/")[0];
+        try {
+            // Upon cancel click, filename returns undefined.
+            // Check has to be done to see if spreadsheetSelection.files exists first.
+            let filename = spreadsheetSelection.files[0].name;
+            let folderName = spreadsheetSelection.files[0].webkitRelativePath.split("/")[0];
         
-        let folderIsUploaded = spreadsheetSelection.value != "";
-        let folderIsExports = folderName === "exports";
+            let folderIsUploaded = spreadsheetSelection.value != "";
+            let folderIsExports = folderName === "exports";
 
-        let isUploadValid = folderIsUploaded && folderIsExports;
-        if (isUploadValid) {
-            filename = filename.split("_")[0];
-            filename = filename.charAt(0).toUpperCase() + filename.slice(1);
-            updateUploadedFileLabel(filename);
-            outlineFileInput();
-            updateFileInputImage(filename);
-        }
-        else {
-            alert("Uploaded folder is not named exports.")
+            let isUploadValid = folderIsUploaded && folderIsExports;
+                if (isUploadValid) {
+                    filename = filename.split("_")[0];
+                    filename = filename.charAt(0).toUpperCase() + filename.slice(1);
+                    updateUploadedFileLabel(filename);
+                    outlineFileInput();
+                    updateFileInputImage(filename);
+                }
+                else {
+                    alert("Uploaded folder is not named exports.")
+                }
+        } catch (err) {
+            console.log(err);
+            if(!spreadsheetSelection.files.length > 0 ) resetForm()
+            console.log("Form refreshed");
         }
     }
 
-    let folderName = "";
+    function resetForm() {
+        let uploadFileContainer = document.querySelector("#upload-file-container");
+        fileImage.src = "static/assets/upload-placeholder.svg";
+        folderName.innerText = "Click to Upload";
+        folderName.className = "mb-2 text-sm text-neutral-500"
+        exportsWarning.style.display = "block";
+        uploadFileContainer.classList.remove("completed-indicator");
+    }
+
+    // let folderName = "";
     // Function for handling updating "Uploaded File" text once file has been uploaded.
     function updateUploadedFileLabel(filename) {
         const uploadedFile = document.querySelector("#uploaded-file-name");
@@ -140,40 +161,27 @@ document.addEventListener("DOMContentLoaded", function() {
     // Function for handling updating the border color of the upload file container when a valid file is uploaded.
     function outlineFileInput() {
         let uploadFileContainer = document.querySelector("#upload-file-container");
-        uploadFileContainer.style.borderColor = "green";
         uploadFileContainer.classList.add("completed-indicator");
     }
 
     // Function for removing file upload image/text and replacing it with placeholder folder image and folder name
     function updateFileInputImage(filename) {
+        // Unused for now
         const uploadedFile = document.querySelector("#uploaded-file-name");
-
-        // Remove excess text/upload image from file uploader once a file is uploaded
-        // The issue is when you .remove() the element #droparea, you no longer have this element on the DOM for future reference.
-        // Temp fix: loop #droparea to check and see if it has children until it has none, then proceed.
-        let fileContainerContent = document.querySelector("#droparea")
-        while(fileContainerContent.firstChild) {
-            fileContainerContent.removeChild(fileContainerContent.firstChild);
-        }
+        let fileContainerContent = document.querySelector("#droparea");
         
-        // Create placeholder folder image element
-        let placeholderFolderImage = document.createElement("img");
+        // Select Elements to be edited on each upload
+        let placeholderFolderImage = document.querySelector("#file-upload-image");
         placeholderFolderImage.src = "static/assets/folder-upload-overwrite.svg";
-        placeholderFolderImage.classList.add("w-10");
 
         // Create folder name element
-        folderName = document.createElement("span");
         folderName.innerText = filename;
-        folderName.classList.add("text-xl", "font-semibold", "pt-4");
-        
-        // Create container for the placeholder folder image and folder name
-        let placeholderContainer = document.createElement("div");
-        placeholderContainer.classList.add("flex", "flex-col","items-center");
-        placeholderContainer.appendChild(placeholderFolderImage);
-        placeholderContainer.appendChild(folderName);
-        
-        // Add the placeholder container to the file uploader
-        fileContainerContent.appendChild(placeholderContainer);
+
+        // Remove previous classes and add appropriate ones for when file is uploaded.
+        folderName.className = "text-xl font-semibold pt-4";
+
+        let exportsWarning = document.querySelector("#exports-only-warning");
+        exportsWarning.style.display = "none";
     }
 });
 

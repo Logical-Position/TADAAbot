@@ -2,6 +2,7 @@
   box-shadow: rgb(26 80 28 / 20%) 0px 7px 29px 0px !important;
   border: solid;
   transition: 2s all;
+  border-color: green;
 }
 
 #raw-data-link {
