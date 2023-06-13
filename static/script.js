@@ -103,6 +103,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const spreadsheetSelection = document.querySelector("#spreadsheet-selection");
     spreadsheetSelection.addEventListener('change', handleFileUpload);
 
+    const uploadedFile = document.querySelector("#uploaded-file-name");
     const fileImage = document.getElementById("file-upload-image");
     const folderName = document.getElementById("folder-name");
     const exportsWarning = document.getElementById("exports-only-warning");
@@ -147,13 +148,14 @@ document.addEventListener("DOMContentLoaded", function() {
         folderName.innerText = "Click to Upload";
         folderName.className = "mb-2 text-sm text-neutral-500"
         exportsWarning.style.display = "block";
+        uploadedFile.innerText = "";
         uploadFileContainer.classList.remove("completed-indicator");
+        generateButton.disabled = true;
     }
 
     // let folderName = "";
     // Function for handling updating "Uploaded File" text once file has been uploaded.
     function updateUploadedFileLabel(filename) {
-        const uploadedFile = document.querySelector("#uploaded-file-name");
         uploadedFile.innerText = filename;
         folderName.innerText = filename;       
     }
