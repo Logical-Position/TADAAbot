@@ -15,7 +15,7 @@ from uuid import uuid4
 # import db_controller as db
 import tadaa
 import datetime
-import db_controller as db
+# import db_controller as db
 import json
 
 
