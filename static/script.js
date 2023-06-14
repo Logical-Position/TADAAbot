@@ -14,21 +14,40 @@ document.addEventListener("DOMContentLoaded", function() {
     tadaaForm.addEventListener('submit', function(event) {
         event.preventDefault();
         const formData = new FormData(tadaaForm);
-
         // set cursor to show progress
         // progess bar goes through stages of completion
         document.body.style.cursor = 'progress';
+        updatePptButton("Generating PPT...");
         handleProgressBar("15");
 
         fetch('/', {
             method: 'POST',
             body: formData,
+        }).then(function(res) {
+            // Do something with the response
+            return res.json();
+
+        }).then((data) => {
+            // console.log(data);
+            
+            const ts = data['ts'];
+            // TODO: This still isn't great; the server and client should 
+            //      coordinate the exact file to be downloaded. This is still
+            //      just educated guessing.
+            const client = data['client_name'];
+            const pptName = `${client}-${ts}.pptx`
+            requestDownload(ts, pptName);
+
+            const auditsId = data['audits_id'];
+            updateRawDataLink(auditsId);
+
             
         }).then(function(response) {
             // Do something with the response  
             handleProgressBar("25");
         }).finally(() => {
             document.body.style.cursor = 'auto';
+            
             updatePptButton("Downloaded PPT");
             handleProgressBar("50");
             requestDownload();
@@ -73,10 +92,14 @@ document.addEventListener("DOMContentLoaded", function() {
     //     // authButton.disabled = false;
     // }
 
-    function requestDownload() {
-        let downloadURL = '/download';
+    function requestDownload(ts, filename) {
+        let downloadURL = `/download/${ts}`;
         makeRequest(downloadURL, (res) => {
-            console.log("Request callback");
+            // https://stackoverflow.com/questions/22724070/prompt-file-download-with-xmlhttprequest
+            // https://stackoverflow.com/questions/29192301/how-to-download-a-file-via-url-then-get-its-name
+            // let contentDispo = e.currentTarget.getResponseHeader('Content-Disposition');
+            // let filename = contentDispo.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/)[1];
+            saveBlob(res, filename);
         });
     }
 
@@ -96,6 +119,38 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
+    const blogCheckElem = document.querySelectorAll("input[name='blog']");
+    // Apply listener to blog options listening for change
+    
+    blogCheckElem.forEach((item) => {
+        item.addEventListener("change", function(e) {
+            // Secondary options become available once yes is checked, might be a cleaner way to do this later.
+        const secondaryBlogOptions = document.querySelectorAll("input[name='blog_updated_regularly']");
+
+            if(blogCheckElem[0].checked) {
+            secondaryBlogOptions.forEach(item => item.disabled = false);
+            }
+            else if (!blogCheckElem[0].checked) {
+            secondaryBlogOptions.forEach(item => item.disabled = true);
+            }
+        });
+        
+    });
+
+    const duplicateContentCheck = document.querySelectorAll("input[name='duplicate_content']");
+
+    duplicateContentCheck.forEach((item) => {
+        item.addEventListener("change", function(e) {
+            const duplicateTextBox = document.querySelector("#duplicate_text");
+            if(duplicateContentCheck[0].checked) {
+                duplicateTextBox.disabled = false;
+            }
+            else if(!duplicateContentCheck[0].checked) {
+                duplicateTextBox.disabled = true;
+            }
+        });
+    });
+
     // MARK: File Upload Listener
     const spreadsheetSelection = document.querySelector("#spreadsheet-selection");
     spreadsheetSelection.addEventListener('change', handleFileUpload);
@@ -111,7 +166,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Reset progress bar 
         handleProgressBar("0");
-
+        
+        // FIXME: Errors if this runs when no files are uploaded.
         let filename = spreadsheetSelection.files[0].name;
         let folderName = spreadsheetSelection.files[0].webkitRelativePath.split("/")[0];
         
@@ -185,27 +241,22 @@ function makeRequest(path, callback) {
     req.onload = function(e) {
         // https://stackoverflow.com/questions/22724070/prompt-file-download-with-xmlhttprequest
         let blob = e.target.response;
-        let contentDispo = e.currentTarget.getResponseHeader('Content-Disposition');
-        console.log(e.currentTarget);
-        console.log(contentDispo);
-        console.log(blob);
-        saveBlob(blob);
-        //callback(e);
+        callback(blob);
     };
 
     req.open("GET", path, true);
     req.send();
 }
 
-function saveBlob(blob) {
+function saveBlob(blob, filename) {
     // let assetRecord = this.getAssetRecord();
-    let fileName = 'pop_ppt.pptx'
+    // console.log(filename);
     let tempEl = document.createElement("a");
     document.body.appendChild(tempEl);
     tempEl.style = "display: none";
     let url = window.URL.createObjectURL(blob);
     tempEl.href = url;
-    tempEl.download = fileName;
+    tempEl.download = filename;
     tempEl.click();
     window.URL.revokeObjectURL(url);
 }
@@ -215,3 +266,12 @@ function updatePptButton (text) {
     pptButton.value = text;
 };
 
+function updateRawDataLink(id) {
+    const elId = "raw-data-link";
+    const disabledClass = "disabled-raw-data-link";
+    const anchor = document.getElementById(elId);
+    if (anchor) {
+        anchor.href = `/db/${id}`;
+        anchor.classList.remove(disabledClass);
+    }
+}

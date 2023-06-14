@@ -7,27 +7,31 @@
 * [ ] Remove unused comments and code
 * [ ] Remove `console.log` and `print` statements
 * [ ] Upload test data to repo
-* [ ] Make `prod` default branch once `0.0` is pushed
-	* [ ] Delete `main` branch
+* [ ] Setup branch protections for `prod`
+    * [ ] Pick and add software license
+* [x] Make `prod` default branch once `0.0` is pushed
+	* [x] Delete `main` branch
 
 ## Server-side
-* [ ] Implement database API
-* [ ] Connect manual input data to TADAA
+* [ ] Clean up tadaabject
+	* [ ] Reduce interface (API) for TADAA 
+* [x] Connect manual input data to TADAA
+* [x] Implement database API
 * [X] Migrate Google Cloud Console project to lpseodeveloper@gmail.com account
 	* [X] Ensure there's nothing left in personal account
 
 ## Client-side
-* [X] Make 'Generate PPT' button the "end of the road"
-	* [X] PPT should automatically download once finished
-	* [X] Remove 'Download Audit Powerpoint' button from UI
-* [ ] Change ppt filename to same as sent over server
+* [x] Make 'Generate PPT' button the "end of the road"
+	* [x] PPT should automatically download once finished
+	* [x] Remove 'Download Audit Powerpoint' button from UI
+* [x] Change ppt filename to same as sent over server
 
 ### Manual Input Fixes
 
 * [ ] Change Robot (#8) manual inputs to multiple radio options.
 * [x] Change Calls to Action (#12) to yes/no radio.
 * [x] Change Blog (#13) to Yes/No radio
-	* [ ] If yes, another yes/no radio for if it's updated regularly
+	* [x] If yes, another yes/no radio for if it's updated regularly
 * [x] Change Duplicate Content (#11) to Yes/No radio
 	* [ ] If yes, give field to explain where the duplicate content is mostly located.
 

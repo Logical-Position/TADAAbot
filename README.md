@@ -55,13 +55,19 @@ TODO
 
 ## Resources
 
+Google's Python Style Guide: https://google.github.io/styleguide/pyguide.html
+
+Conventional Commits: https://www.conventionalcommits.org/en/v1.0.0/
+
+Commit Label Types: https://github.com/angular/angular/blob/22b96b9/CONTRIBUTING.md#-commit-message-guidelines
+
+A good description of what an 'alpha' phase is: https://www.geeksforgeeks.org/alpha-testing-software-testing
+
 https://excalidraw.com/
 
 https://www.makeareadme.com/
 
 Data types in SQLite: https://www.sqlite.org/datatype3.html
-
-Creating UUIDs in Python: https://stackoverflow.com/questions/534839/how-to-create-a-guid-uuid-in-python
 
 ### Google Firestore Documentation
 
