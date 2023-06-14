@@ -18,10 +18,8 @@ document.addEventListener("DOMContentLoaded", function() {
         }).then(function(res) {
             // Do something with the response
             return res.json();
-
         }).then((data) => {
             // console.log(data);
-            
             const ts = data['ts'];
             // TODO: This still isn't great; the server and client should 
             //      coordinate the exact file to be downloaded. This is still
@@ -35,7 +33,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
         }).finally(() => {
             document.body.style.cursor = 'auto';
-            
             updatePptButton("Downloaded PPT");
         });
     });
@@ -115,9 +112,11 @@ document.addEventListener("DOMContentLoaded", function() {
         // 4. Update the file uploader to display a placeholder folder image along with the file name/number of files/ display text "uploaded Folder is not exports".
         
         // FIXME: Errors if this runs when no files are uploaded.
-        try {
-            // Upon cancel click, filename returns undefined.
-            // Check has to be done to see if spreadsheetSelection.files exists first.
+        // Upon cancel click, filename returns undefined.
+        // Check has to be done to see if spreadsheetSelection.files exists first.  
+        if(spreadsheetSelection.files.length > 0) {
+            //sucessfulFormReset works so long as the files change.
+            sucessfulFormReset();
             let filename = spreadsheetSelection.files[0].name;
             let folderName = spreadsheetSelection.files[0].webkitRelativePath.split("/")[0];
         
@@ -135,18 +134,27 @@ document.addEventListener("DOMContentLoaded", function() {
                 else {
                     alert("Uploaded folder is not named exports.")
                 }
-        } catch (err) {
-            console.log(err);
-            if(!spreadsheetSelection.files.length > 0 ) resetForm()
-            console.log("Form refreshed");
+        }   
+        else if (!spreadsheetSelection.files.length > 0 ) {
+            cancelForm()
         }
+            
     }
 
-    function resetForm() {
+    function sucessfulFormReset() {
+        // Reset form on sucessful PPT upload/download.
+        updatePptButton("Generate PPT");
+        const rawDataLink = document.getElementById("raw-data-link");
+        rawDataLink.classList.add("disabled-raw-data-link");
+        rawDataLink.href="#";
+    }
+
+    function cancelForm() {
         let uploadFileContainer = document.querySelector("#upload-file-container");
+        updatePptButton("Generate PPT");
         fileImage.src = "static/assets/upload-placeholder.svg";
         folderName.innerText = "Click to Upload";
-        folderName.className = "mb-2 text-sm text-neutral-500"
+        folderName.className = "mb-2 text-sm text-neutral-500";
         exportsWarning.style.display = "block";
         uploadedFile.innerText = "";
         uploadFileContainer.classList.remove("completed-indicator");
@@ -168,10 +176,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Function for removing file upload image/text and replacing it with placeholder folder image and folder name
     function updateFileInputImage(filename) {
-        // Unused for now
-        const uploadedFile = document.querySelector("#uploaded-file-name");
-        let fileContainerContent = document.querySelector("#droparea");
-        
         // Select Elements to be edited on each upload
         let placeholderFolderImage = document.querySelector("#file-upload-image");
         placeholderFolderImage.src = "static/assets/folder-upload-overwrite.svg";
