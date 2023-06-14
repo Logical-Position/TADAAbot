@@ -57,23 +57,27 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
     function handleProgressBar(percentage) {
-        const progressContainer = document.querySelector(".progress-container");
-        const progressBar = document.querySelector("#progress-bar");
-        const progressLabel = document.querySelector("#progress-label");
+        try {
+            const progressContainer = document.querySelector(".progress-container");
+            const progressBar = document.querySelector("#progress-bar");
+            const progressLabel = document.querySelector("#progress-label");
 
 
-        if(percentage === "100") {
-            progressLabel.innerText = "Powerpoint Finished!";
-            progressBar.value = "100";
-            // progressContainer.classList.add("hidden");
-        }
-        else if(percentage === "0") {
-            progressContainer.classList.add("hidden");
-            progressBar.value = "0";
-        }
-        else {
-            progressContainer.classList.remove("hidden");
-            progressBar.value = percentage;
+            if(percentage === "100") {
+                progressLabel.innerText = "Powerpoint Finished!";
+                progressBar.value = "100";
+                // progressContainer.classList.add("hidden");
+            }
+            else if(percentage === "0") {
+                progressContainer.classList.add("hidden");
+                progressBar.value = "0";
+            }
+            else {
+                progressContainer.classList.remove("hidden");
+                progressBar.value = percentage;
+            }
+        } catch(err) {
+            console.error(err);
         }
     }
 
