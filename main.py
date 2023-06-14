@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template, request, redirect, send_file, url_for
+from flask import Flask, g, jsonify, render_template, request, redirect, send_file, url_for
 
 # Flask Dance
 from flask_dance.contrib.google import make_google_blueprint, google
@@ -8,10 +8,14 @@ from flask_dance.contrib.google import make_google_blueprint, google
 # from oauth2client.service_account import ServiceAccountCredentials
 
 import os
-import tadaa
 import time
+import sqlite3
+from uuid import uuid4
+
+# import db_controller as db
+import tadaa
 import datetime
-import db_controller as db
+# import db_controller as db
 import json
 
 
@@ -60,23 +64,24 @@ def index():
 
 @app.route('/', methods=['POST'])
 def parse_upload():
-    # FIXME: Refactor this value
-    inputID = 'spreadsheet-selection'
+    # 1. Gather uploaded data: files and fields
+    # 2. Call tadaa to parse and compile data
+    # 3. Send compiled data to:
+    #       - Frontend
+    #       - Database
 
     # Get data from form
     for label in manual_data_labels:
         data = request.form.get(label, '')
-        if (data):
-            manual_data[label] = data
-        else:
-            manual_data[label] = ""
-
-    # Create folder for assets
+        manual_data[label] = data
+    
+    # Create folder for audit assets
     now = datetime.datetime.now()
     timestamp = now.strftime("%Y-%m-%d_%H-%M-%S")
     project_dir = os.path.join(app.config['UPLOAD_DIR'], timestamp)
 
     # Save uploaded files
+    inputID = 'spreadsheet-selection'
     os.makedirs(project_dir, exist_ok=True)
     files = [file for file in request.files.getlist(inputID) if file.filename]
     for file in files:
@@ -88,160 +93,428 @@ def parse_upload():
     segments = proj_files[0].split('_')
     project_name = segments[0].split('.')[0]
 
-    # TADAA does it's thing
+    # Let TADAA do it's thing
+    # TODO: Refactor tadaa to return the final tadaabject in one line
     tadaabject = tadaa.parse_data(project_dir, manual_data)
     root_path = app.root_path
     pop_ppt = tadaa.generate_audit(tadaabject, project_dir, root_path, project_name)
 
-    # Have to return something...
-    # TODO: Find out how to use this value on the frontend
-    # TODO: Replace it with the tadaabject and use this to populate a 'Results' view
-    time.sleep(1.5)
-    return jsonify({"Choo Choo": "Welcome to your Flask app 🚅"})
+    # Save tadaabject to database
+    # TODO: Refactor this into tadaa
+    audits_id = str(uuid4())
+    client_id = str(uuid4())
+    domain = manual_data["domain_url"]
+    project_type = "InvalidType"
 
-@app.route('/download', methods=['GET'])
-def download_audit():
+    # TODO: Refactor this into the final tadaabject
+    data = {
+        "audits_id": audits_id,
+        "client_id": client_id,
+        "client_name": project_name,
+        "domain": domain,
+        "ts": timestamp,
+        "project_type": project_type,
+        "ppt_url": pop_ppt,
+    }
+    db_init(DB_SCHEMA)
+    db_insert_new_audit(data)
+
+    # And also return it to the client
+    return jsonify(data)
+
+@app.route('/download/<ts>', methods=['GET'])
+def download_audit(ts):
     dirs = os.listdir(UPLOAD_DIR)
-    last_dir = dirs[-1]
-    abs_path_proj_dir = app.root_path + '/uploads/' + last_dir
+    # FIXME: This has not been getting the correct ppts
+    # FIXED: but leaving temporarily for discussion purposes.
+    # Per the documentation, os.listdir returns a list,
+    #   but "The list is in arbitrary order"
+    # https://docs.python.org/3/library/os.html?highlight=listdir#os.listdir
+    # last_dir = dirs[-1]
+    # print(dirs)
+    # print(last_dir)
+
+    # TODO: This can likely be simplified by just getting the full download path from the client
+    requested_audit = ts
+    abs_path_proj_dir = app.root_path + '/uploads/' + requested_audit
     files = os.listdir(abs_path_proj_dir)
     segments = files[0].split('_')
     project_name = segments[0].split('.')[0]
+    # print(project_name)
     ppt_path = os.path.join(UPLOAD_DIR, abs_path_proj_dir + f'/{project_name}.pptx')
-
+    # print(ppt_path)
     return send_file(ppt_path)
 
 
-# API Routes
-
-@app.route('/auth')
-def api_test():
-    # Define the auth scopes to request.
-    scope = 'https://www.googleapis.com/auth/analytics.readonly'
-    key_file_location = 'key.json'
-
-    # Authenticate and construct service.
-    analytics_service = get_service(
-            api_name='analytics',
-            api_version='v3',
-            scopes=[scope],
-            key_file_location=key_file_location)
-
-    accounts = get_accounts(analytics_service)
-    return accounts
-    #profile_id = get_first_profile_id(analytics_service)
-    #print_results(get_results(analytics_service, profile_id))
-
-    #print(service)
-    #return {"success": "true"}
-    
-    # if not google.authorized:
-    #     return redirect(url_for("google.login"))
-    # userRes = google.get("/oauth2/v1/userinfo")
-    # siteList = google.get("/webmasters/v3/sites")
-    # print(siteList.json())
-    # print("You are {email} on Google".format(email=userRes.json()["email"]))
-    # return siteList.json()
-    # return "You are {email} on Google".format(email=userRes.json()["email"])
-
-
-# Database Routes
-
-@app.route('/test/create', methods=['GET', 'POST'])
-def db_createData():
-    return db.create_audit('example.com', 'Example', {'data': 'something'})
-
-@app.route('/test/read', methods=['GET'])
-def db_readData():
-    return db.read()
-
-@app.route('/test/update', methods=['POST', 'PUT'])
-def db_updateData():
-    return db.update()
-
-@app.route('/test/delete', methods=['GET', 'DELETE'])
-def db_deleteData():
-    return db.delete()
 
 
 
 
 
-# API Functions
 
-def get_service(api_name, api_version, scopes, key_file_location):
-    """Get a service that communicates to a Google API.
 
-    Args:
-        api_name: The name of the api to connect to.
-        api_version: The api version to connect to.
-        scopes: A list auth scopes to authorize for the application.
-        key_file_location: The path to a valid service account JSON key file.
 
-    Returns:
-        A service that is connected to the specified API.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# EVERYTHING DATABASE.
+# wHY ARE THEY SO SIMPLE IN THEORY, BUT IMPLEMENTING THEM IS
+# SUCH. A. BITCH.
+
+DB_NAME = 'db'
+DB_FILENAME = f'{DB_NAME}_partial-schema.db'
+DB_ROUTE = f'/{DB_NAME}'
+
+# Schema
+#
+# clients
+#   id: UUID
+#   name: string
+#
+# audits
+#   id: UUID
+#   client_id: UUID
+#   domain: string
+#   timestamp: Timestamp
+#   projectType: ProjectType
+#   pptUrl: URL
+#
+# audit_data
+#   TODO
+#
+DB_SCHEMA = [
+    {
+        'table': 'clients',
+        'columns': [
+            'id',
+            'name',
+        ],
+    },
+    {
+        'table': 'audits',
+        'columns': [
+            'id',
+            'clientId',
+            'domain',
+            'timestamp',
+            'projectType',
+            'pptUrl'
+        ],
+    },
+    {
+        'table': 'audit_data',
+        'columns': [
+            'auditId',
+            'clientId',
+            # The following is copy-pasted from data_fields of utils.py
+            # TODO: Find a way to re-use the array
+            'broken__4xx_or_5xx',
+            'broken_internal_urls',
+            'broken_external_urls',
+            'h1__tag_is_empty',
+            'urls_with_duplicate_h1',
+            'external_redirected_urls',
+            'missing_alt_text',
+            'internal_redirected_urls',
+            'description_is_empty',
+            'description_is_missing',
+            'description_length_too_long',
+            'description_length_too_short',
+            'not_found_by_the_crawler',
+            'duplicate_meta_descriptions',
+            'title_tag_length_too_long',
+            'title_tag_length_too_short',
+            'duplicate_page_titles',
+            'url_in_multiple_xml_sitemaps',
+            'noindex_url_in_xml_sitemaps',
+            'redirect__3xx__url_in_xml_sitemaps',
+        ],
+    },
+]
+
+def db_connect():
     """
+    Creates a connection to the database.
+    @return A database connection.
+    """
+    db = getattr(g, '_database', None)
+    if db is None:
+        db = g._database = sqlite3.connect(DB_FILENAME)
+    return db
 
-    credentials = ServiceAccountCredentials.from_json_keyfile_name(
-            key_file_location, scopes=scopes)
 
-    # Build the service object.
-    service = build(api_name, api_version, credentials=credentials)
+def db_disconnect():
+    """
+    Properly disconnects from database.
+    This function should be called at app close.
+    @return None
+    """
+    db = getattr(g, '_database', None)
+    if db is not None:
+        db.close()
 
-    return service
 
-def get_accounts(service):
-    # Get a list of all Google Analytics accounts for this user
-    accounts = service.management().accounts().list().execute()
-    print(accounts)
-    return accounts
+def db_init(schema):
+    """
+    Initializes the database with the given schema.
+    @param schema: The schema with which to structure the database.
+    @return None
+    """
+    db = db_connect()
+    cur = db.cursor()
+    for table in schema:
+        table_name = table['table']
+        if not db_table_exists(table_name):
+            cols = table['columns']
+            db_create_table(table_name, cols)
 
-def get_first_profile_id(service):
-    # Use the Analytics service object to get the first profile id.
 
-    # Get a list of all Google Analytics accounts for this user
-    accounts = service.management().accounts().list().execute()
+def db_create_table(name, cols):
+    """
+    Creates a table with the given name and columns.
+    @param [str] name: The name of the table to create.
+    @param [array] cols: An array of string.
+    @return None
+    """
+    db = db_connect()
+    cur = db.cursor()
+    # It is not advised to interpolate strings in a query like this, 
+    # https://docs.python.org/3/library/sqlite3.html#how-to-use-placeholders-to-bind-values-in-sql-queries
+    #   but it's the only option. See the Stack Overflow link below.
+    # At least it's not from user input, it's a variable defined directly above.
+    # Should still (probably) be sanitized if it's going to be used in this way.
+    # (I suppose this is encouragement to move initialization to a .sql file)
+    # https://stackoverflow.com/questions/4308124/safe-way-to-create-sqlite3-table-in-python
+    q = f"CREATE TABLE IF NOT EXISTS {name}("
+    initial = True
+    for col in cols:
+        if initial:
+            q += f"{col}"
+            initial = False
+        else:
+            q += f", {col}"
+    q += f")"
+    cur.execute(q)
+    db.commit()
+    cur.close()
 
-    if accounts.get('items'):
-        # Get the first Google Analytics account.
-        account = accounts.get('items')[0].get('id')
 
-        # Get a list of all the properties for the first account.
-        properties = service.management().webproperties().list(
-                accountId=account).execute()
+"""
+Checks if the given table exists in the database.
+@param [str] name: The name of the table to verify.
+@return [bool] : True if the table exists, otherwise False
+"""
+def db_table_exists(name):
+    db = db_connect()
+    cur = db.cursor()
+    query = f"SELECT name FROM sqlite_master WHERE type='table' and name='{name}'"
+    cur.execute(query)
+    res = cur.fetchall()
+    count = len(res)
+    exists = True if count == 1 else False
+    cur.close()
+    return exists
 
-        if properties.get('items'):
-            # Get the first property id.
-            property = properties.get('items')[0].get('id')
+def db_id_exists_in_table(val, table_name):
+    db = db_connect()
+    cur = db.cursor()
+    q = f"SELECT * FROM {table_name} WHERE id = '{val}'"
+    cur.execute(q)
+    res = cur.fetchall()
+    count = len(res)
+    exists = True if count == 1 else False
+    cur.close()
+    return exists
 
-            # Get a list of all views (profiles) for the first property.
-            profiles = service.management().profiles().list(
-                    accountId=account,
-                    webPropertyId=property).execute()
+def db_client_exists(val):
+    return db_id_exists_in_table(val, "clients")
 
-            if profiles.get('items'):
-                # return the first view (profile) id.
-                return profiles.get('items')[0].get('id')
+def db_audit_exists(val):
+    return db_id_exists_in_table(val, "audits")
 
-    return None
+def db_insert_into(table_name, data):
+    # TODO: Check if data length is equal to num cols for table
+    db = db_connect()
+    cur = db.cursor()
 
-def get_results(service, profile_id):
-    # Use the Analytics Service Object to query the Core Reporting API
-    # for the number of sessions within the past seven days.
-    return service.data().ga().get(
-            ids='ga:' + profile_id,
-            start_date='7daysAgo',
-            end_date='today',
-            metrics='ga:sessions').execute()
+    q = f"INSERT INTO {table_name} VALUES ("
+    initial = True
+    for datum in data:
+        if initial:
+            q += "?"
+            initial = False
+        else:
+            q += ", ?"
+    q += ")"
+    cur.execute(q, data)
+    db.commit()
+    cur.close()
 
-def print_results(results):
-    # Print data nicely for the user.
-    if results:
-        print('View (Profile):', results.get('profileInfo').get('profileName'))
-        print('Total Sessions:', results.get('rows')[0][0])
+def db_insert_new_audit(data):
+    # data = {
+    #     "client_name": project_name,
+    #     "domain": manual_data["domain_url"],
+    #     "ts": timestamp,
+    #     "project_type": project_type,
+    #     "ppt_url": pop_ppt,
+    # }
 
+    # Pull data from input
+    audits_id = data['audits_id']
+    client_id = data['client_id']
+    client_name = data['client_name']
+    domain = data['domain']
+    ts = data['ts']
+    project_type = data['project_type']
+    ppt_url = data['ppt_url']
+
+    # Form data for database submission
+
+    # clients
+    #   id: UUID
+    #   name: string
+    client_data = [
+        client_id,
+        client_name
+    ]
+
+    # audits
+    #   id: UUID
+    #   client_id: UUID
+    #   domain: string
+    #   timestamp: Timestamp
+    #   projectType: ProjectType
+    #   pptUrl: URL
+    audits_data = [
+        audits_id,
+        client_id,
+        domain,
+        ts,
+        project_type,
+        ppt_url,
+    ]
+
+    # Insert into database
+    db_insert_into("clients", client_data)
+    db_insert_into("audits", audits_data)
+
+
+def db_query(query, args=(), one=False):
+    cur = db_connect().execute(query, args)
+    rv = cur.fetchall()
+    cur.close()
+    return (rv[0] if rv else None) if one else rv
+
+def db_read_all():
+    all_data = {}
+    for table in DB_SCHEMA:
+        table_name = table['table']
+        q = f"SELECT * FROM {table_name}"
+        a = []
+        all_data[table_name] = db_query(q, a)
+    return all_data
+
+def db_read_table(table_name):
+    if db_table_exists(table_name):
+        q = f"SELECT * FROM {table_name}"
+        a = []
+        data = db_query(q, a)
+    return data
+
+def db_read_id_from_table(id, table_name):
+    db = db_connect()
+    cur = db.cursor()
+    q = f"SELECT * FROM {table_name} WHERE id = '{id}'"
+    cur.execute(q)
+    res = cur.fetchone()
+    return res
+
+def db_read_audit(ts):
+    q = f""
+    a = []
+    data = db_query(q, a)
+    return data
+
+def db_delete_all():
+    db = db_connect()
+    cur = db.cursor()
+    for table in DB_SCHEMA:
+        table_name = table['table']
+        q = f"DELETE FROM {table_name}"
+        cur.execute(q)
+    db.commit()
+    
+# Database Testing Routes
+
+@app.route(f'{DB_ROUTE}/all', methods=['GET'])
+def db_route_read_all():
+    db_init(DB_SCHEMA)
+    data = db_read_all()
+    return jsonify(data)
+
+@app.route(f'{DB_ROUTE}/<val>', methods=['GET'])
+def db_route_read_data(val):
+    db_init(DB_SCHEMA)
+    if db_table_exists(val):
+        # Fetch table data
+        data = { "table": db_read_table(val) }
+    elif db_client_exists(val):
+        data = { "client": db_read_id_from_table(val, "clients") }
+    elif db_audit_exists(val):
+        data = { "audit": db_read_id_from_table(val, "audits") }
     else:
-        print('No results found')
+        data = {"error": f"{val} does not exist as a table, or client ID, or audit ID"}
+    return jsonify(data)
+
+
+@app.teardown_appcontext
+def close_connection(exception):
+    db_disconnect()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 # Main Function
