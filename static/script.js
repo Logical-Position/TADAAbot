@@ -77,7 +77,6 @@ document.addEventListener("DOMContentLoaded", function() {
         let downloadURL = '/download';
         makeRequest(downloadURL, (res) => {
             console.log("Request callback");
-            console.log(res);
         });
     }
 
@@ -121,6 +120,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         let isUploadValid = folderIsUploaded && folderIsExports;
         if (isUploadValid) {
+            console.log(spreadsheetSelection.files.length)
             filename = filename.split("_")[0];
             filename = filename.charAt(0).toUpperCase() + filename.slice(1);
             updateUploadedFileLabel(filename);
@@ -184,14 +184,12 @@ function makeRequest(path, callback) {
     req.responseType = 'blob';
     req.onload = function(e) {
         // https://stackoverflow.com/questions/22724070/prompt-file-download-with-xmlhttprequest
-        // https://stackoverflow.com/questions/29192301/how-to-download-a-file-via-url-then-get-its-name
         let blob = e.target.response;
         let contentDispo = e.currentTarget.getResponseHeader('Content-Disposition');
-        let fileName = contentDispo.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/)[1];
-        console.log(fileName);
         console.log(e.currentTarget);
         console.log(contentDispo);
         console.log(blob);
+        saveBlob(blob);
         //callback(e);
     };
 
