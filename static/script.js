@@ -76,7 +76,10 @@ document.addEventListener("DOMContentLoaded", function() {
             secondaryBlogOptions.forEach(item => item.disabled = false);
             }
             else if (!blogCheckElem[0].checked) {
-            secondaryBlogOptions.forEach(item => item.disabled = true);
+            secondaryBlogOptions.forEach(item => {
+                item.checked = false;
+                item.disabled = true;
+            });
             }
         });
         
@@ -91,6 +94,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 duplicateTextBox.disabled = false;
             }
             else if(!duplicateContentCheck[0].checked) {
+                duplicateTextBox.value = "";
                 duplicateTextBox.disabled = true;
             }
         });
