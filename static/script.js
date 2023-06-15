@@ -49,11 +49,11 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Handles enabling/disabling the submit buttons and very basic verification.
-    let test = document.querySelector("#spreadsheet-selection");
+    let fileUploadContainer = document.querySelector("#spreadsheet-selection");
     let generateButton = document.querySelector('input[name="generate_ppt"]');
-    test.addEventListener('change', function(event) {
-        if (test.value != "") {
-            let parentFolder = test.files[0].webkitRelativePath.split("/")[0];
+    fileUploadContainer.addEventListener('change', function(event) {
+        if (fileUploadContainer.value != "") {
+            let parentFolder = fileUploadContainer.files[0].webkitRelativePath.split("/")[0];
             if (parentFolder == "exports") {
                 generateButton.disabled = false;
             }
@@ -97,8 +97,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     // MARK: File Upload Listener
-    const spreadsheetSelection = document.querySelector("#spreadsheet-selection");
-    spreadsheetSelection.addEventListener('change', handleFileUpload);
+    fileUploadContainer.addEventListener('change', handleFileUpload);
 
     const uploadedFile = document.querySelector("#uploaded-file-name");
     const fileImage = document.getElementById("file-upload-image");
@@ -113,14 +112,14 @@ document.addEventListener("DOMContentLoaded", function() {
         
         // FIXME: Errors if this runs when no files are uploaded.
         // Upon cancel click, filename returns undefined.
-        // Check has to be done to see if spreadsheetSelection.files exists first.  
-        if(spreadsheetSelection.files.length > 0) {
+        // Check has to be done to see if fileUploadContainer.files exists first.  
+        if(fileUploadContainer.files.length > 0) {
             //sucessfulFormReset works so long as the files change.
             sucessfulFormReset();
-            let filename = spreadsheetSelection.files[0].name;
-            let folderName = spreadsheetSelection.files[0].webkitRelativePath.split("/")[0];
+            let filename = fileUploadContainer.files[0].name;
+            let folderName = fileUploadContainer.files[0].webkitRelativePath.split("/")[0];
         
-            let folderIsUploaded = spreadsheetSelection.value != "";
+            let folderIsUploaded = fileUploadContainer.value != "";
             let folderIsExports = folderName === "exports";
 
             let isUploadValid = folderIsUploaded && folderIsExports;
@@ -135,7 +134,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     alert("Uploaded folder is not named exports.")
                 }
         }   
-        else if (!spreadsheetSelection.files.length > 0 ) {
+        else if (!fileUploadContainer.files.length > 0 ) {
             cancelForm()
         }
             
