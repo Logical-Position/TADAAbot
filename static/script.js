@@ -154,6 +154,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function cancelForm() {
         let uploadFileContainer = document.querySelector("#upload-file-container");
+        const rawDataLink = document.getElementById("raw-data-link");
         updatePptButton("Generate PPT");
         fileImage.src = "static/assets/upload-placeholder.svg";
         folderName.innerText = "Click to Upload";
@@ -162,6 +163,8 @@ document.addEventListener("DOMContentLoaded", function() {
         uploadedFile.innerText = "";
         uploadFileContainer.classList.remove("completed-indicator");
         generateButton.disabled = true;
+        rawDataLink.classList.add("disabled-raw-data-link");
+        rawDataLink.href="#";
     }
 
     // let folderName = "";
