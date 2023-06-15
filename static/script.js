@@ -18,10 +18,8 @@ document.addEventListener("DOMContentLoaded", function() {
         }).then(function(res) {
             // Do something with the response
             return res.json();
-
         }).then((data) => {
             // console.log(data);
-            
             const ts = data['ts'];
             // TODO: This still isn't great; the server and client should 
             //      coordinate the exact file to be downloaded. This is still
@@ -35,7 +33,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
         }).finally(() => {
             document.body.style.cursor = 'auto';
-            
             updatePptButton("Downloaded PPT");
         });
     });
@@ -52,11 +49,11 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Handles enabling/disabling the submit buttons and very basic verification.
-    let test = document.querySelector("#spreadsheet-selection");
+    let fileUploadContainer = document.querySelector("#spreadsheet-selection");
     let generateButton = document.querySelector('input[name="generate_ppt"]');
-    test.addEventListener('change', function(event) {
-        if (test.value != "") {
-            let parentFolder = test.files[0].webkitRelativePath.split("/")[0];
+    fileUploadContainer.addEventListener('change', function(event) {
+        if (fileUploadContainer.value != "") {
+            let parentFolder = fileUploadContainer.files[0].webkitRelativePath.split("/")[0];
             if (parentFolder == "exports") {
                 generateButton.disabled = false;
             }
@@ -79,7 +76,10 @@ document.addEventListener("DOMContentLoaded", function() {
             secondaryBlogOptions.forEach(item => item.disabled = false);
             }
             else if (!blogCheckElem[0].checked) {
-            secondaryBlogOptions.forEach(item => item.disabled = true);
+            secondaryBlogOptions.forEach(item => {
+                item.checked = false;
+                item.disabled = true;
+            });
             }
         });
         
@@ -94,14 +94,19 @@ document.addEventListener("DOMContentLoaded", function() {
                 duplicateTextBox.disabled = false;
             }
             else if(!duplicateContentCheck[0].checked) {
+                duplicateTextBox.value = "";
                 duplicateTextBox.disabled = true;
             }
         });
     });
 
     // MARK: File Upload Listener
-    const spreadsheetSelection = document.querySelector("#spreadsheet-selection");
-    spreadsheetSelection.addEventListener('change', handleFileUpload);
+    fileUploadContainer.addEventListener('change', handleFileUpload);
+
+    const uploadedFile = document.querySelector("#uploaded-file-name");
+    const fileImage = document.getElementById("file-upload-image");
+    const folderName = document.getElementById("folder-name");
+    const exportsWarning = document.getElementById("exports-only-warning");
 
     function handleFileUpload() {
         // 1. Verifying folder is exports folder and there are more than 0 files.
@@ -110,29 +115,58 @@ document.addEventListener("DOMContentLoaded", function() {
         // 4. Update the file uploader to display a placeholder folder image along with the file name/number of files/ display text "uploaded Folder is not exports".
         
         // FIXME: Errors if this runs when no files are uploaded.
-        let filename = spreadsheetSelection.files[0].name;
-        let folderName = spreadsheetSelection.files[0].webkitRelativePath.split("/")[0];
+        // Upon cancel click, filename returns undefined.
+        // Check has to be done to see if fileUploadContainer.files exists first.  
+        if(fileUploadContainer.files.length > 0) {
+            //sucessfulFormReset works so long as the files change.
+            sucessfulFormReset();
+            let filename = fileUploadContainer.files[0].name;
+            let folderName = fileUploadContainer.files[0].webkitRelativePath.split("/")[0];
         
-        let folderIsUploaded = spreadsheetSelection.value != "";
-        let folderIsExports = folderName === "exports";
+            let folderIsUploaded = fileUploadContainer.value != "";
+            let folderIsExports = folderName === "exports";
 
-        let isUploadValid = folderIsUploaded && folderIsExports;
-        if (isUploadValid) {
-            filename = filename.split("_")[0];
-            filename = filename.charAt(0).toUpperCase() + filename.slice(1);
-            updateUploadedFileLabel(filename);
-            outlineFileInput();
-            updateFileInputImage(filename);
+            let isUploadValid = folderIsUploaded && folderIsExports;
+                if (isUploadValid) {
+                    filename = filename.split("_")[0];
+                    filename = filename.charAt(0).toUpperCase() + filename.slice(1);
+                    updateUploadedFileLabel(filename);
+                    outlineFileInput();
+                    updateFileInputImage(filename);
+                }
+                else {
+                    alert("Uploaded folder is not named exports.")
+                }
+        }   
+        else if (!fileUploadContainer.files.length > 0 ) {
+            cancelForm()
         }
-        else {
-            alert("Uploaded folder is not named exports.")
-        }
+            
     }
 
-    let folderName = "";
+    function sucessfulFormReset() {
+        // Reset form on sucessful PPT upload/download.
+        updatePptButton("Generate PPT");
+        const rawDataLink = document.getElementById("raw-data-link");
+        rawDataLink.classList.add("disabled-raw-data-link");
+        rawDataLink.href="#";
+    }
+
+    function cancelForm() {
+        let uploadFileContainer = document.querySelector("#upload-file-container");
+        updatePptButton("Generate PPT");
+        fileImage.src = "static/assets/upload-placeholder.svg";
+        folderName.innerText = "Click to Upload";
+        folderName.className = "mb-2 text-sm text-neutral-500";
+        exportsWarning.style.display = "block";
+        uploadedFile.innerText = "";
+        uploadFileContainer.classList.remove("completed-indicator");
+        generateButton.disabled = true;
+    }
+
+    // let folderName = "";
     // Function for handling updating "Uploaded File" text once file has been uploaded.
     function updateUploadedFileLabel(filename) {
-        const uploadedFile = document.querySelector("#uploaded-file-name");
         uploadedFile.innerText = filename;
         folderName.innerText = filename;       
     }
@@ -140,40 +174,23 @@ document.addEventListener("DOMContentLoaded", function() {
     // Function for handling updating the border color of the upload file container when a valid file is uploaded.
     function outlineFileInput() {
         let uploadFileContainer = document.querySelector("#upload-file-container");
-        uploadFileContainer.style.borderColor = "green";
         uploadFileContainer.classList.add("completed-indicator");
     }
 
     // Function for removing file upload image/text and replacing it with placeholder folder image and folder name
     function updateFileInputImage(filename) {
-        const uploadedFile = document.querySelector("#uploaded-file-name");
-
-        // Remove excess text/upload image from file uploader once a file is uploaded
-        // The issue is when you .remove() the element #droparea, you no longer have this element on the DOM for future reference.
-        // Temp fix: loop #droparea to check and see if it has children until it has none, then proceed.
-        let fileContainerContent = document.querySelector("#droparea")
-        while(fileContainerContent.firstChild) {
-            fileContainerContent.removeChild(fileContainerContent.firstChild);
-        }
-        
-        // Create placeholder folder image element
-        let placeholderFolderImage = document.createElement("img");
+        // Select Elements to be edited on each upload
+        let placeholderFolderImage = document.querySelector("#file-upload-image");
         placeholderFolderImage.src = "static/assets/folder-upload-overwrite.svg";
-        placeholderFolderImage.classList.add("w-10");
 
         // Create folder name element
-        folderName = document.createElement("span");
         folderName.innerText = filename;
-        folderName.classList.add("text-xl", "font-semibold", "pt-4");
-        
-        // Create container for the placeholder folder image and folder name
-        let placeholderContainer = document.createElement("div");
-        placeholderContainer.classList.add("flex", "flex-col","items-center");
-        placeholderContainer.appendChild(placeholderFolderImage);
-        placeholderContainer.appendChild(folderName);
-        
-        // Add the placeholder container to the file uploader
-        fileContainerContent.appendChild(placeholderContainer);
+
+        // Remove previous classes and add appropriate ones for when file is uploaded.
+        folderName.className = "text-xl font-semibold pt-4";
+
+        let exportsWarning = document.querySelector("#exports-only-warning");
+        exportsWarning.style.display = "none";
     }
 });
 
