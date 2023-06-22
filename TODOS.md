@@ -1,7 +1,7 @@
 # TADAAbot TODOs
 
-* [ ] Launch date scheduled for June 6th!
-	* [ ] Schedule meeting with Tursi.
+* [x] Launch date scheduled for June 6th!
+	* [x] Schedule meeting with Tursi.
 
 ## General
 * [ ] Remove unused comments and code
