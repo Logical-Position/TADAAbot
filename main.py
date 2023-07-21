@@ -1,7 +1,7 @@
 from flask import Flask, g, jsonify, render_template, request, redirect, send_file, url_for
 
 # Flask Dance
-from flask_dance.contrib.google import make_google_blueprint, google
+# from flask_dance.contrib.google import make_google_blueprint, google
 
 # Google API
 # from apiclient.discovery import build
@@ -107,17 +107,20 @@ def parse_upload():
     project_type = "InvalidType"
 
     # TODO: Refactor this into the final tadaabject
-    data = {
-        "audits_id": audits_id,
-        "client_id": client_id,
-        "client_name": project_name,
-        "domain": domain,
-        "ts": timestamp,
-        "project_type": project_type,
-        "ppt_url": pop_ppt,
-    }
+    # data = {
+    #     "audits_id": audits_id,
+    #     "client_id": client_id,
+    #     "client_name": project_name,
+    #     "domain": domain,
+    #     "ts": timestamp,
+    #     "project_type": project_type,
+    #     "ppt_url": pop_ppt,
+    # }
+    data = tadaa.__generate_audit()
     db_init(DB_SCHEMA)
     db_insert_new_audit(data)
+
+    
 
     # And also return it to the client
     return jsonify(data)
