@@ -18,8 +18,6 @@ document.addEventListener("DOMContentLoaded", function() {
         // progess bar goes through stages of completion
         document.body.style.cursor = 'progress';
         updatePptButton("Generating PPT...");
-        handleProgressBar("15");
-
         fetch('/', {
             method: 'POST',
             body: formData,
@@ -28,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function() {
             return res.json();
 
         }).then((data) => {
-            // console.log(data);
+             // console.log(data);
             
             const ts = data['ts'];
             // TODO: This still isn't great; the server and client should 
@@ -44,57 +42,13 @@ document.addEventListener("DOMContentLoaded", function() {
             
         }).then(function(response) {
             // Do something with the response  
-            handleProgressBar("25");
         }).finally(() => {
             document.body.style.cursor = 'auto';
             
             updatePptButton("Downloaded PPT");
-            handleProgressBar("50");
-            requestDownload();
-            handleProgressBar("100");
+            // requestDownload(); not sure why its on here twice
         });
     });
-
-
-    function handleProgressBar(percentage) {
-        try {
-            const progressContainer = document.querySelector(".progress-container");
-            const progressBar = document.querySelector("#progress-bar");
-            const progressLabel = document.querySelector("#progress-label");
-
-
-            if(percentage === "100") {
-                progressLabel.innerText = "Powerpoint Finished!";
-                progressBar.value = "100";
-                // progressContainer.classList.add("hidden");
-            }
-            else if(percentage === "0") {
-                progressContainer.classList.add("hidden");
-                progressBar.value = "0";
-            }
-            else {
-                progressContainer.classList.remove("hidden");
-                progressBar.value = percentage;
-            }
-        } catch(err) {
-            console.error(err);
-        }
-    }
-
-    // let downloadButton = document.querySelector('button#ppt-download-button');
-    // // let authButton = document.querySelector('button#auth-dance-button');
-    // downloadButton.addEventListener('click', (e) => {
-    //     if (downloadButton.disabled) return;
-    //     requestDownload();
-    // })
-    // authButton.addEventListener('click', (e) => {
-    //     if (authButton.disabled) return;
-    //     authDance();
-    // })
-    // function enableDownload() {
-    //     // downloadButton.disabled = false;
-    //     // authButton.disabled = false;
-    // }
 
     function requestDownload(ts, filename) {
         let downloadURL = `/download/${ts}`;
@@ -169,7 +123,7 @@ document.addEventListener("DOMContentLoaded", function() {
         // 5. Enable "Generate PPT button"
 
         // Reset progress bar 
-        handleProgressBar("0");
+        // handleProgressBar("0");
         
         // FIXME: Errors if this runs when no files are uploaded.
         let filename = spreadsheetSelection.files[0].name;
@@ -180,7 +134,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
         let isUploadValid = folderIsUploaded && folderIsExports;
         if (isUploadValid) {
-            console.log(spreadsheetSelection.files.length)
+            // console.log(spreadsheetSelection.files.length)
             filename = filename.split("_")[0];
             filename = filename.charAt(0).toUpperCase() + filename.slice(1);
             updateUploadedFileLabel(filename);
