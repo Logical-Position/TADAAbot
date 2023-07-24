@@ -2,6 +2,7 @@ import os.path
 import utils
 import ppt
 import data
+from uuid import uuid4
 
 
 
@@ -52,21 +53,31 @@ tadaabjectCreation class
 
 '''
 
-def __generate_audit(project_dir, manual_data, root_path):
+def __generate_audit(project_dir: str, manual_data:dict, root_path:str, project_name:str, timestamp:str):
     """
-
-    @param
+    @param project_dir: Project path by timestamp "os.path/uploads/[timestamp]"
+    @param manual_data: Data submitted through form fields
+    @param root_path: the path to the root of application
 
     @return tadaabject: Our custom tech audit data object
     """
+
+    audits_id = str(uuid4())
+    client_id = str(uuid4())
+    domain = manual_data["domain_url"]
+    project_type = "InvalidType"
+
+    parsed_data = parse_data(project_dir, manual_data)
+    pop_ppt = ppt.populate_powerpoint(parsed_data, project_dir, root_path, project_name)
+
     tadaabject  = {
-        "audits_id": "audits_id",
-        "client_id": "client_id",
-        "client_name": "project_name",
-        "domain": "domain",
-        "ts": "timestamp",
-        "project_type": "project_type",
-        "ppt_url": "pop_ppt",
+        "audits_id": audits_id,
+        "client_id": client_id,
+        "client_name": project_name,
+        "domain": domain,
+        "ts": timestamp,
+        "project_type": project_type,
+        "ppt_url": pop_ppt,
     }
     return tadaabject
 
@@ -94,18 +105,18 @@ def parse_data(project_dir, manual_data):
     return final_data_obj
 
 
-def generate_audit(final_data_obj, project_dir, root_path, project_name):
-    """
-    Generates a populated Powerpoint document using the custom data object.
+# def generate_audit(final_data_obj, project_dir, root_path, project_name):
+#     """
+#     Generates a populated Powerpoint document using the custom data object.
 
-    @param [dict] final_data_obj: our custom data object {target_file: [data]} that contains Pandas dataframe/series objects.
-    @param [str] root_path: path to the server's root directory.
+#     @param [dict] final_data_obj: our custom data object {target_file: [data]} that contains Pandas dataframe/series objects.
+#     @param [str] root_path: path to the server's root directory.
 
-    @return [list] pop_ppt: a Powerpoint doc populated with values calculated using the custom data object.
-    """
-    pop_ppt = ppt.populate_powerpoint(final_data_obj, project_dir, root_path, project_name)
+#     @return [list] pop_ppt: a Powerpoint doc populated with values calculated using the custom data object.
+#     """
+#     pop_ppt = ppt.populate_powerpoint(final_data_obj, project_dir, root_path, project_name)
     
-    return pop_ppt
+#     return pop_ppt
 
 
 def data_vis():

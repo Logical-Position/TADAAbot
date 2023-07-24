@@ -10,7 +10,6 @@ from flask import Flask, g, jsonify, render_template, request, redirect, send_fi
 import os
 import time
 import sqlite3
-from uuid import uuid4
 
 # import db_controller as db
 import tadaa
@@ -94,29 +93,11 @@ def parse_upload():
     project_name = segments[0].split('.')[0]
 
     # Let TADAA do it's thing
-    # TODO: Refactor tadaa to return the final tadaabject in one line
-    tadaabject = tadaa.parse_data(project_dir, manual_data)
     root_path = app.root_path
-    pop_ppt = tadaa.generate_audit(tadaabject, project_dir, root_path, project_name)
+    data = tadaa.__generate_audit(project_dir, manual_data, root_path, project_name, timestamp)
 
-    # Save tadaabject to database
-    # TODO: Refactor this into tadaa
-    audits_id = str(uuid4())
-    client_id = str(uuid4())
-    domain = manual_data["domain_url"]
-    project_type = "InvalidType"
 
-    # TODO: Refactor this into the final tadaabject
-    # data = {
-    #     "audits_id": audits_id,
-    #     "client_id": client_id,
-    #     "client_name": project_name,
-    #     "domain": domain,
-    #     "ts": timestamp,
-    #     "project_type": project_type,
-    #     "ppt_url": pop_ppt,
-    # }
-    data = tadaa.__generate_audit()
+    # Database
     db_init(DB_SCHEMA)
     db_insert_new_audit(data)
 
