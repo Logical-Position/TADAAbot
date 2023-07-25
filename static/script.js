@@ -18,7 +18,6 @@ document.addEventListener("DOMContentLoaded", function() {
         // progess bar goes through stages of completion
         document.body.style.cursor = 'progress';
         updatePptButton("Generating PPT...");
-        handleProgressBar("15");
 
         fetch('/', {
             method: 'POST',
@@ -44,42 +43,13 @@ document.addEventListener("DOMContentLoaded", function() {
             
         }).then(function(response) {
             // Do something with the response  
-            handleProgressBar("25");
         }).finally(() => {
             document.body.style.cursor = 'auto';
             
             updatePptButton("Downloaded PPT");
-            handleProgressBar("50");
-            requestDownload();
-            handleProgressBar("100");
         });
     });
 
-
-    function handleProgressBar(percentage) {
-        try {
-            const progressContainer = document.querySelector(".progress-container");
-            const progressBar = document.querySelector("#progress-bar");
-            const progressLabel = document.querySelector("#progress-label");
-
-
-            if(percentage === "100") {
-                progressLabel.innerText = "Powerpoint Finished!";
-                progressBar.value = "100";
-                // progressContainer.classList.add("hidden");
-            }
-            else if(percentage === "0") {
-                progressContainer.classList.add("hidden");
-                progressBar.value = "0";
-            }
-            else {
-                progressContainer.classList.remove("hidden");
-                progressBar.value = percentage;
-            }
-        } catch(err) {
-            console.error(err);
-        }
-    }
 
     // let downloadButton = document.querySelector('button#ppt-download-button');
     // // let authButton = document.querySelector('button#auth-dance-button');
@@ -169,7 +139,6 @@ document.addEventListener("DOMContentLoaded", function() {
         // 5. Enable "Generate PPT button"
 
         // Reset progress bar 
-        handleProgressBar("0");
         
         // FIXME: Errors if this runs when no files are uploaded.
         let filename = spreadsheetSelection.files[0].name;
