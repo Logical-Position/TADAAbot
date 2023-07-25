@@ -53,13 +53,15 @@ tadaabjectCreation class
 
 '''
 
-def __generate_audit(project_dir: str, manual_data:dict, root_path:str, project_name:str, timestamp:str):
+def __generate_audit(project_dir:str, manual_data:dict, root_path:str, project_name:str, timestamp:str):
     """
+    Generates a populated Powerpoint document using the custom data object.
+    
     @param project_dir: Project path by timestamp "os.path/uploads/[timestamp]"
     @param manual_data: Data submitted through form fields
     @param root_path: the path to the root of application
 
-    @return tadaabject: Our custom tech audit data object
+    @return [dict] tadaabject: Our custom tech audit data object
     """
 
     audits_id = str(uuid4())
@@ -67,6 +69,7 @@ def __generate_audit(project_dir: str, manual_data:dict, root_path:str, project_
     domain = manual_data["domain_url"]
     project_type = "InvalidType"
 
+    # Not doing anything with parsed_data yet
     parsed_data = parse_data(project_dir, manual_data)
     pop_ppt = ppt.populate_powerpoint(parsed_data, project_dir, root_path, project_name)
 
@@ -103,20 +106,6 @@ def parse_data(project_dir, manual_data):
         print(key)
 
     return final_data_obj
-
-
-# def generate_audit(final_data_obj, project_dir, root_path, project_name):
-#     """
-#     Generates a populated Powerpoint document using the custom data object.
-
-#     @param [dict] final_data_obj: our custom data object {target_file: [data]} that contains Pandas dataframe/series objects.
-#     @param [str] root_path: path to the server's root directory.
-
-#     @return [list] pop_ppt: a Powerpoint doc populated with values calculated using the custom data object.
-#     """
-#     pop_ppt = ppt.populate_powerpoint(final_data_obj, project_dir, root_path, project_name)
-    
-#     return pop_ppt
 
 
 def data_vis():
