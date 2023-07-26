@@ -91,7 +91,12 @@ def parse_upload():
     # Create project name
     proj_files = os.listdir(project_dir)
     segments = proj_files[0].split('_')
-    project_name = segments[0].split('.')[0]
+    print("segments:", segments)
+
+    # Get project name from front-end and sanitize
+    project_name = request.form.get("project-name")
+    # project_name = segments[0].split('.')[0]
+    print("Project name:", project_name)
 
     # Let TADAA do it's thing
     # TODO: Refactor tadaa to return the final tadaabject in one line
@@ -138,10 +143,8 @@ def download_audit(ts):
     requested_audit = ts
     abs_path_proj_dir = app.root_path + '/uploads/' + requested_audit
     files = os.listdir(abs_path_proj_dir)
-    segments = files[0].split('_')
-    project_name = segments[0].split('.')[0]
-    # print(project_name)
-    ppt_path = os.path.join(UPLOAD_DIR, abs_path_proj_dir + f'/{project_name}.pptx')
+    project_name = files[0]
+    ppt_path = os.path.join(UPLOAD_DIR, abs_path_proj_dir + f'/{project_name}')
     # print(ppt_path)
     return send_file(ppt_path)
 
