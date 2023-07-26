@@ -30,6 +30,7 @@ document.addEventListener("DOMContentLoaded", function() {
             // console.log(data);
             
             const ts = data['ts'];
+            console.log(data);
             // TODO: This still isn't great; the server and client should 
             //      coordinate the exact file to be downloaded. This is still
             //      just educated guessing.
@@ -49,7 +50,6 @@ document.addEventListener("DOMContentLoaded", function() {
             updatePptButton("Downloaded PPT");
         });
     });
-
 
     // let downloadButton = document.querySelector('button#ppt-download-button');
     // // let authButton = document.querySelector('button#auth-dance-button');
@@ -138,8 +138,6 @@ document.addEventListener("DOMContentLoaded", function() {
         //      "uploaded Folder is not exports".
         // 5. Enable "Generate PPT button"
 
-        // Reset progress bar 
-        
         // FIXME: Errors if this runs when no files are uploaded.
         let filename = spreadsheetSelection.files[0].name;
         let folderName = spreadsheetSelection.files[0].webkitRelativePath.split("/")[0];
@@ -148,13 +146,25 @@ document.addEventListener("DOMContentLoaded", function() {
         let folderIsExports = folderName === "exports";
 
         let isUploadValid = folderIsUploaded && folderIsExports;
+        let clientName = "";
+
         if (isUploadValid) {
-            console.log(spreadsheetSelection.files.length)
-            filename = filename.split("_")[0];
-            filename = filename.charAt(0).toUpperCase() + filename.slice(1);
-            updateUploadedFileLabel(filename);
-            outlineFileInput();
-            updateFileInputImage(filename);
+            filename = filename.split("_");
+
+            // Check for ".com" TLD or other common TLD's and get the previous item in array (Temporary solution).
+            // Could look into using Public Suffix List package from npm, but not sure how viable it is considering our underscore naming convention.
+            // https://www.npmjs.com/package/psl 
+            for(let i = 0; i < filename.length; i++) {
+                if(filename[i] === "com" || filename[i] === "net" || filename[i] === "org" || filename[i] === "net" || filename[i] === "co" || filename[i] === "us") {
+                    filename = filename[i - 1] + "_" + filename[i];
+                }
+
+            }
+                filename = filename.charAt(0).toUpperCase() + filename.slice(1);
+                updateUploadedFileLabel(filename);
+                outlineFileInput();
+                updateFileInputImage(filename);
+            
         }
         else {
             alert("Uploaded folder is not named exports.")
@@ -166,6 +176,7 @@ document.addEventListener("DOMContentLoaded", function() {
     function updateUploadedFileLabel(filename) {
         const uploadedFile = document.querySelector("#uploaded-file-name");
         uploadedFile.innerText = filename;
+        uploadedFile.value = filename;
         folderName.innerText = filename;       
     }
 
