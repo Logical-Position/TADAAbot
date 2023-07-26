@@ -18,7 +18,6 @@ document.addEventListener("DOMContentLoaded", function() {
         // progess bar goes through stages of completion
         document.body.style.cursor = 'progress';
         updatePptButton("Generating PPT...");
-
         fetch('/', {
             method: 'POST',
             body: formData,
@@ -27,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function() {
             return res.json();
 
         }).then((data) => {
-            // console.log(data);
+             // console.log(data);
             
             const ts = data['ts'];
             console.log(data);

@@ -1,7 +1,7 @@
 from flask import Flask, g, jsonify, render_template, request, redirect, send_file, url_for
 
 # Flask Dance
-from flask_dance.contrib.google import make_google_blueprint, google
+# from flask_dance.contrib.google import make_google_blueprint, google
 
 # Google API
 # from apiclient.discovery import build
@@ -10,7 +10,6 @@ from flask_dance.contrib.google import make_google_blueprint, google
 import os
 import time
 import sqlite3
-from uuid import uuid4
 
 # import db_controller as db
 import tadaa
@@ -99,30 +98,15 @@ def parse_upload():
     print("Project name:", project_name)
 
     # Let TADAA do it's thing
-    # TODO: Refactor tadaa to return the final tadaabject in one line
-    tadaabject = tadaa.parse_data(project_dir, manual_data)
     root_path = app.root_path
-    pop_ppt = tadaa.generate_audit(tadaabject, project_dir, root_path, project_name)
+    data = tadaa.__generate_audit(project_dir, manual_data, root_path, project_name, timestamp)
 
-    # Save tadaabject to database
-    # TODO: Refactor this into tadaa
-    audits_id = str(uuid4())
-    client_id = str(uuid4())
-    domain = manual_data["domain_url"]
-    project_type = "InvalidType"
 
-    # TODO: Refactor this into the final tadaabject
-    data = {
-        "audits_id": audits_id,
-        "client_id": client_id,
-        "client_name": project_name,
-        "domain": domain,
-        "ts": timestamp,
-        "project_type": project_type,
-        "ppt_url": pop_ppt,
-    }
+    # Database
     db_init(DB_SCHEMA)
     db_insert_new_audit(data)
+
+    
 
     # And also return it to the client
     return jsonify(data)
