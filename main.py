@@ -88,14 +88,8 @@ def parse_upload():
         file.save(os.path.join(project_dir, filename))
 
     # Create project name
-    proj_files = os.listdir(project_dir)
-    segments = proj_files[0].split('_')
-    print("segments:", segments)
-
     # Get project name from front-end and sanitize
     project_name = request.form.get("project-name")
-    # project_name = segments[0].split('.')[0]
-    print("Project name:", project_name)
 
     # Let TADAA do it's thing
     root_path = app.root_path
