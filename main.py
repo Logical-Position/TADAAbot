@@ -128,9 +128,10 @@ def download_audit(ts):
     abs_path_proj_dir = app.root_path + '/uploads/' + requested_audit
     files = os.listdir(abs_path_proj_dir)
     project_name = files[0]
+    # Name differs when first sending out file vs when pulling from URL query.
+    # This probably won't be an issue moving forward if we request downloads using ID's or via other methods.
     ppt_path = os.path.join(UPLOAD_DIR, abs_path_proj_dir + f'/{project_name}')
-    # print(ppt_path)
-    return send_file(ppt_path)
+    return send_file(ppt_path, mimetype=None, as_attachment=True, attachment_filename= requested_audit + "_" + project_name)
 
 
 
