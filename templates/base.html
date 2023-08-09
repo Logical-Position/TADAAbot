@@ -12,7 +12,7 @@
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </head>
-<body class="bg-neutral-50">
+<body class="bg-neutral-50 flex-col">
     <header class="border-b-2 border-neutral-900">
         <!-- <h1>TADAA!</h1> -->
         <nav class="flex flex-row gap-4 bg-neutral-100 h-20 text-center justify-center content-center"><img class="p-2" src="https://seotool.logicalposition.com/assets/images/logo-2022.png" alt="Logical Position Logo">
@@ -34,6 +34,10 @@
     <main class="mt-10 overflow-hidden">
         {% block main %}{% endblock %}
     </main>
-    <!-- <footer></footer> -->
+    <footer class="footer">
+        <div class="flex justify-center border-t pt-8 hover:text-blue-600">
+            <a class="hover:underline text-xl" href="https://forms.gle/RiguPrzsdwbFpAnn9" target="_blank" >Send feedback or report a bug!</a>  
+        </div>
+    </footer> 
 </body>
 </html>
