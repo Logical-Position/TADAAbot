@@ -1,4 +1,5 @@
 from flask import Flask, g, jsonify, render_template, request, redirect, send_file, url_for
+import re
 
 # Flask Dance
 # from flask_dance.contrib.google import make_google_blueprint, google
@@ -89,7 +90,13 @@ def parse_upload():
 
     # Create project name
     # Get project name from front-end and sanitize
-    project_name = request.form.get("project-name")
+
+    def sanitize_input(input_str):
+    # Regular expression to blocklist script tags
+        sanitized_str = re.sub(r'<script\b[^>]*>(.*?)</script>', '', input_str, flags=re.IGNORECASE)
+        return sanitized_str
+      
+    project_name = sanitize_input(request.form.get("domain_url"))
 
     # Let TADAA do it's thing
     root_path = app.root_path
