@@ -258,3 +258,18 @@ function updateRawDataLink(id) {
         anchor.classList.remove(disabledClass);
     }
 }
+
+
+// Other Sitemap URL field hidden toggle
+document.addEventListener('DOMContentLoaded', function() {
+    let sitemapDropdown = document.getElementById('sitemap_url');
+    let customSitemapField = document.getElementById('other_sitemap_url');
+
+    sitemapDropdown.addEventListener('change', function() {
+        if (sitemapDropdown.value === 'other') {
+            customSitemapField.classList.remove('other-sitemap-field');
+        } else {
+            customSitemapField.classList.add('other-sitemap-field');
+        }
+    });
+});

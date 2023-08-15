@@ -64,7 +64,7 @@ TADAA
                 <div class="flex flex-col gap-8">
                     <ol>
                         <li class="p-3 grid grid-cols-2 text-left even:bg-neutral-50 odd:bg-sky-200">
-                            <label class="text-left" for="domain_url">1. <span>Domain URL</span></label>
+                            <label class="text-left" for="domain_url">1. <span>Domain</span></label>
                                 <input
                                     type="text"
                                     id="domain_url"
@@ -148,30 +148,34 @@ TADAA
                         </li>
 
                         <li class="p-3 grid grid-cols-2 even:bg-neutral-50 odd:bg-sky-200">
-                            <label class="text-left" for="sitemap_url">7. <span>Sitemap URL</span></label>
-                                <input
-                                    type="text"
-                                    id="sitemap_url"
-                                    name="sitemap_url"
-                                    class="border border-neutral-400 p-1 rounded-md font-normal"
-                                    placeholder="https://"
-                                />
+                            <label class="text-left" for="sitemap_url">7. <span>Sitemap Slug</span></label>
+                            <select id="sitemap_url" name="sitemap_url" class="w-full border border-neutral-400 p-1 rounded-md">
+                                <option value="sitemap.xml">sitemap.xml</option>
+                                <option value="sitemap_index.xml">sitemap_index.xml</option>
+                                <option value="xmlsitemap.php">xmlsitemap.php</option>
+                                <option value="other">Other</option>
+                            </select>
+                            <input type="text" id="other_sitemap_url" name="other_sitemap_url" class="w-full border border-neutral-400 p-1 rounded-md other-sitemap-field">
                         </li>
-
+                        
                         <li class="p-3 grid grid-cols-2 even:bg-neutral-50 odd:bg-sky-200">
                             <label class="text-left" for="robots_url">8. <span>Robots URL</span></label>
                             <div class="w-full flex flex-wrap">
                                 <span class="w-1/2 py-1">
-                                    <input type="radio" id="option1" name="web_security" value="option1" class="scale-150 mr-1">
-                                    <label for="option1">Option 1</label>
+                                    <input type="radio" id="option1" name="robots" value="option1" class="scale-150 mr-1">
+                                    <label for="option1">{{ ta_decisions.robots.option1 }}</label>
                                 </span>
                                 <span class="w-1/2 py-1">
-                                    <input type="radio" id="option2" name="web_security" value="option2" class="scale-150 mr-1">
-                                    <label for="option2">Option 2</label>
+                                    <input type="radio" id="option2" name="robots" value="option2" class="scale-150 mr-1">
+                                    <label for="option2">{{ ta_decisions.robots.option2 }}</label>
                                 </span>
                                 <span class="w-1/2 py-1">
-                                    <input type="radio" id="option3" name="web_security" value="option3" class="scale-150 mr-1">
-                                    <label for="option3">Option 3</label>
+                                    <input type="radio" id="option3" name="robots" value="option3" class="scale-150 mr-1">
+                                    <label for="option3">{{ ta_decisions.robots.option3 }}</label>
+                                </span>
+                                <span class="w-1/2 py-1">
+                                    <input type="radio" id="option4" name="robots" value="option4" class="scale-150 mr-1">
+                                    <label for="option3">{{ ta_decisions.robots.option4 }}</label>
                                 </span>
                             </div>
                         </li>
@@ -186,6 +190,10 @@ TADAA
                                 <span class="w-1/2 py-1">
                                     <input type="radio" id="option2" name="structured_data" value="option2" class="scale-150 mr-1">
                                     <label for="option2">{{ ta_decisions.structuredData.option2 }}</label>
+                                </span>
+                                <span class="w-1/2 py-1">
+                                    <input type="radio" id="option2" name="structured_data" value="option3" class="scale-150 mr-1">
+                                    <label for="option3">{{ ta_decisions.structuredData.option3 }}</label>
                                 </span>
                             </div>
                         </li>
@@ -228,11 +236,11 @@ TADAA
                             <div class="w-full flex flex-wrap">
                                 <span class="w-1/2 py-1">
                                     <input type="radio" id="option1" name="calls_to_action" value="option1" class="scale-150 mr-1">
-                                    <label for="option1">Yes</label>
+                                    <label for="option1">Clear and Visable</label>
                                 </span>
                                 <span class="w-1/2 py-1">
                                     <input type="radio" id="option2" name="calls_to_action" value="option2" class="scale-150 mr-1">
-                                    <label for="option2">No</label>
+                                    <label for="option2">Unclear or Missing</label>
                                 </span>
                             </div>
                         </li>
@@ -278,6 +286,10 @@ TADAA
                                     <input type="radio" id="option3" name="canonicals" value="option3" class="scale-150 mr-1">
                                     <label for="option3">{{ ta_decisions.canonicals.option3 }}</label>
                                 </span>
+                                <span class="w-1/2 py-1">
+                                    <input type="radio" id="option4" name="canonicals" value="option4" class="scale-150 mr-1">
+                                    <label for="option4">{{ ta_decisions.canonicals.option4 }}</label>
+                                </span>
                             </div>
                         </li>
 
@@ -290,17 +302,21 @@ TADAA
                                 </span>
                                 <span class="w-1/2 py-1">
                                     <input type="radio" id="option2" name="web_security" value="option2" class="scale-150 mr-1">
-                                    <label for="option2">{{ ta_decisions.security.option1 }}</label>
+                                    <label for="option2">{{ ta_decisions.security.option2 }}</label>
                                 </span>
                                 <span class="w-1/2 py-1">
                                     <input type="radio" id="option3" name="web_security" value="option3" class="scale-150 mr-1">
-                                    <label for="option3">{{ ta_decisions.security.option1 }}</label>
+                                    <label for="option3">{{ ta_decisions.security.option3 }}</label>
+                                </span>
+                                <span class="w-1/2 py-1">
+                                    <input type="radio" id="option4" name="web_security" value="option4" class="scale-150 mr-1">
+                                    <label for="option4">{{ ta_decisions.security.option4 }}</label>
                                 </span>
                             </div>
                         </li>
 
                         <li class="p-3 grid grid-cols-2 even:bg-neutral-50 odd:bg-sky-200">
-                            <label class="text-left">16. <span>Mobile/Desktop Page Speed</span></label>
+                            <label class="text-left">16. <span>Page Speed (seconds)</span></label>
                             <div class="w-full flex flex-row justify-around">
                                 <span>
                                     <label for="mobile_speed">Mobile</label>
