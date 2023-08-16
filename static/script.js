@@ -216,6 +216,23 @@ document.addEventListener("DOMContentLoaded", function() {
         // Add the placeholder container to the file uploader
         fileContainerContent.appendChild(placeholderContainer);
     }
+
+    // Structured Data Num of Errors toggle
+    const structuredDataCorrect = document.querySelector("#correct_structured_data");
+    const structuredDataNotCorrect = document.querySelector("#incorrect_structured_data");
+    const numStructuredData = document.querySelector("#structured_data_errors");
+    
+    structuredDataCorrect.addEventListener("change", function(e) {
+        if (structuredDataCorrect.checked) {
+            numStructuredData.disabled = false;
+        }
+    });
+    
+    structuredDataNotCorrect.addEventListener("change", function(e) {
+        if (structuredDataNotCorrect.checked) {
+            numStructuredData.disabled = true;
+        }
+    });
 });
 
 function makeRequest(path, callback) {
@@ -259,17 +276,20 @@ function updateRawDataLink(id) {
     }
 }
 
-
-// Other Sitemap URL field hidden toggle
+// 'Other' input hidden text field toggle
 document.addEventListener('DOMContentLoaded', function() {
-    let sitemapDropdown = document.getElementById('sitemap_url');
-    let customSitemapField = document.getElementById('other_sitemap_url');
+    let hiddenInputs = document.querySelectorAll('.hidden-input');
 
-    sitemapDropdown.addEventListener('change', function() {
-        if (sitemapDropdown.value === 'other') {
-            customSitemapField.classList.remove('other-sitemap-field');
-        } else {
-            customSitemapField.classList.add('other-sitemap-field');
-        }
-    });
+    for (let inputElement of hiddenInputs) {
+        let parentSelect = inputElement.previousElementSibling;
+
+        parentSelect.addEventListener('change', function() {
+            if (parentSelect.value === 'other') {
+                inputElement.classList.remove('hidden-input');
+            } else {
+                inputElement.classList.add('hidden-input');
+            }
+        });
+    }
 });
+

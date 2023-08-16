@@ -185,7 +185,7 @@ progress::-webkit-progress-value {
   background-color: rgb(62, 165, 151);
 }
 
-.other-sitemap-field {
+.hidden-input {
   display: none;
 }
 
