@@ -155,19 +155,34 @@ document.addEventListener("DOMContentLoaded", function() {
             // https://www.npmjs.com/package/psl 
             for(let i = 0; i < filename.length; i++) {
                 if(filename[i] === "com" || filename[i] === "net" || filename[i] === "org" || filename[i] === "net" || filename[i] === "co" || filename[i] === "us") {
-                    filename = filename[i - 1] + "_" + filename[i];
+                    filename = filename[i - 1] + "." + filename[i];
                 }
 
             }
-                filename = filename.charAt(0).toUpperCase() + filename.slice(1);
+                filename = filename.charAt(0) + filename.slice(1);
                 updateUploadedFileLabel(filename);
                 outlineFileInput();
                 updateFileInputImage(filename);
-            
+
+                // update manual inputs field
+                let manualDomainInput = document.getElementById("domain_url");
+                manualDomainInput.value = filename;            
         }
         else {
             alert("Uploaded folder is not named exports.")
         }
+    }
+
+    
+    let manualDomainInput = document.getElementById('domain_url');
+    manualDomainInput.addEventListener("input", handleDomainNameChange);
+
+    function handleDomainNameChange(evt) {
+        let newName = evt.target.value;
+        updateUploadedFileLabel(newName);
+
+        // Check if files have been uploaded before changing the name inside the droparea.
+        if(spreadsheetSelection.length > 0) updateFileInputImage(newName);  
     }
 
     let folderName = "";
