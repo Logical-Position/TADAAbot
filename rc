@@ -1,0 +1,4 @@
+start() {
+  tailwindcss -i ./static/src/input.css -o ./static/dist/output.css
+  python3 main.py
+}
