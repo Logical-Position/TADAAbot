@@ -137,7 +137,8 @@ def download_audit(ts):
     # Name differs when first sending out file vs when pulling from URL query.
     # This probably won't be an issue moving forward if we request downloads using ID's or via other methods.
     ppt_path = os.path.join(UPLOAD_DIR, abs_path_proj_dir + f'/{project_name}')
-    return send_file(ppt_path, mimetype=None, as_attachment=True, attachment_filename= final_project_name + "-" + requested_audit + ".pptx")
+    #return send_file(ppt_path, mimetype=None, as_attachment=True, attachment_filename=(final_project_name + "-" + requested_audit + ".pptx"))
+    return send_file(ppt_path)
 
 
 

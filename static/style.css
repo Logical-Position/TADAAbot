@@ -164,25 +164,26 @@ nav a:hover {
 
 #raw-data-link.disabled-raw-data-link {
   color: rgb(150, 150, 150);
-  pointer-events: none;
   cursor: default;
+  pointer-events: none;
 }
 
 #raw-data-link.disabled-raw-data-link:hover {
   text-decoration: none;
 }
+
 .hidden {
   visibility:hidden;
 }
 
 progress {
-  width: 100%;
   background-color: rgb(69 194 177);
+  width: 100%;
 }
 
 progress::-webkit-progress-value {
-  width: 100%;
   background-color: rgb(62, 165, 151);
+  width: 100%;
 }
 
 #uploaded-file-name {
