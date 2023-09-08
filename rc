@@ -6,7 +6,11 @@ build() {
   __compilecss
 }
 
-start() {
-  __compilecss
+run() {
   python3 main.py
+}
+
+start() {
+  build
+  run
 }
