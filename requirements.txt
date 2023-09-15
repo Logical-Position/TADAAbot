@@ -11,3 +11,4 @@ pandas==1.5.3
 seaborn==0.12.2
 python-dotenv
 uuid
+pytailwindcss

@@ -90,7 +90,6 @@ def parse_upload():
 
     # Create project name
     # Get project name from front-end and sanitize
-
     def sanitize_input(input_str):
     # Regular expression to blocklist script tags
         sanitized_str = re.sub(r'<script\b[^>]*>(.*?)</script>', '', input_str, flags=re.IGNORECASE)
