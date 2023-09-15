@@ -1,0 +1,16 @@
+__compilecss() {
+  tailwindcss -i ./static/src/input.css -o ./static/dist/output.css
+}
+
+build() {
+  __compilecss
+}
+
+run() {
+  python3 main.py
+}
+
+start() {
+  build
+  run
+}
