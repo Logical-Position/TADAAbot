@@ -29,7 +29,6 @@ function handleFileUpload(spreadsheetSelection) {
     let folderIsExports = folderName === "exports";
 
     let isUploadValid = folderIsUploaded && folderIsExports;
-    let clientName = "";
 
     if (isUploadValid) {
         filename = filename.split("_");
@@ -57,8 +56,8 @@ function handleFileUpload(spreadsheetSelection) {
     }
 }
 
-function handleDomainNameChange(evt) {
-    let newName = evt.target.value;
+function handleDomainNameChange(e) {
+    let newName = e.target.value;
     updateUploadedFileLabel(newName);
 
     // Check if files have been uploaded before changing the name inside the droparea.
@@ -80,9 +79,7 @@ function outlineFileInput() {
 }
 
 // Function for removing file upload image/text and replacing it with placeholder folder image and folder name
-function updateFileInputImage(filename) {
-    const uploadedFile = document.querySelector("#uploaded-file-name");
-    
+function updateFileInputImage(filename) {    
     // Remove excess text/upload image from file uploader once a file is uploaded
     // The issue is when you .remove() the element #droparea, you no longer have this element on the DOM for future reference.
     // Temp fix: loop #droparea to check and see if it has children until it has none, then proceed.
@@ -109,6 +106,82 @@ function updateFileInputImage(filename) {
     
     // Add the placeholder container to the file uploader
     fileContainerContent.appendChild(placeholderContainer);
+}
+
+function updatePptButton(text) {
+    const pptButton = document.querySelector("#submit-input");
+    pptButton.value = text;
+};
+
+function updateRawDataLink(id) {
+    const elId = "raw-data-link";
+    const disabledClass = "disabled-raw-data-link";
+    const anchor = document.getElementById(elId);
+    if (anchor) {
+        anchor.href = `/db/${id}`;
+        anchor.classList.remove(disabledClass);
+    }
+}
+
+function handleTadaaSubmission(e, tadaaForm) {
+    e.preventDefault();
+    const formData = new FormData(tadaaForm);
+    // set cursor to show progress
+    // progess bar goes through stages of completion
+    document.body.style.cursor = 'progress';
+    updatePptButton("Generating PPT...");
+    fetch('/', {
+        method: 'POST',
+        body: formData,
+    }).then(function(res) {
+        // Do something with the response
+        return res.json();
+
+    }).then((data) => {
+         // console.log(data);
+        
+        const ts = data['ts'];
+        console.log(data);
+        // TODO: This still isn't great; the server and client should 
+        //      coordinate the exact file to be downloaded. This is still
+        //      just educated guessing.
+        const client = data['client_name'];
+        const pptName = `${client}-${ts}.pptx`
+        requestDownload(ts, pptName);
+
+        const auditsId = data['audits_id'];
+        updateRawDataLink(auditsId);
+
+        
+    }).then(function(response) {
+        // Do something with the response  
+    }).finally(() => {
+        document.body.style.cursor = 'auto';
+        
+        updatePptButton("Downloaded PPT");
+    });
+}
+
+// MARK: Radio-Radio Component
+
+function handleRadioRadioChange(q, toEnable) {
+    // Secondary options become available once yes is checked, might be a cleaner way to do this later.
+    const secondaryInputs = document.querySelectorAll(`input[name^=${q}][data-rrs=""]`);
+    console.log(secondaryInputs);
+    if (toEnable) {
+        enableSecondaryRadioInputs(secondaryInputs);
+    } else {
+        disableSecondaryRadioInputs(secondaryInputs);
+    }
+}
+
+function enableSecondaryRadioInputs(secondaryInputs) {
+    console.log(secondaryInputs);
+    secondaryInputs.forEach(item => item.disabled = false);
+}
+
+function disableSecondaryRadioInputs(secondaryInputs) {
+    secondaryInputs.forEach(item => item.disabled = true);
 }
 
 // MARK: Networking
@@ -156,20 +229,7 @@ function saveBlob(blob, filename) {
     window.URL.revokeObjectURL(url);
 }
 
-function updatePptButton (text) {
-    const pptButton = document.querySelector("#submit-input");
-    pptButton.value = text;
-};
 
-function updateRawDataLink(id) {
-    const elId = "raw-data-link";
-    const disabledClass = "disabled-raw-data-link";
-    const anchor = document.getElementById(elId);
-    if (anchor) {
-        anchor.href = `/db/${id}`;
-        anchor.classList.remove(disabledClass);
-    }
-}
 
 // MARK: Main
 
@@ -178,43 +238,8 @@ function main() {
 
     // MARK: TADAA Form
     let tadaaForm = document.querySelector('form#tadaa-form');
-    tadaaForm.addEventListener('submit', function(event) {
-        event.preventDefault();
-        const formData = new FormData(tadaaForm);
-        // set cursor to show progress
-        // progess bar goes through stages of completion
-        document.body.style.cursor = 'progress';
-        updatePptButton("Generating PPT...");
-        fetch('/', {
-            method: 'POST',
-            body: formData,
-        }).then(function(res) {
-            // Do something with the response
-            return res.json();
-
-        }).then((data) => {
-             // console.log(data);
-            
-            const ts = data['ts'];
-            console.log(data);
-            // TODO: This still isn't great; the server and client should 
-            //      coordinate the exact file to be downloaded. This is still
-            //      just educated guessing.
-            const client = data['client_name'];
-            const pptName = `${client}-${ts}.pptx`
-            requestDownload(ts, pptName);
-
-            const auditsId = data['audits_id'];
-            updateRawDataLink(auditsId);
-
-            
-        }).then(function(response) {
-            // Do something with the response  
-        }).finally(() => {
-            document.body.style.cursor = 'auto';
-            
-            updatePptButton("Downloaded PPT");
-        });
+    tadaaForm.addEventListener('submit', function(e) {
+        handleTadaaSubmission(e, tadaaForm);
     });
 
     // MARK: File Upload Listener
@@ -222,12 +247,6 @@ function main() {
     spreadsheetSelection.addEventListener('change', function(e) {
         handleFileUpload(spreadsheetSelection);
     });
-
-    let manualDomainInput = document.getElementById('domain_url');
-    manualDomainInput.addEventListener("input", handleDomainNameChange);
-
-    let folderName = "";
-
 
     // Handles enabling/disabling the submit buttons and very basic verification.
     let test = document.querySelector("#spreadsheet-selection");
@@ -245,23 +264,24 @@ function main() {
         }
     });
 
-    // MARK: Blog
-    const blogCheckElem = document.querySelectorAll("input[name='blog']");
-    // Apply listener to blog options listening for change
-    blogCheckElem.forEach((item) => {
-        item.addEventListener("change", function(e) {
-            // Secondary options become available once yes is checked, might be a cleaner way to do this later.
-        const secondaryBlogOptions = document.querySelectorAll("input[name='blog_updated_regularly']");
-
-            if(blogCheckElem[0].checked) {
-            secondaryBlogOptions.forEach(item => item.disabled = false);
-            }
-            else if (!blogCheckElem[0].checked) {
-            secondaryBlogOptions.forEach(item => item.disabled = true);
-            }
-        });
-        
+    // MARK: Domain Input Change
+    let domainInput = document.getElementById('domain_url');
+    domainInput.addEventListener("input", handleDomainNameChange);
+    
+    // MARK: Radio-Radio Components
+    const rrComponents = document.querySelectorAll(".things-n-stuff");
+    rrComponents.forEach((comp) => {
+        const id = comp.querySelector('input').name;
+        const inputs = comp.querySelectorAll(`input[name='${id}']`);
+        inputs.forEach((input) => {
+            input.addEventListener("change", function(e) {
+                const q = input.getAttribute('name');
+                const toEnable = input.value === 'yes';
+                handleRadioRadioChange(q, toEnable);
+            });
+        })
     });
+
 
     // MARK: Duplicate Content
     const duplicateContentCheck = document.querySelectorAll("input[name='duplicate_content']");
