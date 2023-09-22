@@ -296,5 +296,35 @@ function main() {
             }
         });
     });
+
+    // Structured Data Num of Errors toggle
+    const structuredDataCorrect = document.querySelector("#correct_structured_data");
+    const structuredDataNotCorrect = document.querySelector("#incorrect_structured_data");
+    const numStructuredData = document.querySelector("#structured_data_errors");
+    
+    structuredDataCorrect.addEventListener("change", function(e) {
+        if (structuredDataCorrect.checked) {
+            numStructuredData.disabled = false;
+        }
+    });
+    
+    structuredDataNotCorrect.addEventListener("change", function(e) {
+        if (structuredDataNotCorrect.checked) {
+            numStructuredData.disabled = true;
+        }
+    });
+
+    // 'Other' input hidden text field toggle
+    let hiddenInputs = document.querySelectorAll('.hidden-input');
+    for (let inputElement of hiddenInputs) {
+        let parentSelect = inputElement.previousElementSibling;
+        parentSelect.addEventListener('change', function() {
+            if (parentSelect.value === 'other') {
+                inputElement.classList.remove('hidden-input');
+            } else {
+                inputElement.classList.add('hidden-input');
+            }
+        });
+    }
 }
 

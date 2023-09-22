@@ -186,6 +186,10 @@ progress::-webkit-progress-value {
   width: 100%;
 }
 
+.hidden-input {
+  display: none;
+}
+
 #uploaded-file-name {
   border:none;
   outline:none;
