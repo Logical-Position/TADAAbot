@@ -184,6 +184,14 @@ function disableSecondaryRadioInputs(secondaryInputs) {
     secondaryInputs.forEach(item => item.disabled = true);
 }
 
+// MARK: Dynamic Text "Component"
+//class DynamicTextComponent() {}
+
+function handleDynamicTextChange(input, textarea, formInput) {
+    textarea.innerText = input.value;
+    formInput.value = input.value;
+}
+
 // MARK: Networking
 
 /**
@@ -297,7 +305,7 @@ function main() {
         });
     });
 
-    // Structured Data Num of Errors toggle
+    // MARK: Structured Data
     const structuredDataCorrect = document.querySelector("#correct_structured_data");
     const structuredDataNotCorrect = document.querySelector("#incorrect_structured_data");
     const numStructuredData = document.querySelector("#structured_data_errors");
@@ -314,7 +322,7 @@ function main() {
         }
     });
 
-    // 'Other' input hidden text field toggle
+    // MARK: Hidden Input Component
     let hiddenInputs = document.querySelectorAll('.hidden-input');
     for (let inputElement of hiddenInputs) {
         let parentSelect = inputElement.previousElementSibling;
@@ -326,5 +334,25 @@ function main() {
             }
         });
     }
+
+    // MARK: Dynamic Text Component
+    const dtComps = document.querySelectorAll('[data-comp="dynamic-text"]');
+    dtComps.forEach((comp) => {
+        const inputs = comp.querySelectorAll(`input[type="radio"]`);
+        const textarea = comp.querySelector(`div[contenteditable="true"]`);
+        const formInput = comp.querySelector(`input[type="text"]`);
+        inputs.forEach((input, index) => {
+            if (index === 0) {
+                input.checked = true;
+                handleDynamicTextChange(input, textarea, formInput);
+            }
+
+            input.addEventListener("change", function(e) {
+                if (input.checked) {
+                    handleDynamicTextChange(input, textarea, formInput);
+                }
+            });
+        })
+    });
 }
 

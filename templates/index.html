@@ -53,7 +53,7 @@ TADAA
                 <!-- <input id="spreadsheet-selection" class="bg-red-200" type="file" name="spreadsheet-selection" required accept=".csv, .xlsx, .xls, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" multiple webkitdirectory>
             </div> -->
 
-            <details class="bg-neutral-200 w-full rounded-md border-2 border-neutral-700 font-medium text-lg mb-4 my-4 text-center transition transition-transform group">
+            <details class="bg-neutral-200 w-full rounded-md border-2 border-neutral-700 font-medium text-lg mb-4 my-4 text-center transition transition-transform group" open>
                 <summary class="p-6 hover:cursor-pointer hover:bg-neutral-300 active:bg-neutral-400 list-none flex justify-center">
                     <p class="ml-auto">Edit Manual Inputs</p>
                     <div class="flex w-10 items-center ml-auto">
@@ -160,26 +160,18 @@ TADAA
                             <input type="text" id="other_sitemap_url" name="other_sitemap_url" class="w-full border border-neutral-400 p-1 rounded-md hidden-input">
                         </li>
                         
-                        <!-- TODO: change to dynamic text component -->
-                        <li class="p-3 grid grid-cols-2 even:bg-neutral-50 odd:bg-sky-200">
+                        {# TODO: change to dynamic text component #}
+                        <li class="p-3 grid grid-cols-2 even:bg-neutral-50 odd:bg-sky-200" data-comp="dynamic-text">
                             <label class="text-left" for="robots_url">8. <span>Robots URL</span></label>
                             <div class="w-full flex flex-wrap">
-                                <span class="w-1/2 py-1">
-                                    <input type="radio" id="option1" name="robots" value="option1" class="scale-150 mr-1">
-                                    <label for="option1">{{ ta_decisions.robots.option1 }}</label>
-                                </span>
-                                <span class="w-1/2 py-1">
-                                    <input type="radio" id="option2" name="robots" value="option2" class="scale-150 mr-1">
-                                    <label for="option2">{{ ta_decisions.robots.option2 }}</label>
-                                </span>
-                                <span class="w-1/2 py-1">
-                                    <input type="radio" id="option3" name="robots" value="option3" class="scale-150 mr-1">
-                                    <label for="option3">{{ ta_decisions.robots.option3 }}</label>
-                                </span>
-                                <span class="w-1/2 py-1">
-                                    <input type="radio" id="option4" name="robots" value="option4" class="scale-150 mr-1">
-                                    <label for="option3">{{ ta_decisions.robots.option4 }}</label>
-                                </span>
+                                {% for option in ta_decisions.robots.options %}
+                                    <span class="w-1/2 py-1">
+                                        <input type="radio" id="option1" name="robots" value="{{ option.value_text }}" class="scale-150 mr-1">
+                                        <label for="option1">{{ option.label_text }}</label>
+                                    </span>
+                                {% endfor %}
+                                <input type="text" id="robots-text-input" name="robots" class="w-full border border-neutral-400 p-1 rounded-md hidden-input">
+                                <div contenteditable="true"></div>
                             </div>
                         </li>
 
@@ -188,7 +180,7 @@ TADAA
                             <div class="w-full flex flex-wrap">
                                 <span class="w-1/2 py-1">
                                     <label>Structured Data Errors?</label>
-                                    <!-- TODO: simplify to just a number input -- 0 represents 'no', >=1 represents 'yes' -->
+                                    {# TODO: simplify to just a number input -- 0 represents 'no', >=1 represents 'yes' #}
                                     <div class="radio-group">
                                         <input type="radio" id="correct_structured_data" name="correct_structured_data" class="scale-150 mr-1">
                                         <label for="correct_structured_data">Yes</label>
@@ -204,9 +196,20 @@ TADAA
                             </div>
                         </li>
                         
-                        <!-- TODO: change to dynamic text component -->
-                        <li class="p-3 grid grid-cols-2 text-left even:bg-neutral-50 odd:bg-sky-200">
+                        {# TODO: change to dynamic text component #}
+                        <li class="p-3 grid grid-cols-2 text-left even:bg-neutral-50 odd:bg-sky-200" data-comp="dynamic-text">
                             <label class="text-left" for="site_content_ux">10. <span>Site Content/UX*</span></label>
+                            <div class="w-full flex flex-wrap">
+                                {% for option in ta_decisions.siteUX.options %}
+                                    <span class="w-1/2 py-1">
+                                        <input type="radio" id="option1" name="site_content_ux" value="{{ option.value_text }}" class="scale-150 mr-1">
+                                        <label for="option1">{{ option.label_text }}</label>
+                                    </span>
+                                {% endfor %}
+                                <input type="text" id="siteux-text-input" name="site_content_ux" class="w-full border border-neutral-400 p-1 rounded-md hidden-input">
+                                <div contenteditable="true"></div>
+                            </div>
+                            <!-- 
                             <div class="w-full flex flex-wrap">
                                 <span class="w-1/2 py-1">
                                     <label>{{ ta_decisions.siteUX.option1 }}</label>
@@ -227,9 +230,10 @@ TADAA
                                     </div>
                                 </span>
                             </div>
+                            -->
                         </li>
                         
-                        <!-- TODO: change to dynamic text component -->
+                        {# TODO: change to dynamic text component #}
                         <li class="p-3 grid grid-cols-2 text-left even:bg-neutral-50 odd:bg-sky-200">
                             <label class="text-left" for="dupe_content">11. <span>Internal/External Duplicate Content*</span></label>
                             <div class="w-full flex flex-wrap">
@@ -289,7 +293,7 @@ TADAA
                             </div>
                         </li>
 
-                        <!-- TODO: change to dynamic text component -->
+                        {# TODO: change to dynamic text component #}
                         <li class="p-3 grid grid-cols-2 text-left even:bg-neutral-50 odd:bg-sky-200">
                             <label class="text-left" for="canonicals">14. <span>Canonicals*</span></label>
                             <div class="w-full flex flex-wrap">
@@ -312,7 +316,7 @@ TADAA
                             </div>
                         </li>
 
-                        <!-- TODO: change to dynamic text component -->
+                        {# TODO: change to dynamic text component #}
                         <li class="p-3 grid grid-cols-2 text-left even:bg-neutral-50 odd:bg-sky-200">
                             <label class="text-left" for="web_security">15. <span>Website Security*</span></label>
                             <div class="w-full flex flex-wrap">
