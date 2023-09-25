@@ -1,5 +1,6 @@
-from flask import Flask, g, jsonify, render_template, request, redirect, send_file, url_for
+from flask import Flask, g, jsonify, render_template, request, redirect, send_file, url_for, session, abort, Response
 import re
+import uuid
 
 # Flask Dance
 # from flask_dance.contrib.google import make_google_blueprint, google
@@ -18,8 +19,13 @@ import datetime
 # import db_controller as db
 import json
 
+from flask_login import LoginManager, login_required, UserMixin, login_user, logout_user
+login_manager = LoginManager()
+
 
 app = Flask(__name__)
+login_manager.init_app(app)
+app.secret_key = str(uuid.uuid4())
 
 # For user-uploaded Excel files
 UPLOAD_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'uploads')
@@ -55,6 +61,7 @@ manual_data = {}
 
 # TODO: Combine these '/' routes
 @app.route('/', methods=['GET'])
+@login_required
 def index(): 
     # Accessing manual input options in json file
     with open('ta_decisions.json') as t:
@@ -141,14 +148,67 @@ def download_audit(ts):
     #return send_file(ppt_path, mimetype=None, as_attachment=True, attachment_filename=(final_project_name + "-" + requested_audit + ".pptx"))
     return send_file(ppt_path)
 
+class User(UserMixin):
+    def __init__(self, id):
+        self.id = id
+        self.name = "user" + str(id)
+        self.password = self.name + str(uuid.uuid4())
+        
+    def __repr__(self):
+        return "%d/%s/%s" % (self.id, self.name, self.password)
+    
+# create some users with ids 1 to 20       
+users = [User(id) for id in range(1, 21)]
+for user in users:
+    print(f"UserID:{user.id}")
+    print(f"Username:{user.name}")
+    print(f"password:{user.password}")
+
+@login_manager.user_loader
+def load_user(user_id):
+    for user in users:
+        if user.id == int(user_id):
+            return user
+    return None
 
 
+# somewhere to login
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        # Iterate through users to find a matching username and password
+        for user in users:
+            if username == user.name and password == user.password:
+                login_user(user)
+                return redirect(url_for("index"))  # Redirect to the desired page after login
+
+        # If no matching user is found, return a 401 Unauthorized response
+        return abort(401)
+    else:
+        return '''
+        <form action="" method="post">
+            <p><input type=text name=username>
+            <p><input type=password name=password>  <!-- Change type to "password" -->
+            <p><input type=submit value=Login>
+        </form>
+        '''
+    
+# somewhere to logout
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return Response('<p>Logged out</p>')
 
 
-
-
-
-
+# handle login failed
+@app.errorhandler(401)
+def page_not_found(e):
+    return Response('<p>Login failed</p>')
 
 
 
