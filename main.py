@@ -53,61 +53,58 @@ manual_data = {}
 
 # TADAA Routes
 
-# TODO: Combine these '/' routes
 @app.route('/', methods=['GET'])
-def index(): 
-    # Accessing manual input options in json file
-    with open('ta_decisions.json') as t:
-        ta_decisions = json.load(t)
+def index():
+    if request.method == 'GET':
+        # Accessing manual input options in json file
+        with open('ta_decisions.json') as t:
+            ta_decisions = json.load(t)
+        return render_template('index.html', ta_decisions=ta_decisions)
+    elif request.method == 'POST':
+        # 1. Gather uploaded data: files and fields
+        # 2. Call tadaa to parse and compile data
+        # 3. Send compiled data to:
+        #       - Frontend
+        #       - Database
 
-    return render_template('index.html', ta_decisions=ta_decisions)
+        # Get data from form
+        for label in manual_data_labels:
+            data = request.form.get(label, '')
+            manual_data[label] = data
+        
+        # Create folder for audit assets
+        now = datetime.datetime.now()
+        timestamp = now.strftime("%Y-%m-%d_%H-%M-%S")
+        project_dir = os.path.join(app.config['UPLOAD_DIR'], timestamp)
 
-@app.route('/', methods=['POST'])
-def parse_upload():
-    # 1. Gather uploaded data: files and fields
-    # 2. Call tadaa to parse and compile data
-    # 3. Send compiled data to:
-    #       - Frontend
-    #       - Database
+        # Save uploaded files
+        inputID = 'spreadsheet-selection'
+        os.makedirs(project_dir, exist_ok=True)
+        files = [file for file in request.files.getlist(inputID) if file.filename]
+        for file in files:
+            filename = os.path.basename(file.filename)
+            file.save(os.path.join(project_dir, filename))
 
-    # Get data from form
-    for label in manual_data_labels:
-        data = request.form.get(label, '')
-        manual_data[label] = data
-    
-    # Create folder for audit assets
-    now = datetime.datetime.now()
-    timestamp = now.strftime("%Y-%m-%d_%H-%M-%S")
-    project_dir = os.path.join(app.config['UPLOAD_DIR'], timestamp)
+        # Create project name
+        # Get project name from front-end and sanitize
+        def sanitize_input(input_str):
+        # Regular expression to blocklist script tags
+            sanitized_str = re.sub(r'<script\b[^>]*>(.*?)</script>', '', input_str, flags=re.IGNORECASE)
+            return sanitized_str
+        
+        project_name = sanitize_input(request.form.get("domain_url"))
 
-    # Save uploaded files
-    inputID = 'spreadsheet-selection'
-    os.makedirs(project_dir, exist_ok=True)
-    files = [file for file in request.files.getlist(inputID) if file.filename]
-    for file in files:
-        filename = os.path.basename(file.filename)
-        file.save(os.path.join(project_dir, filename))
-
-    # Create project name
-    # Get project name from front-end and sanitize
-    def sanitize_input(input_str):
-    # Regular expression to blocklist script tags
-        sanitized_str = re.sub(r'<script\b[^>]*>(.*?)</script>', '', input_str, flags=re.IGNORECASE)
-        return sanitized_str
-      
-    project_name = sanitize_input(request.form.get("domain_url"))
-
-    # Let TADAA do it's thing
-    root_path = app.root_path
-    data = tadaa.__generate_audit(project_dir, manual_data, root_path, project_name, timestamp)
+        # Let TADAA do it's thing
+        root_path = app.root_path
+        data = tadaa.__generate_audit(project_dir, manual_data, root_path, project_name, timestamp)
 
 
-    # Database
-    db_init(DB_SCHEMA)
-    db_insert_new_audit(data)
+        # Database
+        db_init(DB_SCHEMA)
+        db_insert_new_audit(data)
 
-    # And also return it to the client
-    return jsonify(data)
+        # And also return it to the client
+        return jsonify(data)
 
 @app.route('/download/<ts>', methods=['GET'])
 # If requesting to redownload a previous powerpoint, browser caches previous download and pull from cache instead of server if cache is present.
