@@ -19,7 +19,7 @@ import datetime
 # import db_controller as db
 import json
 
-from flask_login import LoginManager, login_required, UserMixin, login_user, logout_user
+from flask_login import LoginManager, login_required, UserMixin, login_user, logout_user, current_user
 login_manager = LoginManager()
 
 
@@ -59,9 +59,13 @@ manual_data = {}
 
 # TADAA Routes
 
-@app.route('/', methods=['GET'])
+@app.route('/', methods=['GET', 'POST'])
 @login_required
 def index():
+    if not current_user.is_authenticated:
+        # If the user is not authenticated, redirect to login
+        return redirect(url_for('login'))
+
     if request.method == 'GET':
         # Accessing manual input options in json file
         with open('ta_decisions.json') as t:
@@ -149,13 +153,14 @@ class User(UserMixin):
     def __init__(self, id):
         self.id = id
         self.name = "user" + str(id)
-        self.password = self.name + str(uuid.uuid4())
+        self.password = self.name
         
     def __repr__(self):
         return "%d/%s/%s" % (self.id, self.name, self.password)
     
 # create some users with ids 1 to 20       
 users = [User(id) for id in range(1, 21)]
+
 for user in users:
     print(f"UserID:{user.id}")
     print(f"Username:{user.name}")
@@ -173,26 +178,31 @@ def load_user(user_id):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        # If the user is already authenticated, redirect them to the index page
+        return redirect(url_for('index'))
+
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
+
+        print(f'Login Attempt: Username={username}, Password={password}')
 
         # Iterate through users to find a matching username and password
         for user in users:
             if username == user.name and password == user.password:
                 login_user(user)
-                return redirect(url_for("index"))  # Redirect to the desired page after login
+                print(f'Logged in {user}')
+                return redirect(url_for('index'))
 
         # If no matching user is found, return a 401 Unauthorized response
+        print("User not found or invalid credentials.")
         return abort(401)
-    else:
-        return '''
-        <form action="" method="post">
-            <p><input type=text name=username>
-            <p><input type=password name=password>  <!-- Change type to "password" -->
-            <p><input type=submit value=Login>
-        </form>
-        '''
+
+    print("Get or login failed.")
+    return render_template('login.html')
+
+
     
 # somewhere to logout
 @app.route("/logout")
@@ -205,7 +215,7 @@ def logout():
 # handle login failed
 @app.errorhandler(401)
 def page_not_found(e):
-    return Response('<p>Login failed</p>')
+    return Response('<p>Login failed, <a href="/login">login here</a></p>') 
 
 
 
