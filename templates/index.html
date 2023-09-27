@@ -237,6 +237,17 @@ TADAA
                         <li class="p-3 grid grid-cols-2 text-left even:bg-neutral-50 odd:bg-sky-200">
                             <label class="text-left" for="dupe_content">11. <span>Internal/External Duplicate Content*</span></label>
                             <div class="w-full flex flex-wrap">
+                                {% for option in ta_decisions.siteUX.options %}
+                                    <span class="w-1/2 py-1">
+                                        <input type="radio" id="option1" name="site_content_ux" value="{{ option.value_text }}" class="scale-150 mr-1">
+                                        <label for="option1">{{ option.label_text }}</label>
+                                    </span>
+                                {% endfor %}
+                                <input type="text" id="siteux-text-input" name="site_content_ux" class="w-full border border-neutral-400 p-1 rounded-md hidden-input">
+                                <div contenteditable="true"></div>
+                            </div>
+                            <!--
+                            <div class="w-full flex flex-wrap">
                                 <span class="w-1/2 py-1">
                                     <input type="radio" id="option1" name="duplicate_content" value="option1" class="scale-150 mr-1">
                                     <label for="option1">Yes</label>
@@ -251,6 +262,7 @@ TADAA
                                 <input type="text" id="duplicate_text" name="duplicate_text"
                                     class="w-full border border-neutral-400 p-1 rounded-md font-normal" disabled>
                             </div>
+                        -->
                         </li>
 
                         <li class="p-3 grid grid-cols-2 text-left even:bg-neutral-50 odd:bg-sky-200 things-n-stuff">

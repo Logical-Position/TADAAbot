@@ -24,13 +24,6 @@
         }
       ]
   },
-  "structuredData": {
-
-    "option1": "Correctly implemented structured data",
-    "option2": "Does not have structured data",
-    "option3": "Has structured data; however, there are errors"
-
-  },
   "siteUX": {
     "options": [
       {
@@ -40,6 +33,18 @@
       {
         "label_text": "Thin content?",
         "value_text": "other thing"
+      }
+    ]
+  },
+  "dupecontent": {
+    "options": [
+      {
+        "label_text": "",
+        "value_text": ""
+      },
+      {
+        "label_text": "",
+        "value_text": ""
       }
     ]
   },
@@ -54,6 +59,13 @@
     "option2": "http unsecure",
     "option3": "https expired ssl",
     "option4": "https but insecure https resources (mixed)"
+  },
+  "structuredData": {
+
+    "option1": "Correctly implemented structured data",
+    "option2": "Does not have structured data",
+    "option3": "Has structured data; however, there are errors"
+
   }
 }
 
