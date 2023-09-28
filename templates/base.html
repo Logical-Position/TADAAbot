@@ -13,31 +13,10 @@
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </head>
 <body class="bg-neutral-50 flex-col min-h-screen flex">
-    <header class="border-b-2 border-neutral-900">
-        <!-- <h1>TADAA!</h1> -->
-        <nav class="flex flex-row gap-4 bg-neutral-100 h-20 text-center justify-center content-center"><img class="p-2" src="https://seotool.logicalposition.com/assets/images/logo-2022.png" alt="Logical Position Logo">
-            <!--
-            <a class="bg-neutral-100 text-neutral-900 align-middle w-full py-6 
-            hover:bg-neutral-200 text-xl font-medium" href="/">Home</a>
-            <a class="bg-neutral-100 text-neutral-900 align-middle w-full py-6 
-            hover:bg-neutral-200 text-xl font-medium" href="/results">Results</a>
-            <a class="bg-neutral-100 text-neutral-900 align-middle w-full py-6 
-            hover:bg-neutral-200 text-xl font-medium" href="/extras">Extras</a>
-            <a class="bg-neutral-100 text-neutral-900 align-middle w-full py-6 
-            hover:bg-neutral-200 text-xl font-medium" href="/faq">FAQ</a>
-            This will need to be refactored to not appear on login page when not logged in as well as clear user auth.
-            <a class="bg-neutral-100 text-neutral-900 align-middle w-full py-6 
-            hover:bg-neutral-200 text-xl font-medium" href="/login">Logout</a>
-            -->
-        </nav>
-    </header>
+    {% include 'sections/header.html' %}
     <main class="mt-10 overflow-hidden flex-1">
         {% block main %}{% endblock %}
     </main>
-    <footer class="footer">
-        <div class="flex justify-center border-t w-full h-full pt-8">
-            <a class="hover:underline text-xl hover:text-blue-600" href="https://forms.gle/RiguPrzsdwbFpAnn9" target="_blank" >Send feedback or report a bug!</a>  
-        </div>
-    </footer> 
+    {% include 'sections/footer.html' %}
 </body>
 </html>
