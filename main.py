@@ -27,6 +27,14 @@ app = Flask(__name__)
 login_manager.init_app(app)
 app.secret_key = str(uuid.uuid4())
 
+# Load .env file
+from dotenv import load_dotenv
+load_dotenv()
+
+# Get environment variables
+USER = os.environ.get('TADAA_USERNAME')
+PASSWORD = os.environ.get('TADAA_PASSWORD')
+
 # For user-uploaded Excel files
 UPLOAD_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'uploads')
 app.config['UPLOAD_DIR'] = UPLOAD_DIR
@@ -60,7 +68,6 @@ manual_data = {}
 # TADAA Routes
 
 @app.route('/', methods=['GET', 'POST'])
-@login_required
 def index():
     if not current_user.is_authenticated:
         # If the user is not authenticated, redirect to login
@@ -150,32 +157,21 @@ def download_audit(ts):
     return send_file(ppt_path)
 
 class User(UserMixin):
-    def __init__(self, id):
-        self.id = id
-        self.name = "user" + str(id)
-        self.password = self.name
-        
-    def __repr__(self):
-        return "%d/%s/%s" % (self.id, self.name, self.password)
-    
-# create some users with ids 1 to 20       
-users = [User(id) for id in range(1, 21)]
+    def __init__(self):
+        self.id = 0
+        self.name = USER
+        self.password = PASSWORD
 
-for user in users:
-    print(f"UserID:{user.id}")
-    print(f"Username:{user.name}")
-    print(f"password:{user.password}")
+lp_user = User()
 
 @login_manager.user_loader
 def load_user(user_id):
-    for user in users:
-        if user.id == int(user_id):
-            return user
+    if USER == lp_user.name:
+        return lp_user
     return None
 
 
 # somewhere to login
-
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -186,14 +182,9 @@ def login():
         username = request.form['username']
         password = request.form['password']
 
-        print(f'Login Attempt: Username={username}, Password={password}')
-
-        # Iterate through users to find a matching username and password
-        for user in users:
-            if username == user.name and password == user.password:
-                login_user(user)
-                print(f'Logged in {user}')
-                return redirect(url_for('index'))
+        if username == USER and password == PASSWORD:
+            login_user(lp_user)
+            return redirect(url_for('index'))
 
         # If no matching user is found, return a 401 Unauthorized response
         print("User not found or invalid credentials.")
@@ -203,7 +194,6 @@ def login():
     return render_template('login.html')
 
 
-    
 # somewhere to logout
 @app.route("/logout")
 @login_required
