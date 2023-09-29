@@ -31,9 +31,7 @@ app.secret_key = str(uuid.uuid4())
 from dotenv import load_dotenv
 load_dotenv()
 
-# Get environment variables
-USER = os.environ.get('TADAA_USERNAME')
-PASSWORD = os.environ.get('TADAA_PASSWORD')
+# MARK: Configuration
 
 # For user-uploaded Excel files
 UPLOAD_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'uploads')
@@ -65,7 +63,68 @@ manual_data_labels = [
 
 manual_data = {}
 
+# Get environment variables
+USER_ID  = os.environ.get('TADAA_USER_ID')
+USERNAME = os.environ.get('TADAA_USERNAME')
+PASSWORD = os.environ.get('TADAA_PASSWORD')
+
+
+# MARK: Authentication
+
+class User(UserMixin):
+    def __init__(self):
+        self.id = USER_ID
+        self.name = USERNAME
+        self.password = PASSWORD
+
+lp_user = User()
+
+@login_manager.user_loader
+def load_user(user_id):
+    if user_id == USER_ID:
+        return lp_user
+    return None
+
+
+
 # TADAA Routes
+
+# somewhere to login
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if current_user.is_authenticated:
+        # If the user is already authenticated, redirect them to the index page
+        return redirect(url_for('index'))
+
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        if username == USERNAME and password == PASSWORD:
+            login_user(lp_user)
+            return redirect(url_for('index'))
+
+        # If no matching user is found, return a 401 Unauthorized response
+        print("User not found or invalid credentials.")
+        return abort(401)
+
+    print("Get or login failed.")
+    return render_template('login.html')
+
+
+# somewhere to logout
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return Response('<p>Logged out</p>')
+
+
+# handle login failed
+@app.errorhandler(401)
+def page_not_found(e):
+    return redirect(url_for('login'))
+
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -155,57 +214,6 @@ def download_audit(ts):
 
     #return send_file(ppt_path, mimetype=None, as_attachment=True, attachment_filename=(final_project_name + "-" + requested_audit + ".pptx"))
     return send_file(ppt_path)
-
-class User(UserMixin):
-    def __init__(self):
-        self.id = 0
-        self.name = USER
-        self.password = PASSWORD
-
-lp_user = User()
-
-@login_manager.user_loader
-def load_user(user_id):
-    if USER == lp_user.name:
-        return lp_user
-    return None
-
-
-# somewhere to login
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if current_user.is_authenticated:
-        # If the user is already authenticated, redirect them to the index page
-        return redirect(url_for('index'))
-
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-
-        if username == USER and password == PASSWORD:
-            login_user(lp_user)
-            return redirect(url_for('index'))
-
-        # If no matching user is found, return a 401 Unauthorized response
-        print("User not found or invalid credentials.")
-        return abort(401)
-
-    print("Get or login failed.")
-    return render_template('login.html')
-
-
-# somewhere to logout
-@app.route("/logout")
-@login_required
-def logout():
-    logout_user()
-    return Response('<p>Logged out</p>')
-
-
-# handle login failed
-@app.errorhandler(401)
-def page_not_found(e):
-    return Response('<p>Login failed, <a href="/login">login here</a></p>') 
 
 
 
