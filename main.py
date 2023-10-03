@@ -53,7 +53,7 @@ manual_data = {}
 
 # TADAA Routes
 
-@app.route('/', methods=['GET'])
+@app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'GET':
         # Accessing manual input options in json file
