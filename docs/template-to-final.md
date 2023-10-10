@@ -3,8 +3,8 @@
 * [Type] - [Description]
 
 ## Slide 4. Executive
-* Remove links to unused issues
-* Re-organize links based on importance
+* Deletion - Remove links to unused issues
+* _Re-organize links based on importance_
     * This only really happens by QC / Sr Analyst
 
 ## Slide 5. Keyword Snapshot
@@ -17,87 +17,88 @@
 ## Slide 9. Mobile Usability
 * Text - Update Limited Mobile Usability text
 * Rich Text - Analyst Notes
-    * Link to Search Console
+* Link - to Search Console
 
-# Slide 10. Sitemap
+## Slide 10. Sitemap
 * Bool - Is SC used
 * Bool - Sitemap errors
-* Analyst Notes
-    * Link to client's sitemap
-    * Link to orphaned pages sheet
+* Rich Text - Analyst Notes
+* Link - to client's sitemap
+* Link - to orphaned pages sheet
 
-# Slide 11. Robots
-* Analyst Notes
-* Link to client's robots.txt
+## Slide 11. Robots
+* Rich Text - Analyst Notes
+* Link - to client's robots.txt
 
-# Slide 12. Structured Data
-* Analyst Notes
-* Link to SC - faq errors
-* Link to SC - breadcrumb errors
-* Link to SC - merchant listings
+## Slide 12. Structured Data
+* Rich Text - Analyst Notes
+* Link - to SC faq errors
+* Link - to SC breadcrumb errors
+* Link - to SC merchant listings
 
-# Slide 14. On-Page -- Titles
+## Slide 14. On-Page -- Titles
 * Image upload - SERP result
-* Analyst Notes
-* Link to titles sheet
+* Rich Text - Analyst Notes
+* Link - to titles sheet
 
-# Slide 15. On-Page -- Desc
+## Slide 15. On-Page -- Desc
 * Image upload - SERP result (same as previous slide)
-* Analyst Notes
-* Link to descriptions sheet
+* Rich Text - Analyst Notes
+* Link - to descriptions sheet
 
-# Slide 16. On-Page -- H1
-* Analyst Notes
-* Link to _
+## Slide 16. On-Page -- H1
+* Rich Text - Analyst Notes
+* Link - to _
 
-# Slide 17. Content and XP
-* Analyst Notes
+## Slide 17. Content and XP
+* Rich Text - Analyst Notes
 
-# Slide 18. Duplicate Content
-* Analyst Notes
+## Slide 18. Duplicate Content
+* Rich Text - Analyst Notes
 
-# Slide 19. CTAs
-* Analyst Notes
+## Slide 19. CTAs
+* Rich Text - Analyst Notes
 
-# Slide 20. Blog
-* Yes/No - Has a blog
-* Yes/No - Blog is updated
+## Slide 20. Blog
+* Bool - Has a blog
+* Bool - Blog is updated
 
-# Slide 21. Alt Text
-* Analyst Notes
+## Slide 21. Alt Text
+* Rich Text - Analyst Notes
 
-# Slide 23. 404 Errors
-* Analyst Notes
-* Links to _
+## Slide 23. 404 Errors
+* Rich Text - Analyst Notes
+* Links - to _
 
-# Slide 24. Canonicals
-* Analyst Notes
+## Slide 24. Canonicals
+* Rich Text - Analyst Notes
 
-# Slide 25. Redirects
-* Analyst Notes
+## Slide 25. Redirects
+* Rich Text - Analyst Notes
 
-# Slide 26. Website Security
-* Analyst Notes
+## Slide 26. Website Security
+* Rich Text - Analyst Notes
 loads_http = bool
 loads_mixed_resources = bool
 ssl_exp = bool
 
-# Slide 27. Page Speed
-* Num - mob_load_time = float
-* Num - desk_load_time = float
+## Slide 27. Page Speed
+* Num - mob_load_time
+* Num - desk_load_time
 
-# Slide 28. 
+## Slide 28.
 
-# 29. Domain Authority
-* Image Upload
+## Slide 29. Domain Authority
+* Image Upload - 
 * Rich Text - Analyst Notes
 
-# Slide 30. Backlinks
+## Slide 30. Backlinks
 * Rich Text - Analyst Notes
 
-# Slide 31. Thank You
+## Slide 31. Thank You
 
-What would help us right now:
+---
+
 * An exhaustive list of all sources of data for a tech audit. _Everything referenced to create the audit._:
     * Sitebulb exports
     * Search Console exports
