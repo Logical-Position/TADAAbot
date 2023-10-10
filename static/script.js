@@ -66,10 +66,33 @@ function handleDomainNameChange(e) {
 
 // Function for handling updating "Uploaded File" text once file has been uploaded.
 function updateUploadedFileLabel(filename) {
+    // Discussion: It's a good practice to catch your potential errors.
+    // Here, we add a try-catch handler so, if an error does happen, the program does not crash and continues executing
+    // Without this, the program crashes because the targeted element doesn't exist -- it's commented out
+    // Another approach is to check if `uploadedFile` is a valid object before we try to do something with it, like set it's `innerText` property
+    // What if we don't want to add this boilerplate to every function that updates a part of the UI? 
+    // Is there an abstract helper function(s) that we can make?
+    try {
+        const uploadedFile = document.querySelector("#uploaded-file-name");
+        uploadedFile.innerText = filename;
+        uploadedFile.value = filename;
+    } catch (e) {
+        console.error(e);
+        // Discussion: This will only print to the user's local browser console (i.e. on the analyst's computer)
+        // What else can we do with an error?
+    }
+    /**
+     * Another approach
     const uploadedFile = document.querySelector("#uploaded-file-name");
-    uploadedFile.innerText = filename;
-    uploadedFile.value = filename;
-    // mfolderNae.innerText = filename;
+    if (uploadedFile !== null || uploadedFile !== undefined) {
+        // Do stuff with the element
+        uploadedFile.innerText = filename;
+        uploadedFile.value = filename;
+    } else {
+        // Report and handle an error
+        console.error("oops! something went wrong!");
+    }
+    */
 }
 
 // Function for handling updating the border color of the upload file container when a valid file is uploaded.
