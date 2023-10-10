@@ -1,0 +1,41 @@
+{
+  "name": "original",
+  "ppt": "filename.pptx",
+  "slides": [
+    {
+      "index": 11,
+      "inputs": [
+        {
+          "id": "robots-analyst-notes",
+          "type": ""
+        }
+      ]
+    },
+    {
+      "index": 14,
+      "inputs": [
+        {
+          "id": "title-analyst-notes",
+          "type": ""
+        },
+        {
+          "id": "image-serp-result",
+          "type": ""
+        },
+        {
+          "id": "link-to-desc",
+          "type": ""
+        }
+      ]
+    },
+    {
+      "index": 15,
+      "inputs": [
+        {
+          "id": "image-serp-result",
+          "type": ""
+        }
+      ]
+    }
+  ]
+}
