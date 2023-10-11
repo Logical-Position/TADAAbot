@@ -7,7 +7,11 @@
       "inputs": [
         {
           "id": "robots-analyst-notes",
-          "type": ""
+          "type": "dynamic-text"
+        },
+        {
+          "id": "robots-link",
+          "type": "link"
         }
       ]
     },
