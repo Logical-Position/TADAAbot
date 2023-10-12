@@ -3,6 +3,67 @@
   "ppt": "filename.pptx",
   "slides": [
     {
+      "index": 4,
+      "inputs": [
+        {
+          "id": "executive-summary",
+          "type": ""
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "inputs": [
+        {
+          "id": "keyword-snapshot",
+          "type": ""
+        }
+      ]
+    },
+    {
+      "index": 7,
+      "inputs": [
+        {
+          "id": "ga_bool",
+          "type": ""
+        },
+        {
+          "id": "sc_bool",
+          "type": ""
+        }
+      ]
+    },
+    {
+      "index": 9,
+      "inputs": [
+        {
+          "id": "sc_mob_usability_analyst_notes",
+          "type": ""
+        },
+        {
+          "id": "sc_mob_usability",
+          "type": ""
+        }
+      ]
+    },
+    {
+      "index": 10,
+      "inputs": [
+        {
+          "id": "sitemap_analyst_notes",
+          "type": ""
+        },
+        {
+          "id": "sitemap_errors_bool",
+          "type": ""
+        },
+        {
+          "id": "sc_sitemap_submitted_bool",
+          "type": ""
+        }
+      ]
+    },
+    {
       "index": 11,
       "inputs": [
         {
@@ -16,6 +77,15 @@
       ]
     },
     {
+      "index": 12,
+      "inputs": [
+        {
+          "id": "structured_data_analyst_notes",
+          "type": ""
+        }
+      ]
+    },
+    {
       "index": 14,
       "inputs": [
         {
@@ -23,11 +93,7 @@
           "type": ""
         },
         {
-          "id": "image-serp-result",
-          "type": ""
-        },
-        {
-          "id": "link-to-desc",
+          "id": "serps_screenshot",
           "type": ""
         }
       ]
@@ -36,7 +102,136 @@
       "index": 15,
       "inputs": [
         {
-          "id": "image-serp-result",
+          "id": "serps_screenshot",
+          "type": ""
+        },
+        {
+          "id": "meta_descriptions_analyst_notes",
+          "type": ""
+        }  
+      ]
+    },
+    {
+      "index": 16,
+      "inputs": [
+        {
+          "id": "h1_analyst_notes",
+          "type": ""
+        }
+      ]
+    },
+    {
+      "index": 17,
+      "inputs": [
+        {
+          "id": "site_content_analyst_notes",
+          "type": ""
+        }
+      ]
+    },
+    {
+      "index": 18,
+      "inputs": [
+        {
+          "id": "dup_content_analyst_notes",
+          "type": ""
+        }
+      ]
+    },
+    {
+      "index": 19,
+      "inputs": [
+        {
+          "id": "cta_analyst_notes",
+          "type": ""
+        }
+      ]
+    },
+    {
+      "index": 20,
+      "inputs": [
+        {
+          "id": "blog_updated_reg_bool",
+          "type": ""
+        },
+        {
+          "id": "onsite_blog_bool",
+          "type": ""
+        }
+      ]
+    },
+    {
+      "index": 21,
+      "inputs": [
+        {
+          "id": "alt_text_analyst_notes",
+          "type": ""
+        }
+      ]
+    },
+    {
+      "index": 23,
+      "inputs": [
+        {
+          "id": "404s_analyst_notes",
+          "type": ""
+        }
+      ]
+    },
+    {
+      "index": 24,
+      "inputs": [
+        {
+          "id": "canonical_analyst_notes",
+          "type": ""
+        }
+      ]
+    },
+    {
+      "index": 25,
+      "inputs": [
+        {
+          "id": "redirects_analyst_notes",
+          "type": ""
+        }
+      ]
+    },
+    {
+      "index": 26,
+      "inputs": [
+        {
+          "id": "site_security_analyst_notes",
+          "type": ""
+        }
+      ]
+    },
+    {
+      "index": 27,
+      "inputs": [
+        {
+          "id": "desk_load_time_float",
+          "type": ""
+        },
+        {
+          "id": "mob_load_time_float",
+          "type": ""
+        }
+      ]
+    },
+    {
+      "index": 29,
+      "inputs": [
+        {
+          "id": "dom_auth_analyst_notes",
+          "type": ""
+        }
+      ]
+    },
+    {
+      "index": 30,
+      "inputs": [
+        {
+          "id": "backlinks_analyst_notes",
           "type": ""
         }
       ]
