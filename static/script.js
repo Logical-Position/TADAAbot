@@ -22,6 +22,9 @@ function handleFileUpload(spreadsheetSelection) {
     // 5. Enable "Generate PPT button"
 
     // FIXME: Errors if this runs when no files are uploaded.
+    console.log(spreadsheetSelection.files);
+
+    
     let filename = spreadsheetSelection.files[0].name;
     let folderName = spreadsheetSelection.files[0].webkitRelativePath.split("/")[0];
     
@@ -43,7 +46,7 @@ function handleFileUpload(spreadsheetSelection) {
 
         }
             filename = filename.charAt(0) + filename.slice(1);
-            updateUploadedFileLabel(filename);
+            // updateUploadedFileLabel(filename);
             outlineFileInput();
             updateFileInputImage(filename);
 
@@ -58,7 +61,7 @@ function handleFileUpload(spreadsheetSelection) {
 
 function handleDomainNameChange(e) {
     let newName = e.target.value;
-    updateUploadedFileLabel(newName);
+    // updateUploadedFileLabel(newName);
 
     // Check if files have been uploaded before changing the name inside the droparea.
     if(spreadsheetSelection.length > 0) updateFileInputImage(newName);  
@@ -260,6 +263,60 @@ function saveBlob(blob, filename) {
     window.URL.revokeObjectURL(url);
 }
 
+function dragOverHandler(e) {
+  console.log('Files over drop area');
+  e.preventDefault();
+  e.stopPropagation();
+}
+
+//  progress made here
+//https://developer.mozilla.org/en-US/docs/Web/API/DataTransferItem/webkitGetAsEntry
+// SO: https://stackoverflow.com/questions/44842247/event-datatransfer-files-vs-event-datatransfer-items
+async function dropHandler(e, spreadsheetSelection) {
+//   console.log('File Dropped');
+  e.preventDefault();
+
+  const files = [];
+  const dataTransfer = e.dataTransfer.items;
+  // let item = await e.dataTransfer.items[0].webkitGetAsEntry();
+
+  for (let i = 0; i < dataTransfer.length; i++) {
+    const item = dataTransfer[i].webkitGetAsEntry();
+    if (item) {
+      getFileTree(item);
+    }
+  }
+
+
+function getFileTree(item, path) {
+    if (item.isFile) {
+      // console.log(item);
+    //   let newFile = await item.file((file) => console.log(file));
+      files.push(item);
+    } else if (item.isDirectory) {
+      // console.log(item);
+
+      // if directory/subdirectory run reader
+      const dirReader = item.createReader();
+      dirReader.readEntries(function (entries) {
+        for (let i = 0; i < entries.length; i++) {
+          // console.log(entries[i]);
+          // if subdirectory recursively run function
+          getFileTree(entries[i], path, +item.name + '/');
+        }
+      });
+    }
+  }
+  console.log(files);
+
+// spreadsheetSelection.files = {files: files}; 
+
+//   spreadsheetSelection.files = files; 
+//   console.log(spreadsheetSelection.files)
+
+//   handleFileUpload(spreadsheetSelection);
+}
+
 
 
 // MARK: Main
@@ -277,6 +334,13 @@ function main() {
     const spreadsheetSelection = document.querySelector("#spreadsheet-selection");
     spreadsheetSelection.addEventListener('change', function(e) {
         handleFileUpload(spreadsheetSelection);
+    });
+
+    // File Drag and Drop Listener
+    const dragndropArea = document.querySelector('.drop-zone');
+    dragndropArea.addEventListener('dragover', dragOverHandler);
+    dragndropArea.addEventListener('drop', function (e) {
+        dropHandler(e, spreadsheetSelection);
     });
 
     // Handles enabling/disabling the submit buttons and very basic verification.
@@ -377,5 +441,5 @@ function main() {
             });
         })
     });
-}
+};
 
