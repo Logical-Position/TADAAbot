@@ -56,11 +56,12 @@ manual_data = {}
 # TODO: Combine these '/' routes
 @app.route('/', methods=['GET'])
 def index(): 
-    # Accessing manual input options in json file
-    with open('ta_decisions.json') as t:
-        ta_decisions = json.load(t)
+    with open('ppts/json/original.json') as t:
+        ppt_schema = json.load(t)
+    
+    slides=[]
 
-    return render_template('index.html', ta_decisions=ta_decisions)
+    return render_template('index.html', slides=slides)
 
 @app.route('/', methods=['POST'])
 def parse_upload():
