@@ -1,13 +1,14 @@
 {
     "name": "original",
-    "ppt": "filename.pptx",
+    "ppt": "SEOC Tech Audit Template.pptx",
     "slides": [
       {
         "index": 4,
+        "name": "Executive Summary",
         "inputs": [
           {
             "id": "executive-summary",
-            "type": ""
+            "type": "deletion"
           }
         ]
       },
@@ -16,7 +17,7 @@
         "inputs": [
           {
             "id": "keyword-snapshot",
-            "type": ""
+            "type": "image"
           }
         ]
       },
@@ -25,11 +26,11 @@
         "inputs": [
           {
             "id": "ga_bool",
-            "type": ""
+            "type": "boolean"
           },
           {
             "id": "sc_bool",
-            "type": ""
+            "type": "boolean"
           }
         ]
       },
@@ -38,11 +39,11 @@
         "inputs": [
           {
             "id": "sc_mob_usability_analyst_notes",
-            "type": ""
+            "type": "text"
           },
           {
             "id": "sc_mob_usability",
-            "type": ""
+            "type": "text"
           }
         ]
       },
@@ -51,15 +52,15 @@
         "inputs": [
           {
             "id": "sitemap_analyst_notes",
-            "type": ""
+            "type": "text"
           },
           {
             "id": "sitemap_errors_bool",
-            "type": ""
+            "type": "boolean"
           },
           {
             "id": "sc_sitemap_submitted_bool",
-            "type": ""
+            "type": "boolean"
           }
         ]
       },
@@ -68,7 +69,7 @@
         "inputs": [
           {
             "id": "robots-analyst-notes",
-            "type": "dynamic-text"
+            "type": "text"
           },
           {
             "id": "robots-link",
@@ -81,7 +82,7 @@
         "inputs": [
           {
             "id": "structured_data_analyst_notes",
-            "type": ""
+            "type": "text"
           }
         ]
       },
@@ -90,11 +91,15 @@
         "inputs": [
           {
             "id": "title-analyst-notes",
-            "type": ""
+            "type": "text"
           },
           {
             "id": "serps_screenshot",
-            "type": ""
+            "type": "image"
+          },
+          {
+            "id": "link-titles-sheet",
+            "type": "link"
           }
         ]
       },
@@ -103,11 +108,15 @@
         "inputs": [
           {
             "id": "serps_screenshot",
-            "type": ""
+            "type": "image"
           },
           {
             "id": "meta_descriptions_analyst_notes",
-            "type": ""
+            "type": "text"
+          },
+          {
+            "id": "link-descriptions-sheet",
+            "type": "link"
           }  
         ]
       },
@@ -116,7 +125,11 @@
         "inputs": [
           {
             "id": "h1_analyst_notes",
-            "type": ""
+            "type": "text"
+          },
+          {
+            "id": "link-h1s-sheet",
+            "type": "link"
           }
         ]
       },
@@ -125,7 +138,7 @@
         "inputs": [
           {
             "id": "site_content_analyst_notes",
-            "type": ""
+            "type": "text"
           }
         ]
       },
@@ -134,7 +147,7 @@
         "inputs": [
           {
             "id": "dup_content_analyst_notes",
-            "type": ""
+            "type": "text"
           }
         ]
       },
@@ -143,7 +156,7 @@
         "inputs": [
           {
             "id": "cta_analyst_notes",
-            "type": ""
+            "type": "text"
           }
         ]
       },
@@ -152,11 +165,11 @@
         "inputs": [
           {
             "id": "blog_updated_reg_bool",
-            "type": ""
+            "type": "boolean"
           },
           {
             "id": "onsite_blog_bool",
-            "type": ""
+            "type": "boolean"
           }
         ]
       },
@@ -165,7 +178,7 @@
         "inputs": [
           {
             "id": "alt_text_analyst_notes",
-            "type": ""
+            "type": "text"
           }
         ]
       },
@@ -174,7 +187,7 @@
         "inputs": [
           {
             "id": "404s_analyst_notes",
-            "type": ""
+            "type": "text"
           }
         ]
       },
@@ -183,7 +196,7 @@
         "inputs": [
           {
             "id": "canonical_analyst_notes",
-            "type": ""
+            "type": "text"
           }
         ]
       },
@@ -192,7 +205,7 @@
         "inputs": [
           {
             "id": "redirects_analyst_notes",
-            "type": ""
+            "type": "text"
           }
         ]
       },
@@ -201,7 +214,7 @@
         "inputs": [
           {
             "id": "site_security_analyst_notes",
-            "type": ""
+            "type": "text"
           }
         ]
       },
@@ -210,11 +223,11 @@
         "inputs": [
           {
             "id": "desk_load_time_float",
-            "type": ""
+            "type": "number"
           },
           {
             "id": "mob_load_time_float",
-            "type": ""
+            "type": "number"
           }
         ]
       },
@@ -223,7 +236,7 @@
         "inputs": [
           {
             "id": "dom_auth_analyst_notes",
-            "type": ""
+            "type": "text"
           }
         ]
       },
@@ -232,7 +245,7 @@
         "inputs": [
           {
             "id": "backlinks_analyst_notes",
-            "type": ""
+            "type": "text"
           }
         ]
       }

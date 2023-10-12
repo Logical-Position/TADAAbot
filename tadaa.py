@@ -104,7 +104,9 @@ def parse_data(project_dir, manual_data):
     
     for key in final_data_obj.keys():
         print(key)
-
+    print(" ===== TADAABJECT ===== ")
+    print(final_data_obj)
+    print(" ===== TADAABJECT ===== ")
     return final_data_obj
 
 

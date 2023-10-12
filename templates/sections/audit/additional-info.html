@@ -103,22 +103,16 @@
     <div>
         <h3 class="text-xl italic text-neutral-500 my-2">Slide Notes</h3>
         <ol>
-
-            <li class="p-3 grid grid-cols-2 even:bg-neutral-50 odd:bg-sky-200" data-comp="dynamic-text">
-                {% include 'components/dynamic-text-input.html' %}
-            </li>
-            <li>
-                {% include 'components/image-input.html' %}
-            </li>
-            <li>
-                {% include 'components/link-input.html' %}
-            </li>
-            <li>
-                {% include 'components/number-input.html' %}
-            </li>
-            <li>
-                {% include 'components/boolean-input.html' %}
-            </li>
+            {% for slide in slides %}
+                <h4 class="text-lg font-bold">{{ slide.index }}. {{ slide.name }}</h4>
+                <li class="p-3 even:bg-neutral-50 odd:bg-sky-200">
+                    {% for input in slide.inputs %}
+                        {% if input.type != "deletion" %}
+                            {% include 'components/' + input.type + '-input.html' %}
+                        {% endif %}
+                    {% endfor %}
+                </li>
+            {% endfor %}
         </ol>
     </div>
 </section>
