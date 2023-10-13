@@ -5,13 +5,12 @@
 <script src="{{ url_for('static', filename='scripts/components.js') }}"></script>
 {% endblock %}
 
-{% block main %}
+{% block page %}
 {% include 'sections/header.html' %}
-<div class="flex justify-center pt-8 pb-12">
-    <div class="w-4/5 md:w-2/3 lg:w-1/2">        
+<main>
+    <div class="max-w-screen-lg mx-auto px-5">
         {% include 'sections/audit-form/form.html' %}
     </div>
-</div>
+</main>
 {% include 'sections/footer.html' %}
-
 {% endblock %}
