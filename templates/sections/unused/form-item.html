@@ -1,0 +1,5 @@
+<div>
+    <p class="font-bold">{{ input.type }}</p>
+    <p for="{{ input.id }}">{{ input.id }}</p>
+    {% include 'components/inputs/' + input.type + '.html' %}
+</div>

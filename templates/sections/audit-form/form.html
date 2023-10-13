@@ -1,0 +1,77 @@
+<!-- MARK: Form -->
+<form id="tadaa-form" action="/" method="post" enctype="multipart/form-data" class="py-4">
+    <h1 class="text-5xl my-6">Audit for <span class="italic text-neutral-300 underline" data-domain-name="">example.com</span></h1>
+    <!-- Sitebulb Upload -->
+    <section>
+        <fieldset>
+
+        </fieldset>
+    </section>
+    <!-- Site Data -->
+    
+    
+    <!-- Google Search Console -->
+    <section>
+        <fieldset>
+            <li class="p-3 grid grid-cols-2 text-left even:bg-neutral-50 odd:bg-sky-200">
+                <label class="text-left">3. <span>SC access</span></label>
+                <div class="w-full flex justify-around">
+                    <span>
+                        <input type="radio" id="yes" name="sc_access" value="true" class="scale-150 mr-1">
+                        <label for="yes">Yes</label>
+                    </span>
+                    <span>
+                        <input type="radio" id="no" name="sc_access" value="false" class="scale-150 mr-1">
+                        <label for="no">No</label>
+                    </span>
+                </div>
+            </li>
+            <li class="p-3 grid grid-cols-2 text-left even:bg-neutral-50 odd:bg-sky-200">
+                <label class="text-left">4. <span>GA access</span></label>
+                <div class="w-full flex justify-around">
+                    <span>
+                        <input type="radio" id="yes" name="ga_access" value="true" class="scale-150 mr-1">
+                        <label for="yes">Yes</label>
+                    </span>
+                    <span>
+                        <input type="radio" id="no" name="ga_access" value="false" class="scale-150 mr-1">
+                        <label for="no">No</label>
+                    </span>
+                </div>
+            </li>
+            <li class="p-3 grid grid-cols-2 text-left even:bg-neutral-50 odd:bg-sky-200">
+                <label class="text-left">6. <span>Is Sitemap Submitted in SC</span></label>
+                <div class="w-full flex justify-around">
+                    <span>
+                        <input type="radio" id="yes" name="sitemap_submitted" value="true" class="scale-150 mr-1">
+                        <label for="yes">Yes</label>
+                    </span>
+                    <span>
+                        <input type="radio" id="no" name="sitemap_submitted" value="false" class="scale-150 mr-1">
+                        <label for="no">No</label>
+                    </span>
+                </div>
+            </li>
+        </fieldset>
+    </section>
+    <!-- Google Analytics -->
+
+    <!-- PageSpeed Insights -->
+
+    <!-- Slide Notes -->
+    
+    <!-- Submission Button -->
+    <section>
+        <h2 class="text-2xl text-neutral-600 my-4">n. Submit to generate the Powerpoint</h2>
+        <p class="text-lg italic text-neutral-400">The .pptx should download automatically once completed.</p>
+        <input
+            id="submit-input"
+            class="text-center bg-green-200 enabled:hover:bg-green-300 w-full p-6 rounded-md border border-green-700 font-medium text-lg my-4 enabled:hover:cursor-pointer enabled:hover:drop-shadow-md enabled:active:bg-green-400 disabled:opacity-50"
+            type="submit"
+            name="generate_ppt"
+            value="Generate PPT"
+            disabled
+        >
+    </section>
+    <p class="py-4 text-center font-medium text-xl text-neutral-500"><em>The "Technical Audit Documentation Automation Assistant", or TADAA!</em></p>
+</form>

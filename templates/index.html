@@ -1,24 +1,17 @@
 {% extends 'layouts/base.html' %}
 
-{% block title %}
-TADAA
+{% block scripts %}
+<script src="{{ url_for('static', filename='scripts/script.js') }}"></script>
+<script src="{{ url_for('static', filename='scripts/components.js') }}"></script>
 {% endblock %}
 
 {% block main %}
+{% include 'sections/header.html' %}
 <div class="flex justify-center pt-8 pb-12">
-    <div class="w-4/5 md:w-2/3 lg:w-1/2">
-        <p class="py-4 text-center font-medium text-xl text-neutral-500"><em>The "Technical Audit Documentation Automation Assistant", or TADAA!</em></p>
-        
-        <!-- MARK: Form -->
-        <form id="tadaa-form" action="/" method="post" enctype="multipart/form-data" class="py-4">
-            
-        {% include 'sections/audit/exports-upload.html' %}
-        {% include 'sections/audit/additional-info.html' %}
-        {% include 'sections/audit/submission-button.html' %}
-            
-        </form>
+    <div class="w-4/5 md:w-2/3 lg:w-1/2">        
+        {% include 'sections/audit-form/form.html' %}
     </div>
 </div>
-
+{% include 'sections/footer.html' %}
 
 {% endblock %}

@@ -1,0 +1,8 @@
+<li class="p-3 even:bg-neutral-100 odd:bg-sky-200">
+    <h4 class="text-lg font-bold">{{ slide.index }}. {{ slide.name }}</h4>
+    {% for input in slide.inputs %}
+        {% if input.type != "deletion" %}
+            {% include 'components/input.html' %}
+        {% endif %}
+    {% endfor %}
+</li>

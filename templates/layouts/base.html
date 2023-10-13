@@ -2,22 +2,19 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" cntent="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <title>{{ title }}</title> -->
-    <title>{% block title %}{% endblock %}</title>
-    
-    <link rel="stylesheet" href="{{ url_for('static',filename='dist/output.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
-    <script src="{{ url_for('static', filename='components.js') }}"></script>
+    <title>{{ page_title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/tailwind.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
+    {% block styles %}{% endblock %}
+    {% block scripts %}{% endblock %}
 </head>
-<body class="bg-neutral-50 flex-col min-h-screen flex">
-    {% include 'sections/header.html' %}
-    <main class="mt-10 overflow-hidden flex-1">
-        {% block main %}{% endblock %}
-    </main>
-    {% include 'sections/footer.html' %}
+<body>
+    <div class="bg-neutral-50 flex-col min-h-screen flex">
+        <main class="mt-10 overflow-hidden flex-1">
+            {% block main %}{% endblock %}
+        </main>
+    </div>
 </body>
 </html>

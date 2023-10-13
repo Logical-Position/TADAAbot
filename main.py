@@ -40,13 +40,15 @@ manual_data = {}
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'GET':
+        page_title = "TADAAbot"
+        
         with open('ppts/json/original.json') as t:
             ppt_schema = json.load(t)
     
         tmplname = ppt_schema['ppt']
         slides = ppt_schema['slides']
 
-        return render_template('index.html', slides=slides)
+        return render_template('index.html', page_title=page_title, slides=slides)
     elif request.method == 'POST':
         # 1. Gather uploaded data: files and fields
         # 2. Call tadaa to parse and compile data
