@@ -1,0 +1,53 @@
+.completed-indicator {
+  box-shadow: rgb(26 80 28 / 20%) 0px 7px 29px 0px !important;
+  border: solid green;
+  transition: 2s all;
+}
+
+#raw-data-link {
+  font-style: italic;
+}
+
+#raw-data-link:hover {
+  font-style: italic;
+  text-decoration: underline;
+}
+
+#raw-data-link.disabled-raw-data-link {
+  color: rgb(150, 150, 150);
+  cursor: default;
+  pointer-events: none;
+}
+
+#raw-data-link.disabled-raw-data-link:hover {
+  text-decoration: none;
+}
+
+.hidden {
+  visibility:hidden;
+}
+
+progress {
+  background-color: rgb(69 194 177);
+  width: 100%;
+}
+
+progress::-webkit-progress-value {
+  background-color: rgb(62, 165, 151);
+  width: 100%;
+}
+
+.hidden-input {
+  display: none;
+}
+
+#uploaded-file-name {
+  border:none;
+  outline:none;
+  background-color:transparent;
+}
+
+.footer {
+  height: 100px;
+  border-top: 2px solid black;
+}
