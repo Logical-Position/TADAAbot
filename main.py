@@ -39,15 +39,13 @@ manual_data = {}
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    if request.method == 'GET':
-        page_title = "TADAAbot"
-        
-        with open('ppts/json/original.json') as t:
-            ppt_schema = json.load(t)
-    
+    with open('ppts/json/original.json') as t:
+        ppt_schema = json.load(t)
         tmplname = ppt_schema['ppt']
         slides = ppt_schema['slides']
 
+    if request.method == 'GET':
+        page_title = "TADAAbot"
         return render_template('index.html', page_title=page_title, slides=slides)
     elif request.method == 'POST':
         # 1. Gather uploaded data: files and fields
@@ -60,7 +58,10 @@ def index():
         for label in manual_data_labels:
             data = request.form.get(label, '')
             manual_data[label] = data
-        
+        print("")
+        print(" ===== D A T A ===== ")
+        print(manual_data)
+        print("\n\n")
         # Create folder for audit assets
         now = datetime.datetime.now()
         timestamp = now.strftime("%Y-%m-%d_%H-%M-%S")

@@ -137,12 +137,12 @@
                 {% for slide in slides %}
                     <h4 class="text-lg font-bold">{{ slide.index }}. {{ slide.name }}</h4>
                     <li class="p-3 even:bg-neutral-50 odd:bg-sky-200">
-                        {#{% for input in slide.inputs %}
+                        {% for input in slide.inputs %}
                             {% if input.type != "deletion" %}
-                                {% set key, prompt = 'input.id, 'Is Search Console installed on the site?' %}
+                                {% set key, prompt = input.id, input.id %}
                                 {% include 'sections/audit-form/inputs/' + input.type + '.html' %}
                             {% endif %}
-                        {% endfor %}#}
+                        {% endfor %}
                     </li>
                 {% endfor %}
             </ol>

@@ -86,7 +86,7 @@ desk_load_time = float
 broken_backlinks = 0
 
 
-def populate_powerpoint(final_data_object, project_dir, root_path, project_name):
+def populate_powerpoint(final_data_object, project_dir, root_path, project_name, manual_data):
     """
     Goes through the template PowerPoint slide by slide, and adjusts the values/SEO recommendation text to correspond
     to the calculated data and user inputs.
@@ -174,6 +174,7 @@ def populate_powerpoint(final_data_object, project_dir, root_path, project_name)
                     print(shape.name)
                     runs[0].text = f'Missing descriptions: {desc_missing} | Short descriptions: {desc_too_short} | ' \
                                    f'Long descriptions: {desc_too_long} | Empty descriptions: {desc_empty}'
+                
 
                 # Slide 16
                 if 'h1_analyst_notes' == shape.name:

@@ -3,23 +3,30 @@
     "ppt": "SEOC Tech Audit Template.pptx",
     "slides": [
       {
+        "index": 1
+      },
+      {
+        "index": 2
+      },
+      {
+        "index": 3
+      },
+      {
         "index": 4,
-        "name": "Executive Summary",
-        "inputs": [
-          {
-            "id": "executive-summary",
-            "type": "deletion"
-          }
-        ]
+        "name": "Executive Summary"
       },
       {
         "index": 5,
         "inputs": [
           {
             "id": "keyword-snapshot",
-            "type": "image"
+            "type": "image",
+            "label": "Upload a screenshot from "
           }
         ]
+      },
+      {
+        "index": 6
       },
       {
         "index": 7,
@@ -85,6 +92,9 @@
             "type": "text"
           }
         ]
+      },
+      {
+        "index": 13
       },
       {
         "index": 14,
@@ -183,6 +193,9 @@
         ]
       },
       {
+        "index": 22
+      },
+      {
         "index": 23,
         "inputs": [
           {
@@ -230,6 +243,9 @@
             "type": "number"
           }
         ]
+      },
+      {
+        "index": 28
       },
       {
         "index": 29,
