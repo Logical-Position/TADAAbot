@@ -93,7 +93,9 @@ def populate_powerpoint(final_data_object, project_dir, root_path, project_name)
     @param exports_path: the path to the main exports folder.
     @param root_path: the path to the tech audit template ppt.
     """
-    template_path = root_path + '/SEOC Tech Audit Template.pptx'
+    templates_dir = '/ppts/pptx/'
+    template_name = 'SEOC Tech Audit Template.pptx'
+    template_path = root_path + templates_dir + template_name
     presentation = Presentation(template_path)
     slides = [slide for slide in presentation.slides]
     slide_num = 0
