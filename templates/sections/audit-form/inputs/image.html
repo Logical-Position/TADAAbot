@@ -1,7 +1,7 @@
 {% extends 'layouts/input.html' %}
 {% block inputs %}
 <div>
-    <label class="text-left" for="robots_url">{{ input.id }}</label>
-    <input type="file" >
+    <label for="{{ key }}-image">Select Screenshot:</label>
+    <input id="{{ key }}-image" type="file">
 </div>
 {% endblock %}

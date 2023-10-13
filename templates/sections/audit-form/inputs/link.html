@@ -1,11 +1,14 @@
 {% extends 'layouts/input.html' %}
 {% block inputs %}
 <div>
-    <p><b>Link Component</b></p>
-    <label for=""></label>
-    <input type="text">
-    <label for=""></label>
-    <input type="text">
+    <div>
+        <label for="{{ key }}-anchor">Anchor Text:</label>
+        <input id="{{ key }}-anchor" type="text">
+    </div>
+    <div>
+        <label for="{{ key }}-url">URL:</label>
+        <input id="{{ key }}-url" type="text">
+    </div>
 </div>
 {% endblock %}
 

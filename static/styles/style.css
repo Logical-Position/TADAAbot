@@ -64,8 +64,16 @@ progress::-webkit-progress-value {
 }
 
 #tadaa-form fieldset {
-  border: 2px groove black;
+  border: 2px solid black;
   margin-top: 15px;
   padding: 15px;
   padding-top: 0;
+}
+
+#tadaa-form fieldset fieldset {
+  border-color: #444;
+  padding: 15px;
+}
+#tadaa-form fieldset fieldset:first-of-type {
+  margin-top: 0;
 }

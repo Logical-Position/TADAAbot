@@ -1,0 +1,11 @@
+{% extends 'layouts/input.html' %}
+{% block inputs %}
+    <div>
+        <select id="{{ key }}" name="{{ key }}" class="w-full border border-neutral-400 p-1 rounded-md">
+            {% for option in options %}
+                <option value="{{ option|lower }}">{{ option }}</option>
+            {% endfor %}
+        </select>
+        <input type="text" id="other_{{ key }}" name="other_{{ key }}" class="w-full border border-neutral-400 mt-2 p-1 rounded-md hidden-input">
+    </div>
+{% endblock %}

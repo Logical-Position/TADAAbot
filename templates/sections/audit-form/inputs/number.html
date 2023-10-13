@@ -1,5 +1,16 @@
-<div>
-    <label class="text-left" for="robots_url">{{ input.id }}</label>
+{% extends 'layouts/input.html' %}
+{% block inputs %}
+<div class="w-full flex flex-row justify-center">
+    <input
+        type="number"
+        id="mobility_issues"
+        name="mobility_issues"
+        min="0"
+        value="0"
+        class="border border-neutral-400 p-1 rounded-md w-1/4 mr-2"
+    />
+    <p class="pt-4">Issues</p>
 </div>
+{% endblock %}
 
 

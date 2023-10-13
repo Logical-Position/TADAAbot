@@ -1,7 +1,8 @@
 <!-- MARK: Form -->
 <form id="tadaa-form" action="/" method="post" enctype="multipart/form-data">
     <h1 class="text-5xl my-6"><em>TADAA</em>bot Form</h1>
-    <!-- Sitebulb Upload -->
+    
+    <!-- SECTION: Sitebulb Upload -->
     {% set section_name = "1. Upload Sitebulb 'exports'" %}
     {% set section_contents %}
     <div class="flex items-center justify-center w-full">
@@ -25,63 +26,25 @@
     </div>
     {% endset %}
     {% include 'sections/audit-form/form-section.html' %}
-    <!-- Site Information -->
-    <section>
-        <fieldset>
-            <legend><h2 class="text-2xl text-neutral-600 my-4 px-2">n. Site Information</h2></legend>
-            <div class="p-3 grid grid-cols-2 text-left even:bg-neutral-50 odd:bg-sky-200">
-                <label class="text-left" for="domain_url"><span>Domain name</span></label>
-                <input
-                    type="text"
-                    id="domain_url"
-                    name="domain_url"
-                    class="border border-neutral-400 p-1 rounded-md font-normal"
-                    placeholder="https://"
-                />
-            </div>
-            <!-- Does CMS go into the tech audit? Or can we remove this? -->
-            <div class="p-3 grid grid-cols-2 text-left even:bg-neutral-50 odd:bg-sky-200">
-                <label class="text-left" for="cms">CMS</label>
-                <select id="cms" name="cms" class="w-full border border-neutral-400 p-1 rounded-md">
-                    <option value="wordpress">WordPress</option>
-                    <option value="shopify">Shopify</option>
-                    <option value="bigcommerce">BigCommerce</option>
-                    <option value="squarespace">SquareSpace</option>
-                    <option value="wix">Wix</option>
-                    <option value="weebly">Weebly</option>
-                    <option value="godaddy">GoDaddy</option>
-                    <option value="duda">Duda</option>
-                    <option value="square">Square</option>
-                    <option value="other">Other</option>
-                </select>
-                <input type="text" id="other_cms" name="other_cms" class="w-full border border-neutral-400 p-1 rounded-md hidden-input">
-            </div>
-            {% set key, prompt = 'robots-bool', 'Does the site have a robots.txt?' %}
-            {% include 'sections/audit-form/inputs/boolean.html' %}
-            <div class="p-3 grid grid-cols-2 even:bg-neutral-50 odd:bg-sky-200">
-                <label class="text-left" for="sitemap_url">7. <span>Sitemap Slug</span></label>
-                <select id="sitemap_url" name="sitemap_url" class="w-full border border-neutral-400 p-1 rounded-md">
-                    <option value="sitemap.xml">sitemap.xml</option>
-                    <option value="sitemap_index.xml">sitemap_index.xml</option>
-                    <option value="xmlsitemap.php">xmlsitemap.php</option>
-                    <option value="other">Other</option>
-                </select>
-                <input type="text" id="other_sitemap_url" name="other_sitemap_url" class="w-full border border-neutral-400 p-1 rounded-md hidden-input">
-            </div>
-            <div class="p-3 grid grid-cols-2 even:bg-neutral-50 odd:bg-sky-200">
-                <label class="text-left" for="sitemap_url">7. <span>Robots.txt URL</span></label>
-                <select id="sitemap_url" name="sitemap_url" class="w-full border border-neutral-400 p-1 rounded-md">
-                    <option value="sitemap.xml">sitemap.xml</option>
-                    <option value="sitemap_index.xml">sitemap_index.xml</option>
-                    <option value="xmlsitemap.php">xmlsitemap.php</option>
-                    <option value="other">Other</option>
-                </select>
-                <input type="text" id="other_sitemap_url" name="other_sitemap_url" class="w-full border border-neutral-400 p-1 rounded-md hidden-input">
-            </div>
-        </fieldset>
-    </section>
-    <!-- Google Search Console -->
-    {% set section_name = "n. Google Search Console" %}
+    
+    <!-- SECTION: Site Information -->
+    {% set section_name = "2. Site Information" %}
+    {% set section_contents %}
+        <!-- Domain name -->
+        {% set key, prompt = 'domain_url', 'Domain name' %}
+        {% include 'sections/audit-form/inputs/smart-text.html' %}
+        <!-- Sitemap slug -->
+        {% set key, prompt = 'sitemap_url', 'Sitemap slug' %}
+        {% set options = ['sitemap.xml', 'sitemap_index.xml', 'xmlsitemap.php', 'Other'] %}
+        {% include 'sections/audit-form/inputs/dropdown.html' %}
+        <!-- Robots.txt -->
+        {% set key, prompt = 'robots-bool', 'Does the site have a robots.txt?' %}
+        {% include 'sections/audit-form/inputs/boolean.html' %}
+    {% endset %}
+    {% include 'sections/audit-form/form-section.html' %}
+    
+    <!-- SECTION: Google Search Console -->
+    {% set section_name = "3. Google Search Console" %}
     {% set section_contents %}
         {% set key, prompt = 'sc_bool', 'Is Search Console installed on the site?' %}
         {% include 'sections/audit-form/inputs/boolean.html' %}
@@ -89,67 +52,43 @@
         {% include 'sections/audit-form/inputs/boolean.html' %}
     {% endset %}
     {% include 'sections/audit-form/form-section.html' %}
-    <!-- Google Analytics -->
-    <section>
-        <fieldset>
-            <legend><h2 class="text-2xl text-neutral-600 my-4">n. Google Analytics</h2></legend>
-            <li class="p-3 grid grid-cols-2 text-left even:bg-neutral-50 odd:bg-sky-200">
-                <label class="text-left">Is Google Analytics installed on the site?</label>
-                <div class="w-full flex justify-around">
-                    <span>
-                        <input type="radio" id="yes" name="ga_access" value="true" class="scale-150 mr-1">
-                        <label for="yes">Yes</label>
-                    </span>
-                    <span>
-                        <input type="radio" id="no" name="ga_access" value="false" class="scale-150 mr-1">
-                        <label for="no">No</label>
-                    </span>
-                </div>
-            </li>
-        </fieldset>
-    </section>
-    <!-- PageSpeed Insights -->
-    <section>
-        <fieldset>
-            <legend><h2 class="text-2xl text-neutral-600 my-4">n. PageSpeed Insights</h2></legend>
-            <div class="p-3 grid grid-cols-2 even:bg-neutral-50 odd:bg-sky-200">
-                <label class="text-left" for="mobility_issues">5. <span>Number of Mobile Usability Issues</span></label>
-                <div class="w-full flex flex-row justify-center">
-                    <input
-                        type="number"
-                        id="mobility_issues"
-                        name="mobility_issues"
-                        min="0"
-                        value="0"
-                        class="border border-neutral-400 p-1 rounded-md w-1/4 mr-2"
-                    />
-                    <p class="pt-4">Issues</p>
-                </div>
-            </div>
-        </fieldset>
-    </section>
-    <!-- Slide Notes -->
-    <section>
-        <fieldset>
-            <legend><h2 class="text-2xl text-neutral-600 my-4">n. Slide Notes</h2></legend>
-
-            <ol>
-                {% for slide in slides %}
-                    <h4 class="text-lg font-bold">{{ slide.index }}. {{ slide.name }}</h4>
-                    <li class="p-3 even:bg-neutral-50 odd:bg-sky-200">
-                        {% for input in slide.inputs %}
-                            {% if input.type != "deletion" %}
-                                {% set key, prompt = input.id, input.id %}
-                                {% include 'sections/audit-form/inputs/' + input.type + '.html' %}
-                            {% endif %}
-                        {% endfor %}
-                    </li>
-                {% endfor %}
-            </ol>
-
-        </fieldset>
-    </section>
-    <!-- Submission Button -->
+    
+    <!-- SECTION: Google Analytics -->
+    {% set section_name = "4. Google Analytics" %}
+    {% set section_contents %}
+        {% set key, prompt = 'ga_bool', 'Is Google Analytics installed on the site?' %}
+        {% include 'sections/audit-form/inputs/boolean.html' %}
+    {% endset %}
+    {% include 'sections/audit-form/form-section.html' %}
+    
+    <!-- SECTION: PageSpeed Insights -->
+    {% set section_name = "5. PageSpeed Insights" %}
+    {% set section_contents %}
+        {% set key, prompt = 'mobility_issues', 'Number of Mobile Usability Issues' %}
+        {% include 'sections/audit-form/inputs/number.html' %}
+    {% endset %}
+    {% include 'sections/audit-form/form-section.html' %}
+    
+    <!-- SECTION: Slide Notes -->
+    {% set section_name = "6. Slide Notes" %}
+    {% set section_contents %}
+        {% for slide in slides %}
+            {% if 'inputs' in slide %}
+                <fieldset>
+                    <legend><h4 class="text-lg italic px-2">#{{ slide.index }} {{ slide.name }}</h4></legend>
+                    {% for input in slide.inputs %}
+                        {% if input.type != "deletion" %}
+                            {% set key, prompt = input.id, input.id %}
+                            {% include 'sections/audit-form/inputs/' + input.type + '.html' %}
+                        {% endif %}
+                    {% endfor %}
+                </fieldset>
+            {% endif %}
+        {% endfor %}
+    {% endset %}
+    {% include 'sections/audit-form/form-section.html' %}
+    
+    <!-- SECTION: Submission Button -->
     <section>
         <h2 class="text-2xl text-neutral-600 my-4">n. Submit this form to make the PowerPoint</h2>
         <input
