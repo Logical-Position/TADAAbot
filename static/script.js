@@ -22,16 +22,30 @@ function handleFileUpload(spreadsheetSelection) {
     // 5. Enable "Generate PPT button"
 
     // FIXME: Errors if this runs when no files are uploaded.
-    console.log(spreadsheetSelection.files);
+    let folderName = "";
+
+    // Receiving `spreadsheetSelection from two possible sources
+    // determines whether we use webkitRelativePath[click] vs Path[drag-n-drop]
+    let path = spreadsheetSelection.files[0].path
+    let webKitPath = spreadsheetSelection.files[0].webkitRelativePath
 
     
+    if(webKitPath === "") {
+        folderName = path.split("/")[0];
+    }
+    else if (webKitPath !== null && webKitPath !== undefined) {
+        folderName = webKitPath.split("/")[0];
+    }
+    else {
+        folderName = "";
+    }
+
     let filename = spreadsheetSelection.files[0].name;
-    let folderName = spreadsheetSelection.files[0].webkitRelativePath.split("/")[0];
-    
     let folderIsUploaded = spreadsheetSelection.value != "";
     let folderIsExports = folderName === "exports";
 
     let isUploadValid = folderIsUploaded && folderIsExports;
+    let generateButton = document.querySelector('input[name="generate_ppt"]');
 
     if (isUploadValid) {
         filename = filename.split("_");
@@ -52,10 +66,12 @@ function handleFileUpload(spreadsheetSelection) {
 
             // update manual inputs field
             let manualDomainInput = document.getElementById("domain_url");
-            manualDomainInput.value = filename;            
+            manualDomainInput.value = filename;  
+            generateButton.disabled = false;          
     }
     else {
         alert("Uploaded folder is not named exports.")
+        generateButton.disabled = true;
     }
 }
 
@@ -263,59 +279,6 @@ function saveBlob(blob, filename) {
     window.URL.revokeObjectURL(url);
 }
 
-function dragOverHandler(e) {
-  console.log('Files over drop area');
-  e.preventDefault();
-  e.stopPropagation();
-}
-
-//  progress made here
-//https://developer.mozilla.org/en-US/docs/Web/API/DataTransferItem/webkitGetAsEntry
-// SO: https://stackoverflow.com/questions/44842247/event-datatransfer-files-vs-event-datatransfer-items
-async function dropHandler(e, spreadsheetSelection) {
-//   console.log('File Dropped');
-  e.preventDefault();
-
-  const files = [];
-  const dataTransfer = e.dataTransfer.items;
-  // let item = await e.dataTransfer.items[0].webkitGetAsEntry();
-
-  for (let i = 0; i < dataTransfer.length; i++) {
-    const item = dataTransfer[i].webkitGetAsEntry();
-    if (item) {
-      getFileTree(item);
-    }
-  }
-
-
-function getFileTree(item, path) {
-    if (item.isFile) {
-      // console.log(item);
-    //   let newFile = await item.file((file) => console.log(file));
-      files.push(item);
-    } else if (item.isDirectory) {
-      // console.log(item);
-
-      // if directory/subdirectory run reader
-      const dirReader = item.createReader();
-      dirReader.readEntries(function (entries) {
-        for (let i = 0; i < entries.length; i++) {
-          // console.log(entries[i]);
-          // if subdirectory recursively run function
-          getFileTree(entries[i], path, +item.name + '/');
-        }
-      });
-    }
-  }
-  console.log(files);
-
-// spreadsheetSelection.files = {files: files}; 
-
-//   spreadsheetSelection.files = files; 
-//   console.log(spreadsheetSelection.files)
-
-//   handleFileUpload(spreadsheetSelection);
-}
 
 
 
@@ -336,28 +299,6 @@ function main() {
         handleFileUpload(spreadsheetSelection);
     });
 
-    // File Drag and Drop Listener
-    const dragndropArea = document.querySelector('.drop-zone');
-    dragndropArea.addEventListener('dragover', dragOverHandler);
-    dragndropArea.addEventListener('drop', function (e) {
-        dropHandler(e, spreadsheetSelection);
-    });
-
-    // Handles enabling/disabling the submit buttons and very basic verification.
-    let test = document.querySelector("#spreadsheet-selection");
-    let generateButton = document.querySelector('input[name="generate_ppt"]');
-    test.addEventListener('change', function(event) {
-        if (test.value != "") {
-            let parentFolder = test.files[0].webkitRelativePath.split("/")[0];
-            if (parentFolder == "exports") {
-                generateButton.disabled = false;
-            }
-            else {
-                window.alert("Uploaded folder is not named 'exports'.");
-                generateButton.disabled = true;
-            }
-        }
-    });
 
     // MARK: Domain Input Change
     let domainInput = document.getElementById('domain_url');
