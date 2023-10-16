@@ -28,31 +28,25 @@ document.addEventListener("DOMContentLoaded", function (e) {
       }
     }
 
-    // Now 'files' array contains standard JavaScript file objects.
-    // console.log(files);
-  };
+    async function getFileTree(item, files, path = '') {
+      if (item.isFile) {
+        const file = await new Promise((resolve) => item.file(resolve));
+        file.path = path + item.name; // Add the path to the file object
+        dataTransferObj.items.add(file);
 
-  async function getFileTree(item, files, path = '') {
-    if (item.isFile) {
-      const file = await new Promise((resolve) => item.file(resolve));
-      file.path = path + item.name; // Add the path to the file object
-      dataTransferObj.items.add(file);
+      } else if (item.isDirectory) {
+        const dirReader = item.createReader();
+        const entries = await new Promise((resolve) => dirReader.readEntries(resolve));
+        for (let i = 0; i < entries.length; i++) {
+          await getFileTree(entries[i], files, path + item.name + '/');
+        }
 
-    } else if (item.isDirectory) {
-      const dirReader = item.createReader();
-      const entries = await new Promise((resolve) => dirReader.readEntries(resolve));
-      for (let i = 0; i < entries.length; i++) {
-        await getFileTree(entries[i], files, path + item.name + '/');
       }
-
     }
-  }
-
-  // console.log(dataTransferObj);
-  // console.log(files);
-  spreadsheetSelection.files = dataTransferObj.files
-  // console.log(spreadsheetSelection.files)
-  handleFileUpload(spreadsheetSelection)
+    // Now 'files' array contains standard JavaScript file objects.
+    spreadsheetSelection.files = dataTransferObj.files
+    handleFileUpload(spreadsheetSelection)
+  };
 
 
 
