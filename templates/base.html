@@ -7,13 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- <title>{{ title }}</title> -->
     <title>{% block title %}{% endblock %}</title>
-    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename = 'assets/lp-logo.png')}}">
-    <link rel="stylesheet" href="{{ url_for('static',filename='dist/css/output.css') }}">
+    
+    <link rel="stylesheet" href="{{ url_for('static',filename='dist/output.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </head>
-<body class="bg-neutral-50">
+<body class="bg-neutral-50 flex-col min-h-screen flex">
     <header class="border-b-2 border-neutral-900">
         <!-- <h1>TADAA!</h1> -->
         <nav class="flex flex-row gap-4 bg-neutral-100 h-20 text-center justify-center content-center"><img class="p-2" src="https://seotool.logicalposition.com/assets/images/logo-2022.png" alt="Logical Position Logo">
@@ -32,9 +32,13 @@
             -->
         </nav>
     </header>
-    <main class="mt-10 overflow-hidden">
+    <main class="mt-10 overflow-hidden flex-1">
         {% block main %}{% endblock %}
     </main>
-    <!-- <footer></footer> -->
+    <footer class="footer">
+        <div class="flex justify-center border-t w-full h-full pt-8">
+            <a class="hover:underline text-xl hover:text-blue-600" href="https://forms.gle/RiguPrzsdwbFpAnn9" target="_blank" >Send feedback or report a bug!</a>  
+        </div>
+    </footer> 
 </body>
 </html>

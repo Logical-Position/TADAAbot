@@ -67,7 +67,8 @@ def close_connection(exception):
 
 # API - Creating Data
 def create_audit(clientName, domain, data):
-    pass
+    res = db.create_audit()
+    return jsonify(res), 200
 
 # API - Reading Data
 def get_all_clients():

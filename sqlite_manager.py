@@ -97,8 +97,8 @@ class SqliteManager:
 
 
 
-
-
+    def create_audit(self):
+        return {"create_result": True}
 
 
     # Starter CRUD Functions

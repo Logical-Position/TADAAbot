@@ -1,14 +1,23 @@
 from flask import Flask, g, jsonify, render_template, request, redirect, send_file, url_for
+import re
 
-import datetime
-import json
+# Flask Dance
+# from flask_dance.contrib.google import make_google_blueprint, google
+
+# Google API
+# from apiclient.discovery import build
+# from oauth2client.service_account import ServiceAccountCredentials
+
 import os
 import time
 import sqlite3
-from uuid import uuid4
 
 # import db_controller as db
 import tadaa
+import datetime
+# import db_controller as db
+import json
+
 
 app = Flask(__name__)
 
@@ -16,6 +25,9 @@ app = Flask(__name__)
 UPLOAD_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'uploads')
 app.config['UPLOAD_DIR'] = UPLOAD_DIR
 
+# TODO: Code the options and labels here instead.
+#   Keys should be used as IDs.
+# tadaaptions = ta_decisions.json 
 
 manual_data_labels = [
     'domain_url',
@@ -41,76 +53,61 @@ manual_data = {}
 
 # TADAA Routes
 
-# TODO: Combine these '/' routes
-@app.route('/', methods=['GET'])
-def index(): 
-    # Accessing manual input options in json file
-    with open('ta_decisions.json') as t:
-        ta_decisions = json.load(t)
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    if request.method == 'GET':
+        # Accessing manual input options in json file
+        with open('ta_decisions.json') as t:
+            ta_decisions = json.load(t)
+        return render_template('index.html', ta_decisions=ta_decisions)
+    elif request.method == 'POST':
+        # 1. Gather uploaded data: files and fields
+        # 2. Call tadaa to parse and compile data
+        # 3. Send compiled data to:
+        #       - Frontend
+        #       - Database
 
-    return render_template('index.html', ta_decisions=ta_decisions)
+        # Get data from form
+        for label in manual_data_labels:
+            data = request.form.get(label, '')
+            manual_data[label] = data
+        
+        # Create folder for audit assets
+        now = datetime.datetime.now()
+        timestamp = now.strftime("%Y-%m-%d_%H-%M-%S")
+        project_dir = os.path.join(app.config['UPLOAD_DIR'], timestamp)
 
-@app.route('/', methods=['POST'])
-def parse_upload():
-    # 1. Gather uploaded data: files and fields
-    # 2. Call tadaa to parse and compile data
-    # 3. Send compiled data to:
-    #       - Frontend
-    #       - Database
+        # Save uploaded files
+        inputID = 'spreadsheet-selection'
+        os.makedirs(project_dir, exist_ok=True)
+        files = [file for file in request.files.getlist(inputID) if file.filename]
+        for file in files:
+            filename = os.path.basename(file.filename)
+            file.save(os.path.join(project_dir, filename))
 
-    # Get data from form
-    for label in manual_data_labels:
-        data = request.form.get(label, '')
-        manual_data[label] = data
-    
-    # Create folder for audit assets
-    now = datetime.datetime.now()
-    timestamp = now.strftime("%Y-%m-%d_%H-%M-%S")
-    project_dir = os.path.join(app.config['UPLOAD_DIR'], timestamp)
+        # Create project name
+        # Get project name from front-end and sanitize
+        def sanitize_input(input_str):
+        # Regular expression to blocklist script tags
+            sanitized_str = re.sub(r'<script\b[^>]*>(.*?)</script>', '', input_str, flags=re.IGNORECASE)
+            return sanitized_str
+        
+        project_name = sanitize_input(request.form.get("domain_url"))
 
-    # Save uploaded files
-    inputID = 'spreadsheet-selection'
-    os.makedirs(project_dir, exist_ok=True)
-    files = [file for file in request.files.getlist(inputID) if file.filename]
-    for file in files:
-        filename = os.path.basename(file.filename)
-        file.save(os.path.join(project_dir, filename))
+        # Let TADAA do it's thing
+        root_path = app.root_path
+        data = tadaa.__generate_audit(project_dir, manual_data, root_path, project_name, timestamp)
 
-    # Create project name
-    proj_files = os.listdir(project_dir)
-    segments = proj_files[0].split('_')
-    project_name = segments[0].split('.')[0]
 
-    # Let TADAA do it's thing
-    # TODO: Refactor tadaa to return the final tadaabject in one line
-    tadaabject = tadaa.parse_data(project_dir, manual_data)
-    root_path = app.root_path
-    pop_ppt = tadaa.generate_audit(tadaabject, project_dir, root_path, project_name)
+        # Database
+        db_init(DB_SCHEMA)
+        db_insert_new_audit(data)
 
-    # Save tadaabject to database
-    # TODO: Refactor this into tadaa
-    audits_id = str(uuid4())
-    client_id = str(uuid4())
-    domain = manual_data["domain_url"]
-    project_type = "InvalidType"
-
-    # TODO: Refactor this into the final tadaabject
-    data = {
-        "audits_id": audits_id,
-        "client_id": client_id,
-        "client_name": project_name,
-        "domain": domain,
-        "ts": timestamp,
-        "project_type": project_type,
-        "ppt_url": pop_ppt,
-    }
-    db_init(DB_SCHEMA)
-    db_insert_new_audit(data)
-
-    # And also return it to the client
-    return jsonify(data)
+        # And also return it to the client
+        return jsonify(data)
 
 @app.route('/download/<ts>', methods=['GET'])
+# If requesting to redownload a previous powerpoint, browser caches previous download and pull from cache instead of server if cache is present.
 def download_audit(ts):
     dirs = os.listdir(UPLOAD_DIR)
     # FIXME: This has not been getting the correct ppts
@@ -126,14 +123,20 @@ def download_audit(ts):
     requested_audit = ts
     abs_path_proj_dir = app.root_path + '/uploads/' + requested_audit
     files = os.listdir(abs_path_proj_dir)
-    segments = files[0].split('_')
-    project_name = segments[0].split('.')[0]
-    # print(project_name)
-    ppt_path = os.path.join(UPLOAD_DIR, abs_path_proj_dir + f'/{project_name}.pptx')
-    # print(ppt_path)
+    project_name = ''
+    for file in files:
+        if file.endswith('.pptx'):
+            project_name = file
+
+    project_name_split = project_name.split(".")
+    #final_project_name = project_name_split[0]
+
+    # Name differs when first sending out file vs when pulling from URL query.
+    # This probably won't be an issue moving forward if we request downloads using ID's or via other methods.
+    ppt_path = os.path.join(UPLOAD_DIR, abs_path_proj_dir + f'/{project_name}')
+
+    #return send_file(ppt_path, mimetype=None, as_attachment=True, attachment_filename=(final_project_name + "-" + requested_audit + ".pptx"))
     return send_file(ppt_path)
-
-
 
 
 

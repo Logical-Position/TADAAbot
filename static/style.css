@@ -1,8 +1,156 @@
+/* .main-grid-container {
+  display: grid;
+}
+
+nav 
+header {
+  background-color: #bfdcff;
+  display: flex;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+nav li {
+  float: left;
+}
+
+nav a {
+  display: block;
+  color: rgb(0, 0, 0);
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+nav a:hover {
+  background-color: #677a90;
+}
+
+.results-grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: repeat(3, 1fr);
+  grid-template-areas:
+    "general overview-sc-data overview-crawl-data"
+    "sc-data sc-data sc-data"
+    "crawl-data crawl-data crawl-data";
+  margin: 10px;
+}
+
+.general {
+  grid-area: general;
+}
+
+.overview-sc-data {
+  grid-area: overview-sc-data;
+}
+
+.overview-crawl-data {
+  grid-area: overview-crawl-data;
+}
+
+.sc-data {
+  grid-area: sc-data;
+}
+
+.crawl-data {
+  grid-area: crawl-data;
+}
+
+.results-grid-container > div {
+  border: thin solid black;
+  background-color: #bfdcff;
+  margin: 10px;
+  text-align: center;
+  padding: 10px;
+}
+
+.grid-header {
+  font-weight: bold;
+}
+
+.dropbtn {
+  background-color: #677a90;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #78818c;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown:hover .dropbtn {
+  background-color: #323c47;
+}
+
+.main {
+  text-align: center;
+  margin: 3% 10%;
+}
+
+.main > div,
+.main > form {
+  border: thin solid black;
+  background-color: #bfdcff;
+  margin: 10px;
+  text-align: center;
+  padding: 10px;
+}
+
+.main > form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.table-grid {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+#ppt-download-button {
+}
+*/
 .completed-indicator {
   box-shadow: rgb(26 80 28 / 20%) 0px 7px 29px 0px !important;
-  border: solid;
-  transition: 1s all;
-  border-color: green;
+  border: solid green;
+  transition: 2s all;
 }
 
 #raw-data-link {
@@ -16,10 +164,35 @@
 
 #raw-data-link.disabled-raw-data-link {
   color: rgb(150, 150, 150);
-  pointer-events: none;
   cursor: default;
+  pointer-events: none;
 }
 
 #raw-data-link.disabled-raw-data-link:hover {
   text-decoration: none;
+}
+
+.hidden {
+  visibility:hidden;
+}
+
+progress {
+  background-color: rgb(69 194 177);
+  width: 100%;
+}
+
+progress::-webkit-progress-value {
+  background-color: rgb(62, 165, 151);
+  width: 100%;
+}
+
+#uploaded-file-name {
+  border:none;
+  outline:none;
+  background-color:transparent;
+}
+
+.footer {
+  height: 100px;
+  border-top: 2px solid black;
 }
