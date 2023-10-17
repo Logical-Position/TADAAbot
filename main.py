@@ -1,5 +1,6 @@
-from flask import Flask, g, jsonify, render_template, request, redirect, send_file, url_for
+from flask import Flask, g, jsonify, render_template, request, redirect, send_file, url_for, session, abort, Response
 import re
+import uuid
 
 # Flask Dance
 # from flask_dance.contrib.google import make_google_blueprint, google
@@ -18,8 +19,19 @@ import datetime
 # import db_controller as db
 import json
 
+from flask_login import LoginManager, login_required, UserMixin, login_user, logout_user, current_user
+login_manager = LoginManager()
+
 
 app = Flask(__name__)
+login_manager.init_app(app)
+app.secret_key = str(uuid.uuid4())
+
+# Load .env file
+from dotenv import load_dotenv
+load_dotenv()
+
+# MARK: Configuration
 
 # For user-uploaded Excel files
 UPLOAD_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'uploads')
@@ -51,10 +63,75 @@ manual_data_labels = [
 
 manual_data = {}
 
+# Get environment variables
+USER_ID  = os.environ.get('TADAA_USER_ID')
+USERNAME = os.environ.get('TADAA_USERNAME')
+PASSWORD = os.environ.get('TADAA_PASSWORD')
+
+
+# MARK: Authentication
+
+class User(UserMixin):
+    def __init__(self):
+        self.id = USER_ID
+        self.name = USERNAME
+        self.password = PASSWORD
+
+lp_user = User()
+
+@login_manager.user_loader
+def load_user(user_id):
+    if user_id == USER_ID:
+        return lp_user
+    return None
+
+
+
 # TADAA Routes
+
+# somewhere to login
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if current_user.is_authenticated:
+        # If the user is already authenticated, redirect them to the index page
+        return redirect(url_for('index'))
+
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        if username == USERNAME and password == PASSWORD:
+            login_user(lp_user)
+            return redirect(url_for('index'))
+
+        # If no matching user is found, return a 401 Unauthorized response
+        print("User not found or invalid credentials.")
+        return abort(401)
+
+    print("Get or login failed.")
+    return render_template('login.html')
+
+
+# somewhere to logout
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return Response('<p>Logged out</p>')
+
+
+# handle login failed
+@app.errorhandler(401)
+def page_not_found(e):
+    return redirect(url_for('login'))
+
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    if not current_user.is_authenticated:
+        # If the user is not authenticated, redirect to login
+        return redirect(url_for('login'))
+
     if request.method == 'GET':
         # Accessing manual input options in json file
         with open('ta_decisions.json') as t:
@@ -137,15 +214,6 @@ def download_audit(ts):
 
     #return send_file(ppt_path, mimetype=None, as_attachment=True, attachment_filename=(final_project_name + "-" + requested_audit + ".pptx"))
     return send_file(ppt_path)
-
-
-
-
-
-
-
-
-
 
 
 
