@@ -37,4 +37,17 @@ function addComponents() {
     } catch (e) {
         console.error(e);
     }
+
+
 }
+
+try {
+    let confetti = new Confetti('confetti');
+
+    // Edit given parameters
+    confetti.setCount(100);
+    confetti.setSize(1);
+    confetti.setPower(25);
+    confetti.setFade(false);
+    confetti.destroyTarget(false);
+} catch (e) {}

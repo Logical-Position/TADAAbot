@@ -1,0 +1,271 @@
+{
+    "name": "original",
+    "ppt": "SEOC Tech Audit Template.pptx",
+    "slides": [
+      {
+        "index": 1,
+        "slide_name": "" 
+      },
+      {
+        "index": 2
+      },
+      {
+        "index": 3
+      },
+      {
+        "index": 4,
+        "name": "Executive Summary"
+      },
+      {
+        "index": 5,
+        "inputs": [
+          {
+            "id": "keyword-snapshot",
+            "type": "image",
+            "label": "Upload a screenshot from "
+          }
+        ]
+      },
+      {
+        "index": 6
+      },
+      {
+        "index": 7,
+        "inputs": [
+          {
+            "id": "ga_bool",
+            "type": "boolean"
+          },
+          {
+            "id": "sc_bool",
+            "type": "boolean"
+          }
+        ]
+      },
+      {
+        "index": 9,
+        "inputs": [
+          {
+            "id": "sc_mob_usability_analyst_notes",
+            "type": "text"
+          },
+          {
+            "id": "sc_mob_usability",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "index": 10,
+        "inputs": [
+          {
+            "id": "sitemap_analyst_notes",
+            "type": "text"
+          },
+          {
+            "id": "sitemap_errors_bool",
+            "type": "boolean"
+          },
+          {
+            "id": "sc_sitemap_submitted_bool",
+            "type": "boolean"
+          }
+        ]
+      },
+      {
+        "index": 11,
+        "inputs": [
+          {
+            "id": "robots-analyst-notes",
+            "type": "text"
+          },
+          {
+            "id": "robots-link",
+            "type": "link"
+          }
+        ]
+      },
+      {
+        "index": 12,
+        "inputs": [
+          {
+            "id": "structured_data_analyst_notes",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "index": 13
+      },
+      {
+        "index": 14,
+        "inputs": [
+          {
+            "id": "title-analyst-notes",
+            "type": "text"
+          },
+          {
+            "id": "serps_screenshot",
+            "type": "image"
+          },
+          {
+            "id": "link-titles-sheet",
+            "type": "link"
+          }
+        ]
+      },
+      {
+        "index": 15,
+        "inputs": [
+          {
+            "id": "serps_screenshot",
+            "type": "image"
+          },
+          {
+            "id": "meta_descriptions_analyst_notes",
+            "type": "text"
+          },
+          {
+            "id": "link-descriptions-sheet",
+            "type": "link"
+          }  
+        ]
+      },
+      {
+        "index": 16,
+        "inputs": [
+          {
+            "id": "h1_analyst_notes",
+            "type": "text"
+          },
+          {
+            "id": "link-h1s-sheet",
+            "type": "link"
+          }
+        ]
+      },
+      {
+        "index": 17,
+        "inputs": [
+          {
+            "id": "site_content_analyst_notes",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "index": 18,
+        "inputs": [
+          {
+            "id": "dup_content_analyst_notes",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "index": 19,
+        "inputs": [
+          {
+            "id": "cta_analyst_notes",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "index": 20,
+        "inputs": [
+          {
+            "id": "blog_updated_reg_bool",
+            "type": "boolean"
+          },
+          {
+            "id": "onsite_blog_bool",
+            "type": "boolean"
+          }
+        ]
+      },
+      {
+        "index": 21,
+        "inputs": [
+          {
+            "id": "alt_text_analyst_notes",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "index": 22
+      },
+      {
+        "index": 23,
+        "inputs": [
+          {
+            "id": "404s_analyst_notes",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "index": 24,
+        "inputs": [
+          {
+            "id": "canonical_analyst_notes",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "index": 25,
+        "inputs": [
+          {
+            "id": "redirects_analyst_notes",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "index": 26,
+        "inputs": [
+          {
+            "id": "site_security_analyst_notes",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "index": 27,
+        "inputs": [
+          {
+            "id": "desk_load_time_float",
+            "type": "number"
+          },
+          {
+            "id": "mob_load_time_float",
+            "type": "number"
+          }
+        ]
+      },
+      {
+        "index": 28
+      },
+      {
+        "index": 29,
+        "inputs": [
+          {
+            "id": "dom_auth_analyst_notes",
+            "type": "text"
+          }
+        ]
+      },
+      {
+        "index": 30,
+        "inputs": [
+          {
+            "id": "backlinks_analyst_notes",
+            "type": "text"
+          }
+        ]
+      }
+    ]
+  }
+  

@@ -668,6 +668,10 @@ video {
   margin-top: 2rem;
 }
 
+.mt-10 {
+  margin-top: 2.5rem;
+}
+
 .block {
   display: block;
 }
@@ -1212,6 +1216,11 @@ video {
 .even\:bg-teal-200:nth-child(even) {
   --tw-bg-opacity: 1;
   background-color: rgb(153 246 228 / var(--tw-bg-opacity));
+}
+
+.even\:bg-red-200:nth-child(even) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 202 202 / var(--tw-bg-opacity));
 }
 
 .focus-within\:shadow-lg:focus-within {
