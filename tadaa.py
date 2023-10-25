@@ -4,54 +4,11 @@ import ppt
 import data
 from uuid import uuid4
 
-
-
-
-'''
-Current API Endpoints
-
-* ppt.populate_powerpoint
-    INPUT
-        * Annotated Template
-        * Data
-    OUTPUT
-        * Completed PPT
-
-* tadaa.parse_data
-
-* tadaa.generate_audit
-
-* utils.match_target_hint_files
-
-* utils.get_abs_path
-
-* utils.get_data_obj
-
-'''
-
-'''
-New API Endpoints
-
-* tadaa.generate_audit
-
-    * parse xls files
-    * create tadaabject
-    * create powerpoint
-    * save to db
-    * send to client
-
-* tadaa.request_audits(client_name) -> all_audits
-* tadaa.request_audit(audit_id) -> audit_data
-
-
-tableParser class
-    handles csv/xls parsing from Sitebulb exports
-tadaabjectCreation class
-    takes data from webAPI and tableParser classes and organizes into tadaabject
-
-
-
-'''
+# NEW DEF
+def _generate_ppt(form_data: dict):
+    """
+    """
+    pass
 
 def __generate_audit(project_dir:str, manual_data:dict, root_path:str, project_name:str, timestamp:str):
     """
@@ -108,7 +65,3 @@ def parse_data(project_dir, manual_data):
     print(final_data_obj)
     print(" ===== TADAABJECT ===== ")
     return final_data_obj
-
-
-def data_vis():
-    data.visualize()

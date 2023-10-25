@@ -33,6 +33,7 @@ manual_data_labels = [
 ]
 
 manual_data = {}
+data_labels = {}
 
 
 # TADAA Routes
@@ -41,8 +42,13 @@ manual_data = {}
 def index():
     with open('ppts/json/original.json') as t:
         ppt_schema = json.load(t)
-        tmplname = ppt_schema['ppt']
+        # tmplname = ppt_schema['ppt']
         slides = ppt_schema['slides']
+
+    for slide in slides:
+        if 'inputs' in slide:
+            for input in slide['inputs']:
+                data_labels.append(input['id'])
 
     if request.method == 'GET':
         page_title = "TADAAbot"
@@ -91,6 +97,16 @@ def index():
     # And also return it to the client
     return jsonify(data)
 
+@app.route('/gen-ppt', methods=['POST'])
+def generate_ppt():
+    # 1. Collect form data
+    # 1.5 Handle file uploads: https://flask.palletsprojects.com/en/2.3.x/patterns/fileuploads/
+    # 2. Let TADAA do it's thing
+    # 3. And also return it to the client
+    # data = tadaa.generate_ppt()
+    # return jsonify(data)
+    return jsonify({})
+
 @app.route('/download/<ts>', methods=['GET'])
 # If requesting to redownload a previous powerpoint, browser caches previous download and pull from cache instead of server if cache is present.
 def download_audit(ts):
@@ -122,6 +138,10 @@ def download_audit(ts):
 
     #return send_file(ppt_path, mimetype=None, as_attachment=True, attachment_filename=(final_project_name + "-" + requested_audit + ".pptx"))
     return send_file(ppt_path)
+#NEW DEF
+def get_ppt(id):
+    # path = get_ppt_for(id)
+    return send_file("/path/to/ppt")
 
 # Main Function
 if __name__ == '__main__':

@@ -85,6 +85,14 @@ desk_load_time = float
 # Slide 30.
 broken_backlinks = 0
 
+# NEW DEF
+def _populate_powerpoint(ppt_schema: dict, audit_data: dict):
+    """
+    Prepare the final deliverable file by inserting tech audit data into the specified output template.
+    @param ppt_schema: Information from the output.json (output schema) that is needed to generate the final document.
+    @param audit_data: Data collected during the audit process (this includes data parsed from Sitebulb files as well as data collected from manual input fields)
+    """
+    pass
 
 def populate_powerpoint(final_data_object, project_dir, root_path, project_name, manual_data):
     """
