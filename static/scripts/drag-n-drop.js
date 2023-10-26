@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
   };
 
   // File Drag and Drop Listener
-  const dragndropArea = document.querySelector('.drop-zone');
+  const dragndropArea = document.querySelector('#upload-file-container');
   dragndropArea.addEventListener('dragover', dragOverHandler);
   dragndropArea.addEventListener('drop', function (e) {
     dropHandler(e, spreadsheetSelection);
