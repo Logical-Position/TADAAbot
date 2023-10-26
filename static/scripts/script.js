@@ -22,13 +22,30 @@ function handleFileUpload(spreadsheetSelection) {
     // 5. Enable "Generate PPT button"
 
     // FIXME: Errors if this runs when no files are uploaded.
-    let filename = spreadsheetSelection.files[0].name;
-    let folderName = spreadsheetSelection.files[0].webkitRelativePath.split("/")[0];
+    let folderName = "";
+
+    // Receiving `spreadsheetSelection from two possible sources
+    // determines whether we use webkitRelativePath[click] vs Path[drag-n-drop]
+    let path = spreadsheetSelection.files[0].path
+    let webKitPath = spreadsheetSelection.files[0].webkitRelativePath
+
     
+    if(webKitPath === "") {
+        folderName = path.split("/")[0];
+    }
+    else if (webKitPath !== null && webKitPath !== undefined) {
+        folderName = webKitPath.split("/")[0];
+    }
+    else {
+        folderName = "";
+    }
+
+    let filename = spreadsheetSelection.files[0].name;
     let folderIsUploaded = spreadsheetSelection.value != "";
     let folderIsExports = folderName === "exports";
 
     let isUploadValid = folderIsUploaded && folderIsExports;
+    let generateButton = document.querySelector('input[name="generate_ppt"]');
 
     if (isUploadValid) {
         filename = filename.split("_");
@@ -43,22 +60,24 @@ function handleFileUpload(spreadsheetSelection) {
 
         }
             filename = filename.charAt(0) + filename.slice(1);
-            updateUploadedFileLabel(filename);
+            // updateUploadedFileLabel(filename);
             outlineFileInput();
             updateFileInputImage(filename);
 
             // update manual inputs field
             let manualDomainInput = document.getElementById("domain_url");
-            manualDomainInput.value = filename;            
+            manualDomainInput.value = filename;  
+            generateButton.disabled = false;          
     }
     else {
         alert("Uploaded folder is not named exports.")
+        generateButton.disabled = true;
     }
 }
 
 function handleDomainNameChange(e) {
     let newName = e.target.value;
-    updateUploadedFileLabel(newName);
+    // updateUploadedFileLabel(newName);
 
     // Check if files have been uploaded before changing the name inside the droparea.
     if(spreadsheetSelection.length > 0) updateFileInputImage(newName);  
@@ -260,8 +279,6 @@ function saveBlob(blob, filename) {
     window.URL.revokeObjectURL(url);
 }
 
-
-
 // MARK: Main
 
 function main() {
@@ -279,21 +296,6 @@ function main() {
         handleFileUpload(spreadsheetSelection);
     });
 
-    // Handles enabling/disabling the submit buttons and very basic verification.
-    let test = document.querySelector("#spreadsheet-selection");
-    let generateButton = document.querySelector('input[name="generate_ppt"]');
-    test.addEventListener('change', function(event) {
-        if (test.value != "") {
-            let parentFolder = test.files[0].webkitRelativePath.split("/")[0];
-            if (parentFolder == "exports") {
-                generateButton.disabled = false;
-            }
-            else {
-                window.alert("Uploaded folder is not named 'exports'.");
-                generateButton.disabled = true;
-            }
-        }
-    });
 
     // MARK: Domain Input Change
     let domainInput = document.getElementById('domain_url');
@@ -377,5 +379,5 @@ function main() {
             });
         })
     });
-}
+};
 
