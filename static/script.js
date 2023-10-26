@@ -279,9 +279,6 @@ function saveBlob(blob, filename) {
     window.URL.revokeObjectURL(url);
 }
 
-
-
-
 // MARK: Main
 
 function main() {
