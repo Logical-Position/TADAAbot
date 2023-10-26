@@ -4,13 +4,12 @@ import ppt
 import data
 from uuid import uuid4
 
-# NEW DEF
-def _generate_ppt(form_data: dict):
+def helper_fn():
     """
     """
     pass
 
-def __generate_audit(project_dir:str, manual_data:dict, root_path:str, project_name:str, timestamp:str, schema):
+def generate_ppt(project_dir:str, manual_data:dict, root_path:str, project_name:str, timestamp:str, schema):
     """
     Generates a populated Powerpoint document using the custom data object.
     
@@ -26,19 +25,15 @@ def __generate_audit(project_dir:str, manual_data:dict, root_path:str, project_n
     domain = manual_data["domain_url"]
     project_type = "InvalidType"
 
-    # Not doing anything with parsed_data yet
+    # NOTE: Not doing anything with parsed_data yet
     parsed_data = parse_data(project_dir, manual_data)
+    
+    ppt_path = ppt.populate_powerpoint(parsed_data, project_dir, root_path, project_name, None)
     
     schema = schema
     print("")
-    print(parsed_data)
+    print(manual_data)
     print("")
-    # data = None
-    
-    # ppt._populate_powerpoint(schema, data)
-    
-    
-    pop_ppt = ppt.populate_powerpoint(parsed_data, project_dir, root_path, project_name, None)
 
     tadaabject  = {
         "audits_id": audits_id,
@@ -47,8 +42,12 @@ def __generate_audit(project_dir:str, manual_data:dict, root_path:str, project_n
         "domain": domain,
         "ts": timestamp,
         "project_type": project_type,
-        "ppt_url": pop_ppt,
+        "ppt_url": ppt_path,
     }
+    # data = None
+    
+    # ppt._populate_powerpoint(schema, data)
+
     return tadaabject
 
 
@@ -70,8 +69,7 @@ def parse_data(project_dir, manual_data):
     final_data_obj = utils.get_data_obj(matched_paths)
     
     for key in final_data_obj.keys():
-        print(key)
-    print(" ===== TADAABJECT ===== ")
-    print(final_data_obj)
-    print(" ===== TADAABJECT ===== ")
+        #print(key)
+        pass
+
     return final_data_obj

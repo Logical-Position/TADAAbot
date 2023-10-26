@@ -33,7 +33,7 @@ manual_data_labels = [
 ]
 
 manual_data = {}
-data_labels = {}
+# data_labels = {}
 
 
 # TADAA Routes
@@ -48,7 +48,7 @@ def index():
     # for slide in slides:
     #     if 'inputs' in slide:
     #         for input in slide['inputs']:
-    #             data_labels.append(input['id'])
+    #             data_labels.update(input['id'])
 
     if request.method == 'GET':
         page_title = "TADAAbot"
@@ -61,13 +61,11 @@ def index():
         #       - Database
 
         # Get data from form
+        print(request.form)
         for label in manual_data_labels:
             data = request.form.get(label, '')
             manual_data[label] = data
-        print("")
-        print(" ===== D A T A ===== ")
-        print(manual_data)
-        print("\n\n")
+
         # Create folder for audit assets
         now = datetime.datetime.now()
         timestamp = now.strftime("%Y-%m-%d_%H-%M-%S")
@@ -92,7 +90,7 @@ def index():
 
         # Let TADAA do it's thing
         root_path = app.root_path
-        data = tadaa.__generate_audit(project_dir, manual_data, root_path, project_name, timestamp, ppt_schema)
+        data = tadaa.generate_ppt(project_dir, manual_data, root_path, project_name, timestamp, ppt_schema)
 
     # And also return it to the client
     return jsonify(data)
