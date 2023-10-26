@@ -1,0 +1,13 @@
+{% extends 'layouts/input.html' %}
+{% block inputs %}
+<div class="w-full flex justify-around">
+    <span>
+        <input type="radio" id="{{ key }}-yes" name="{{ key }}" value="true" class="scale-150 mr-1">
+        <label for="{{ key }}-yes">Yes</label>
+    </span>
+    <span>
+        <input type="radio" id="{{ key }}-no" name="{{ key }}" value="false" class="scale-150 mr-1">
+        <label for="{{ key }}-no">No</label>
+    </span>
+</div>
+{% endblock %}

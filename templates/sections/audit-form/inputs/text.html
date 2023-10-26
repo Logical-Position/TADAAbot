@@ -1,0 +1,11 @@
+{% extends 'layouts/input.html' %}
+{% block inputs %}
+<div class="w-full flex flex-wrap">
+    <!-- Use a dropdown for options instead of radio buttons -->
+    <select id="{{ key }}" name="{{ key }}" class="w-full border border-neutral-400 p-1 rounded-md">
+        <option value="sample">Sample</option>
+    </select>
+    <input type="text" id="robots-text-input" name="robots" class="w-full border border-neutral-400 p-1 rounded-md hidden-input">
+    <div contenteditable="true"></div>
+</div>
+{% endblock %}

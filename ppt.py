@@ -86,14 +86,16 @@ desk_load_time = float
 broken_backlinks = 0
 
 
-def populate_powerpoint(final_data_object, project_dir, root_path, project_name):
+def populate_powerpoint(final_data_object, project_dir, root_path, project_name, manual_data):
     """
     Goes through the template PowerPoint slide by slide, and adjusts the values/SEO recommendation text to correspond
     to the calculated data and user inputs.
     @param exports_path: the path to the main exports folder.
     @param root_path: the path to the tech audit template ppt.
     """
-    template_path = root_path + '/SEOC Tech Audit Template.pptx'
+    templates_dir = '/ppts/pptx/'
+    template_name = 'SEOC Tech Audit Template.pptx'
+    template_path = root_path + templates_dir + template_name
     presentation = Presentation(template_path)
     slides = [slide for slide in presentation.slides]
     slide_num = 0
@@ -172,6 +174,7 @@ def populate_powerpoint(final_data_object, project_dir, root_path, project_name)
                     print(shape.name)
                     runs[0].text = f'Missing descriptions: {desc_missing} | Short descriptions: {desc_too_short} | ' \
                                    f'Long descriptions: {desc_too_long} | Empty descriptions: {desc_empty}'
+                
 
                 # Slide 16
                 if 'h1_analyst_notes' == shape.name:

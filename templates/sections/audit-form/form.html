@@ -1,0 +1,105 @@
+<!-- MARK: Form -->
+<form id="tadaa-form" action="/" method="post" enctype="multipart/form-data">
+    <h1 class="text-5xl my-6"><em>TADAA</em>bot Form</h1>
+    
+    <!-- SECTION: Sitebulb Upload -->
+    {% set section_name = "1. Upload Sitebulb 'exports'" %}
+    {% set section_contents %}
+    <div class="flex items-center justify-center w-full">
+        <label id="upload-file-container" for="spreadsheet-selection" class="flex flex-col items-center justify-center w-full h-64 border-2 border-neutral-300 border-dashed rounded-lg cursor-pointer bg-neutral-50 hover:bg-neutral-200 hover:border-neutral-400 mb-4">
+            <div id="droparea" class="flex flex-col items-center justify-center pt-5 pb-6">
+                <svg id="file-upload-image"aria-hidden="true" class="w-10 h-10 mb-3 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                <p class="mb-2 text-sm text-neutral-500"><span class="font-semibold">Click to upload</span></p>
+                <p class="text-xs text-neutral-500">Only accepts "exports" folder</p>
+            </div>
+            <input
+                id="spreadsheet-selection"
+                class="hidden"
+                type="file"
+                name="spreadsheet-selection"
+                required 
+                accept=".csv, .xlsx, .xls, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                multiple 
+                webkitdirectory
+            >
+        </label>
+    </div>
+    {% endset %}
+    {% include 'sections/audit-form/form-section.html' %}
+    
+    <!-- SECTION: Site Information -->
+    {% set section_name = "2. Site Information" %}
+    {% set section_contents %}
+        <!-- Domain name -->
+        {% set key, prompt = 'domain_url', 'Domain name' %}
+        {% include 'sections/audit-form/inputs/smart-text.html' %}
+        <!-- Sitemap slug -->
+        {% set key, prompt = 'sitemap_url', 'Sitemap slug' %}
+        {% set options = ['sitemap.xml', 'sitemap_index.xml', 'xmlsitemap.php', 'Other'] %}
+        {% include 'sections/audit-form/inputs/dropdown.html' %}
+        <!-- Robots.txt -->
+        {% set key, prompt = 'robots-bool', 'Does the site have a robots.txt?' %}
+        {% include 'sections/audit-form/inputs/boolean.html' %}
+    {% endset %}
+    {% include 'sections/audit-form/form-section.html' %}
+    
+    <!-- SECTION: Google Search Console -->
+    {% set section_name = "3. Google Search Console" %}
+    {% set section_contents %}
+        {% set key, prompt = 'sc_bool', 'Is Search Console installed on the site?' %}
+        {% include 'sections/audit-form/inputs/boolean.html' %}
+        {% set key, prompt = 'sc_sitemap_submitted_bool', 'Has a sitemap been submitted?' %}
+        {% include 'sections/audit-form/inputs/boolean.html' %}
+    {% endset %}
+    {% include 'sections/audit-form/form-section.html' %}
+    
+    <!-- SECTION: Google Analytics -->
+    {% set section_name = "4. Google Analytics" %}
+    {% set section_contents %}
+        {% set key, prompt = 'ga_bool', 'Is Google Analytics installed on the site?' %}
+        {% include 'sections/audit-form/inputs/boolean.html' %}
+    {% endset %}
+    {% include 'sections/audit-form/form-section.html' %}
+    
+    <!-- SECTION: PageSpeed Insights -->
+    {% set section_name = "5. PageSpeed Insights" %}
+    {% set section_contents %}
+        {% set key, prompt = 'mobility_issues', 'Number of Mobile Usability Issues' %}
+        {% include 'sections/audit-form/inputs/number.html' %}
+    {% endset %}
+    {% include 'sections/audit-form/form-section.html' %}
+    
+    <!-- SECTION: Slide Notes -->
+    {% set section_name = "6. Slide Notes" %}
+    {% set section_contents %}
+        {% for slide in slides %}
+            {% if 'inputs' in slide %}
+                <fieldset>
+                    <legend><h4 class="text-lg italic px-2">#{{ slide.index }} {{ slide.name }}</h4></legend>
+                    {% for input in slide.inputs %}
+                        {% if input.type != "deletion" %}
+                            {% set key, prompt = input.id, input.id %}
+                            {% include 'sections/audit-form/inputs/' + input.type + '.html' %}
+                        {% endif %}
+                    {% endfor %}
+                </fieldset>
+            {% endif %}
+        {% endfor %}
+    {% endset %}
+    {% include 'sections/audit-form/form-section.html' %}
+    
+    <!-- SECTION: Submission Button -->
+    <section>
+        <h2 class="text-2xl text-neutral-600 my-4">n. Submit this form to make the PowerPoint</h2>
+        <input
+            id="submit-input"
+            class="text-center bg-green-200 enabled:hover:bg-green-300 w-full p-6 rounded-md border border-green-700 font-medium text-lg my-4 enabled:hover:cursor-pointer enabled:hover:drop-shadow-md enabled:active:bg-green-400 disabled:opacity-50"
+            type="submit"
+            name="generate_ppt"
+            value="Generate PPT"
+            disabled
+        >
+        <p class="text-center text-lg italic text-neutral-400">The .pptx should download automatically once completed.</p>
+    </section>
+    <h3 id="form-status" class="py-4 text-center font-medium text-xl text-neutral-500"><em>The "Technical Audit Documentation Automation Assistant", or TADAA!</em></p>
+</form>

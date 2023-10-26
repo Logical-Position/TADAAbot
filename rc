@@ -1,5 +1,12 @@
+INPUT_FILE='./tailwind/input.css'
+OUTPUT_FILE='./static/styles/tailwind.css'
+
 __compilecss() {
-  tailwindcss -i ./static/src/input.css -o ./static/dist/output.css
+  tailwindcss -i $INPUT_FILE -o $OUTPUT_FILE
+}
+
+__watchcss() {
+  tailwindcss -i $INPUT_FILE -o $OUTPUT_FILE --watch
 }
 
 build() {
@@ -11,6 +18,6 @@ run() {
 }
 
 start() {
-  build
+  __watchcss &
   run
 }

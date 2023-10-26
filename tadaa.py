@@ -71,7 +71,7 @@ def __generate_audit(project_dir:str, manual_data:dict, root_path:str, project_n
 
     # Not doing anything with parsed_data yet
     parsed_data = parse_data(project_dir, manual_data)
-    pop_ppt = ppt.populate_powerpoint(parsed_data, project_dir, root_path, project_name)
+    pop_ppt = ppt.populate_powerpoint(parsed_data, project_dir, root_path, project_name, None)
 
     tadaabject  = {
         "audits_id": audits_id,
@@ -104,7 +104,9 @@ def parse_data(project_dir, manual_data):
     
     for key in final_data_obj.keys():
         print(key)
-
+    print(" ===== TADAABJECT ===== ")
+    print(final_data_obj)
+    print(" ===== TADAABJECT ===== ")
     return final_data_obj
 
 
