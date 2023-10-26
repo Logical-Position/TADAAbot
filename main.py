@@ -45,10 +45,10 @@ def index():
         # tmplname = ppt_schema['ppt']
         slides = ppt_schema['slides']
 
-    for slide in slides:
-        if 'inputs' in slide:
-            for input in slide['inputs']:
-                data_labels.append(input['id'])
+    # for slide in slides:
+    #     if 'inputs' in slide:
+    #         for input in slide['inputs']:
+    #             data_labels.append(input['id'])
 
     if request.method == 'GET':
         page_title = "TADAAbot"
@@ -92,7 +92,7 @@ def index():
 
         # Let TADAA do it's thing
         root_path = app.root_path
-        data = tadaa.__generate_audit(project_dir, manual_data, root_path, project_name, timestamp)
+        data = tadaa.__generate_audit(project_dir, manual_data, root_path, project_name, timestamp, ppt_schema)
 
     # And also return it to the client
     return jsonify(data)

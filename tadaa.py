@@ -10,7 +10,7 @@ def _generate_ppt(form_data: dict):
     """
     pass
 
-def __generate_audit(project_dir:str, manual_data:dict, root_path:str, project_name:str, timestamp:str):
+def __generate_audit(project_dir:str, manual_data:dict, root_path:str, project_name:str, timestamp:str, schema):
     """
     Generates a populated Powerpoint document using the custom data object.
     
@@ -28,6 +28,16 @@ def __generate_audit(project_dir:str, manual_data:dict, root_path:str, project_n
 
     # Not doing anything with parsed_data yet
     parsed_data = parse_data(project_dir, manual_data)
+    
+    schema = schema
+    print("")
+    print(parsed_data)
+    print("")
+    # data = None
+    
+    # ppt._populate_powerpoint(schema, data)
+    
+    
     pop_ppt = ppt.populate_powerpoint(parsed_data, project_dir, root_path, project_name, None)
 
     tadaabject  = {
