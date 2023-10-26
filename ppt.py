@@ -108,6 +108,20 @@ def _populate_powerpoint(ppt_schema: dict, audit_data: dict):
     print(data)
     print("")
 
+    # for slide in slides:
+        # for shape in slide.shapes:
+            # Slide 7
+                # shape.name == ppt_schema.slides[slide_num].shapes[shape_num].id => True
+                # iterate through shapes in
+                # if 'ga_bool' == shape.name:
+                #     if not has_ga_access:
+                #         runs[0].text = 'No'
+                #     #print(shape.name)
+                # if 'sc_bool' == shape.name:
+                #     if not has_sc_access:
+                #         runs[0].text = 'No'
+                #     #print(shape.name)
+
     # output_path = project_dir + f'/{project_name}.pptx'
     # presentation.save(output_path)
 

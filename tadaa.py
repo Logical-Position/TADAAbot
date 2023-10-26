@@ -4,12 +4,10 @@ import ppt
 import data
 from uuid import uuid4
 
-def helper_fn():
-    """
-    """
+def merge_form_data_and_audit_data():
     pass
 
-def generate_ppt(project_dir:str, manual_data:dict, root_path:str, project_name:str, timestamp:str, schema):
+def generate_ppt(project_dir:str, form_data:dict, root_path:str, project_name:str, timestamp:str, schema):
     """
     Generates a populated Powerpoint document using the custom data object.
     
@@ -19,21 +17,11 @@ def generate_ppt(project_dir:str, manual_data:dict, root_path:str, project_name:
 
     @return [dict] tadaabject: Our custom tech audit data object
     """
-
+    # Form the tadaabject
     audits_id = str(uuid4())
     client_id = str(uuid4())
-    domain = manual_data["domain_url"]
+    domain = form_data["domain_url"]
     project_type = "InvalidType"
-
-    # NOTE: Not doing anything with parsed_data yet
-    parsed_data = parse_data(project_dir, manual_data)
-    
-    ppt_path = ppt.populate_powerpoint(parsed_data, project_dir, root_path, project_name, None)
-    
-    schema = schema
-    print("")
-    print(manual_data)
-    print("")
 
     tadaabject  = {
         "audits_id": audits_id,
@@ -42,17 +30,18 @@ def generate_ppt(project_dir:str, manual_data:dict, root_path:str, project_name:
         "domain": domain,
         "ts": timestamp,
         "project_type": project_type,
-        "ppt_url": ppt_path,
+        #"ppt_url": ppt_path, # This gives a valid server path that is useless client-side
+        "audit_data": ""
     }
-    # data = None
+    parse_data(project_dir, form_data)
     
-    # ppt._populate_powerpoint(schema, data)
-
+    tadaabject['ppt_url'] = ppt._populate_powerpoint(schema, data)
+    
     return tadaabject
 
 
 
-def parse_data(project_dir, manual_data):
+def parse_data(project_dir, form_data):
     """
     Takes the upload directory and organizes the data necessary for the tech audit. Returns our custom data object.
 
@@ -66,10 +55,9 @@ def parse_data(project_dir, manual_data):
     matched_list = utils.match_target_hint_files(all_uploaded_files)
     matched_paths = utils.get_abs_paths(matched_list, project_dir)
 
+    # All the CSV data
     final_data_obj = utils.get_data_obj(matched_paths)
-    
-    for key in final_data_obj.keys():
-        #print(key)
-        pass
+    print(final_data_obj)
 
-    return final_data_obj
+    return None
+    #return final_data_obj

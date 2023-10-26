@@ -12,27 +12,27 @@ app = Flask(__name__)
 UPLOAD_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'uploads')
 app.config['UPLOAD_DIR'] = UPLOAD_DIR
 
-manual_data_labels = [
-    'domain_url',
-    'cms',
-    'sc_access',
-    'ga_access',
-    'mobility_issues',
-    'sitemap_submitted',
-    'sitemap_url',
-    'robots_url',
-    'structured_data',
-    'site_content_ux',
-    'dupe_content',
-    'calls_to_action',
-    'blog',
-    'canonicals',
-    'web_security',
-    'desktop_speed',
-    'broken_backlinks',
-]
+# manual_data_labels = [
+#     'domain_url',
+#     'cms',
+#     'sc_access',
+#     'ga_access',
+#     'mobility_issues',
+#     'sitemap_submitted',
+#     'sitemap_url',
+#     'robots_url',
+#     'structured_data',
+#     'site_content_ux',
+#     'dupe_content',
+#     'calls_to_action',
+#     'blog',
+#     'canonicals',
+#     'web_security',
+#     'desktop_speed',
+#     'broken_backlinks',
+# ]
 
-manual_data = {}
+# manual_data = {}
 # data_labels = {}
 
 
@@ -61,10 +61,10 @@ def index():
         #       - Database
 
         # Get data from form
-        print(request.form)
-        for label in manual_data_labels:
-            data = request.form.get(label, '')
-            manual_data[label] = data
+        form_data = request.form.to_dict()
+        # for label in manual_data_labels:
+        #     data = request.form.get(label, '')
+        #     manual_data[label] = data
 
         # Create folder for audit assets
         now = datetime.datetime.now()
@@ -90,7 +90,7 @@ def index():
 
         # Let TADAA do it's thing
         root_path = app.root_path
-        data = tadaa.generate_ppt(project_dir, manual_data, root_path, project_name, timestamp, ppt_schema)
+        data = tadaa.generate_ppt(project_dir, form_data, root_path, project_name, timestamp, ppt_schema)
 
     # And also return it to the client
     return jsonify(data)
