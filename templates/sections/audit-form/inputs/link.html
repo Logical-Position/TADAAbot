@@ -1,13 +1,13 @@
 {% extends 'layouts/input.html' %}
 {% block inputs %}
 <div>
-    <div>
+    <div class="my-2">
         <label for="{{ key }}-anchor">Anchor Text:</label>
-        <input id="{{ key }}-anchor" type="text">
+        <input class="border border-neutral-400 rounded-md w-3/4" id="{{ key }}-anchor" type="text">
     </div>
-    <div>
+    <div class="my-2">
         <label for="{{ key }}-url">URL:</label>
-        <input id="{{ key }}-url" type="text">
+        <input class="border border-neutral-400 rounded-md w-3/4" id="{{ key }}-url" type="text">
     </div>
 </div>
 {% endblock %}
