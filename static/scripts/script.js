@@ -153,7 +153,7 @@ function handleTadaaSubmission(e, tadaaForm) {
     // progess bar goes through stages of completion
     document.body.style.cursor = 'progress';
     updatePptButton("Generating PPT...");
-    fetch('/', {
+    fetch('/gen-ppt', {
         method: 'POST',
         body: formData,
     }).then(function(res) {
@@ -170,18 +170,19 @@ function handleTadaaSubmission(e, tadaaForm) {
         //      just educated guessing.
         const client = data['client_name'];
         const pptName = `${client}-${ts}.pptx`
-        requestDownload(ts, pptName);
+
+        // requestDownload(ts, pptName);
 
         const auditsId = data['audits_id'];
-        updateRawDataLink(auditsId);
+        // updateRawDataLink(auditsId);
 
         
     }).then(function(response) {
         // Do something with the response  
     }).finally(() => {
-        document.body.style.cursor = 'auto';
+        // document.body.style.cursor = 'auto';
         
-        updatePptButton("Downloaded PPT");
+        // updatePptButton("Downloaded PPT");
     });
 }
 

@@ -1,5 +1,5 @@
 <!-- MARK: Form -->
-<form id="tadaa-form" action="/" method="post" enctype="multipart/form-data">
+<form id="tadaa-form" action="/gen-ppt" method="post" enctype="multipart/form-data">
     <h1 class="text-5xl my-6"><em>TADAA</em>bot Form</h1>
     
     <!-- SECTION: Sitebulb Upload -->
@@ -72,19 +72,21 @@
     <!-- SECTION: Slide Notes -->
     {% set section_name = "6. Slide Notes" %}
     {% set section_contents %}
-        {% for slide in slides %}
-            {% if 'inputs' in slide %}
-                <fieldset>
-                    <legend><h4 class="text-lg italic px-2">#{{ slide.index }} {{ slide.name }}</h4></legend>
-                    {% for input in slide.inputs %}
-                        {% if input.type != "deletion" %}
-                            {% set key, prompt = input.id, input.id %}
-                            {% include 'sections/audit-form/inputs/' + input.type + '.html' %}
-                        {% endif %}
+    {% for slide in schema.slides %}
+        {% if slide.keys.inputs %}
+            <fieldset>
+                <legend><h4 class="text-lg italic px-2">#{{ slide.index }} {{ slide.name }}</h4></legend>
+                {% for id in slide.keys.shapes.id %}
+                    {% set key = id %}
+                    {% for input in slide.keys.inputs %}
+                        {% set prompt, type = input.label, input.type %}
+                        {% include 'sections/audit-form/inputs/' + type + '.html' %}
                     {% endfor %}
-                </fieldset>
-            {% endif %}
-        {% endfor %}
+                {% endfor %}
+            </fieldset>
+        {% endif %}
+    {% endfor %}
+
     {% endset %}
     {% include 'sections/audit-form/form-section.html' %}
     

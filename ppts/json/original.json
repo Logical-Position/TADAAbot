@@ -291,3 +291,30 @@
   }
 }
   
+
+{
+  "index": 1,
+  "name": "basically-slide-topic",
+  "target_export_files": [
+    "targeted-file-name-strings-from-sitebulb-exports",
+    "used-in-match-target-files-function"
+  ],
+  "keys": {
+    "shapes": {
+      "id": [
+        "used-to-access-pptx-objects",
+        "used-in-front-end-too??"
+      ]
+    },
+    "inputs": [
+      {
+        "type": "text",
+        "label": "Good or bad?"
+      },
+      {
+        "type": "image",
+        "label": "Upload Keywords Snapshot from SEMrush."
+      }
+    ]
+  }
+}

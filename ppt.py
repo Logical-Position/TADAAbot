@@ -98,15 +98,15 @@ def _populate_powerpoint(ppt_schema: dict, audit_data: dict):
     # template_path = root_path + templates_dir + template_name
     # presentation = Presentation(template_path)
     
-    print("")
-    print(" ===== SCHEMA ===== ")
-    print(schema)
-    print("")
+    # print("")
+    # print(" ===== SCHEMA ===== ")
+    # print(ppt_schema)
+    # print("")
 
-    print("")
-    print(" ===== DATA ===== ")
-    print(data)
-    print("")
+    # print("")
+    # print(" ===== DATA ===== ")
+    # print(audit_data)
+    # print("")
 
     # for slide in slides:
         # for shape in slide.shapes:
@@ -128,7 +128,7 @@ def _populate_powerpoint(ppt_schema: dict, audit_data: dict):
     # return output_path
     pass
 
-def populate_powerpoint(final_data_object, project_dir, root_path, project_name, manual_data):
+def old_populate_powerpoint(final_data_object, project_dir, root_path, project_name, manual_data):
     """
     Goes through the template PowerPoint slide by slide, and adjusts the values/SEO recommendation text to correspond
     to the calculated data and user inputs.
