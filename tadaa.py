@@ -11,7 +11,7 @@ import pandas as pd
 def generate_ppt(form_data:dict, export_files:list, schema:dict):
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     target_files = get_target_files_from_schema(schema)
-    PROJECT_DIR = create_project_dir(export_files, timestamp)
+    PROJECT_DIR = create_project_dir(timestamp)
     save_csvs(export_files, PROJECT_DIR)
     parsed_export_files = parse_export_files(export_files, target_files, PROJECT_DIR)
     tadaabject = create_tadaabject(form_data, parsed_export_files, timestamp)

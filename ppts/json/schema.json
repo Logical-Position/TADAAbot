@@ -1,32 +1,3 @@
-"slide": {
-  "index": 1,
-  "name": "basically-slide-topic",
-  "shapes": [
-    {
-      "key": "id-on-frontend-and-in-tadaabject-and-key-in-ppt",
-      "type": "",
-      "input": {
-        "label": "",
-        "options": [
-          {
-            "label": "",
-            "value": ""
-          }
-        ]
-      }
-    }
-  ]
-}
-//
-// TYPES:
-// - text
-// - boolean
-// - link
-// - image
-// - number
-// - data
-// - delete
-//
 {
   "name": "original",
   "ppt": "SEOC Tech Audit Template.pptx",
@@ -38,7 +9,14 @@
     "title_tag_length_too_long",
     "title_tag_length_too_short",
     "urls_with_duplicate_page_titles",
-
+    "urls_with_duplicate_meta_descriptions",
+    "description_length_too_long",
+    "description_length_too_short",
+    "meta_description_is_missing",
+    "meta_description_is_empty",
+    "h1__tag_is_empty",
+    "urls_with_duplicate_h1s",
+    "images_with_missing_alt_text",
     "external_url_redirect_broken__4xx_or_5xx",
     "broken_internal_urls",
     "broken_external_urls",
@@ -48,19 +26,23 @@
   "slides": [
     {
       "index": 1,
-      "name": "Intro1"
+      "name": "Intro1",
+			"requires_input": "false"
     },
     {
       "index": 2,
-      "name": "Intro2"
+      "name": "Intro2",
+			"requires_input": "false"
     },
     {
       "index": 3,
-      "name": "Intro3"
+      "name": "Intro3",
+			"requires_input": "false"
     },
     {
       "index": 4,
       "name": "Executive Summary",
+			"requires_input": "false",
       "shapes": [
         {
           "key": "executive-summary",
@@ -71,6 +53,7 @@
     {
       "index": 5,
       "name": "Keywords Snapshot",
+      "requires_input": "true",
       "shapes": [
         {
           "key": "keyword-snapshot",
@@ -83,39 +66,37 @@
     },
     {
       "index": 6,
-      "name": "Monitoring Intro"
+      "name": "Monitoring Intro",
+			"requires_input": "false"
     },
     {
       "index": 7,
       "name": "GA/SC Access Check",
+			"requires_input": "false",
       "shapes": [
         {
           "key": "ga_bool",
-          "type": "data",
-          "input": {
-            "label": "GA Access?"
-          }
+          "type": "data"
         },
         {
           "key": "sc_bool",
-          "type": "data",
-          "input": {
-            "label": "SC Access?"
-          }
-        },
+          "type": "data"
+        }
       ]
     },
     {
       "index": 8,
-      "name": "Mobile First Intro"
+      "name": "Mobile First Intro",
+			"requires_input": "false"
     },
     {
       "index": 9,
       "name": "SC Mobile Usability",
+			"requires_input": "true",
       "shapes": [
         {
           "key": "sc_mob_usability",
-          "type": "data",
+          "type": "data"
         },
         {
           "key": "sc_mob_usability_analyst_notes",
@@ -124,8 +105,12 @@
             "label": "Analyst Notes",
             "options": [
               {
-                "label": "",
-                "value": ""
+                "label": "Not mobile friendly",
+                "value": "We found that # of your pages are NOT mobile-friendly. We recommend making your pages mobile-friendly, so visitors can easily view your site on their mobile devices."
+              },
+              {
+                "label": "Mobile friendly",
+                "value": "We found your site is mobile-friendly."
               }
             ]
           }
@@ -135,6 +120,7 @@
     {
       "index": 10,
       "name": "XML Sitemap",
+			"requires_input": "true",
       "shapes": [
         {
           "key": "sitemap_errors_bool",
@@ -162,6 +148,7 @@
     {
       "index": 11,
       "name": "Robots.txt",
+			"requires_input": "true",
       "shapes": [
         {
           "key": "robots-link",
@@ -185,6 +172,7 @@
     {
       "index": 12,
       "name": "Structured Data",
+			"requires_input": "true",
       "shapes": [
         {
           "key": "structured_data_analyst_notes",
@@ -203,11 +191,13 @@
     },
     {
       "index": 13,
-      "name": "On-page SEO Intro"
+      "name": "On-page SEO Intro",
+			"requires_input": "false"
     },
     {
       "index": 14,
       "name": "Page Titles",
+			"requires_input": "true",
       "shapes": [
         {
           "key": "serps_screenshot",
@@ -241,12 +231,20 @@
     {
       "index": 15,
       "name": "Meta Descriptions",
+			"requires_input": "true",
       "shapes": [
         {
-          "key": "id-on-frontend-and-in-tadaabject-and-key-in-ppt",
-          "type": "",
+          "key": "serps_screenshot",
+          "type": "image",
           "input": {
-            "label": "",
+            "label": "SERP Screenshot"
+          }
+        },
+        {
+          "key": "meta_descriptions_analyst_notes",
+          "type": "text",
+          "input": {
+            "label": "Analyst Notes",
             "options": [
               {
                 "label": "",
@@ -254,48 +252,26 @@
               }
             ]
           }
+        },
+        {
+          "key": "link-descriptions-sheet",
+          "type": "link",
+          "input": {
+            "label": "Descriptions Sheet link"
+          }
         }
       ]
-      "target_export_files": [
-        "urls_with_duplicate_meta_descriptions",
-        "description_length_too_long",
-        "description_length_too_short",
-        "meta_description_is_missing",
-        "meta_description_is_empty"
-      ],
-      "keys": {
-        "shapes": {
-          "id": [
-            "serps_screenshot",
-            "meta_descriptions_analyst_notes",
-            "link-descriptions-sheet"
-          ]
-        },
-        "inputs": [
-          {
-            "type": "image",
-            "label": ""
-          },
-          {
-            "type": "text",
-            "label": ""
-          },
-          {
-            "type": "link",
-            "label": ""
-          }
-        ]
-      }
     },
     {
       "index": 16,
       "name": "H1s",
+			"requires_input": "true",
       "shapes": [
         {
-          "key": "id-on-frontend-and-in-tadaabject-and-key-in-ppt",
-          "type": "",
+          "key": "h1_analyst_notes",
+          "type": "text",
           "input": {
-            "label": "",
+            "label": "Analyst Notes",
             "options": [
               {
                 "label": "",
@@ -303,40 +279,26 @@
               }
             ]
           }
+        },
+        {
+          "key": "link-h1s-sheet",
+          "type": "link",
+          "input": {
+            "label": "H1s Sheet"
+          }
         }
       ]
-      "target_export_files": [
-        "h1__tag_is_empty",
-        "urls_with_duplicate_h1s"
-      ],
-      "keys": {
-        "shapes": {
-          "id": [
-            "h1_analyst_notes",
-            "link-h1s-sheet"
-          ]
-        },
-        "inputs": [
-          {
-            "type": "text",
-            "label": ""
-          },
-          {
-            "type": "link",
-            "label": ""
-          }
-        ]
-      }
     },
     {
       "index": 17,
       "name": "Site Content/Experience",
+			"requires_input": "true",
       "shapes": [
         {
-          "key": "id-on-frontend-and-in-tadaabject-and-key-in-ppt",
-          "type": "",
+          "key": "site_content_analyst_notes",
+          "type": "text",
           "input": {
-            "label": "",
+            "label": "Analyst Notes",
             "options": [
               {
                 "label": "",
@@ -346,32 +308,17 @@
           }
         }
       ]
-      "target_export_files": [
-        ""
-      ],
-      "keys": {
-        "shapes": {
-          "id": [
-            "site_content_analyst_notes"
-          ]
-        },
-        "inputs": [
-          {
-            "type": "text",
-            "label": ""
-          }
-        ]
-      }
     },
     {
       "index": 18,
       "name": "Duplicate Content",
+			"requires_input": "true",
       "shapes": [
         {
-          "key": "id-on-frontend-and-in-tadaabject-and-key-in-ppt",
-          "type": "",
+          "key": "dup_content_analyst_notes",
+          "type": "text",
           "input": {
-            "label": "",
+            "label": "Analyst Notes",
             "options": [
               {
                 "label": "",
@@ -381,29 +328,17 @@
           }
         }
       ]
-      "keys": {
-        "shapes": {
-          "id": [
-            "dup_content_analyst_notes"
-          ]
-        },
-        "inputs": [
-          {
-            "type": "text",
-            "label": ""
-          }
-        ]
-      }
     },
     {
       "index": 19,
       "name": "Calls to Action",
+			"requires_input": "true",
       "shapes": [
         {
-          "key": "id-on-frontend-and-in-tadaabject-and-key-in-ppt",
-          "type": "",
+          "key": "cta_analyst_notes",
+          "type": "text",
           "input": {
-            "label": "",
+            "label": "Analyst Notes",
             "options": [
               {
                 "label": "",
@@ -413,66 +348,38 @@
           }
         }
       ]
-      "keys": {
-        "shapes": {
-          "id": [
-            "cta_analyst_notes"
-          ]
-        },
-        "inputs": [
-          {
-            "type": "text",
-            "label": ""
-          }
-        ]
-      }
     },
     {
       "index": 20,
       "name": "Blog",
+			"requires_input": "true",
       "shapes": [
         {
-          "key": "id-on-frontend-and-in-tadaabject-and-key-in-ppt",
-          "type": "",
+          "key": "onsite_blog_bool",
+          "type": "boolean",
           "input": {
-            "label": "",
-            "options": [
-              {
-                "label": "",
-                "value": ""
-              }
-            ]
+            "label": "Does the site have a blog?"
+          }
+        },
+        {
+          "key": "blog_updated_reg_bool",
+          "type": "boolean",
+          "input": {
+            "label": "Is it regularly updated?"
           }
         }
       ]
-      "keys": {
-        "shapes": {
-          "id": [
-            "blog_updated_reg_bool",
-            "onsite_blog_bool"
-          ]
-        },
-        "inputs": [
-          {
-            "type": "boolean",
-            "label": ""
-          },
-          {
-            "type": "boolean",
-            "label": ""
-          }
-        ]
-      }
     },
     {
       "index": 21,
       "name": "Alt-Text",
+			"requires_input": "true",
       "shapes": [
         {
-          "key": "id-on-frontend-and-in-tadaabject-and-key-in-ppt",
-          "type": "",
+          "key": "alt_text_analyst_notes",
+          "type": "text",
           "input": {
-            "label": "",
+            "label": "Analyst Notes",
             "options": [
               {
                 "label": "",
@@ -482,36 +389,22 @@
           }
         }
       ]
-      "target_export_files": [
-        "images_with_missing_alt_text"
-      ],
-      "keys": {
-        "shapes": {
-          "id": [
-            "alt_text_analyst_notes"
-          ]
-        },
-        "inputs": [
-          {
-            "type": "text",
-            "label": ""
-          }
-        ]
-      }
     },
     {
       "index": 22,
-      "name": "Technical SEO Intro"
+      "name": "Technical SEO Intro",
+			"requires_input": "false"
     },
     {
       "index": 23,
       "name": "404s",
+			"requires_input": "true",
       "shapes": [
         {
-          "key": "id-on-frontend-and-in-tadaabject-and-key-in-ppt",
-          "type": "",
+          "key": "404s_analyst_notes",
+          "type": "text",
           "input": {
-            "label": "",
+            "label": "Analyst Notes",
             "options": [
               {
                 "label": "",
@@ -521,28 +414,11 @@
           }
         }
       ]
-      "target_export_files": [
-        "external_url_redirect_broken__4xx_or_5xx",
-        "broken_internal_urls",
-        "broken_external_urls"
-      ],
-      "keys": {
-        "shapes": {
-          "id": [
-            "404s_analyst_notes"
-          ]
-        },
-        "inputs": [
-          {
-            "type": "text",
-            "label": ""
-          }
-        ]
-      }
     },
     {
       "index": 24,
       "name": "Canonicals",
+			"requires_input": "true",
       "shapes": [
         {
           "key": "canonical_analyst_notes",
@@ -562,6 +438,7 @@
     {
       "index": 25,
       "name": "Redirects",
+			"requires_input": "true",
       "shapes": [
         {
           "key": "redirects_analyst_notes",
@@ -581,6 +458,7 @@
     {
       "index": 26,
       "name": "Site Security",
+			"requires_input": "true",
       "shapes": [
         {
           "key": "site_security_analyst_notes",
@@ -600,6 +478,7 @@
     {
       "index": 27,
       "name": "Page Speed",
+			"requires_input": "false",
       "shapes": [
         {
           "key": "desk_load_time_float",
@@ -613,11 +492,13 @@
     },
     {
       "index": 28,
-      "name": "Off-Page SEO Intro"
+      "name": "Off-Page SEO Intro",
+			"requires_input": "false"
     },
     {
       "index": 29,
       "name": "Domain Authority",
+			"requires_input": "true",
       "shapes": [
         {
           "key": "dom_auth_screenshot",
@@ -644,6 +525,7 @@
     {
       "index": 30,
       "name": "Backlinks",
+			"requires_input": "false",
       "shapes": [
         {
           "key": "backlinks_analyst_notes",
@@ -662,7 +544,8 @@
     },
     {
       "index": 31,
-      "name": "Thank You"
+      "name": "Thank You",
+			"requires_input": "false"
     }
   ]
 }

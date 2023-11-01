@@ -26,6 +26,14 @@ def index():
 def generate_ppt():
     form_data = request.form.to_dict()
 
+    print("")
+    print(" ===== F O R M   D A T A ===== ")
+    print("")
+    print(form_data)
+    print("")
+    print(" ===== F O R M   D A T A ===== ")
+    print("")
+
     # Handle file uploads: https://flask.palletsprojects.com/en/2.3.x/patterns/fileuploads/ <-- idk how to apply this
     export_files = [file for file in request.files.getlist('spreadsheet-selection') if file.filename]
 

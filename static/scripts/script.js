@@ -181,8 +181,7 @@ function handleTadaaSubmission(e, tadaaForm) {
         // Do something with the response  
     }).finally(() => {
         document.body.style.cursor = 'auto';
-        
-        // updatePptButton("Downloaded PPT");
+        updatePptButton("Downloaded PPT");
     });
 }
 

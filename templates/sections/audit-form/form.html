@@ -73,18 +73,19 @@
     {% set section_name = "6. Slide Notes" %}
     {% set section_contents %}
     {% for slide in schema.slides %}
-        {% if slide.keys.inputs %}
-            <fieldset>
-                <legend><h4 class="text-lg italic px-2">#{{ slide.index }} {{ slide.name }}</h4></legend>
-                {% for id in slide.keys.shapes.id %}
-                    {% set key = id %}
-                    {% for input in slide.keys.inputs %}
-                        {% set prompt, type = input.label, input.type %}
-                        {% include 'sections/audit-form/inputs/' + type + '.html' %}
-                    {% endfor %}
-                {% endfor %}
-            </fieldset>
-        {% endif %}
+        {% if slide.requires_input == "true" %}
+        <fieldset>
+            <legend><h4 class="text-lg italic px-2">#{{ slide.index }} {{ slide.name }}</h4></legend>
+            {% for shape in slide.shapes %}
+                {% if shape.input and shape.type != "data" and shape.type != "delete" %}
+                    {% set key = shape.key %}
+                    {% set prompt, type = shape.input.label, shape.type %}
+                    {% set options = shape.input.options %}
+                    {% include 'sections/audit-form/inputs/' + type + '.html' %}
+                {% endif %}
+            {% endfor %}
+        </fieldset>
+        {% endif %}   
     {% endfor %}
 
     {% endset %}
@@ -92,7 +93,6 @@
     
     <!-- SECTION: Submission Button -->
     <section>
-        <h2 class="text-2xl text-neutral-600 my-4">n. Submit this form to make the PowerPoint</h2>
         <input
             id="submit-input"
             class="text-center bg-green-200 enabled:hover:bg-green-300 w-full p-6 rounded-md border border-green-700 font-medium text-lg my-4 enabled:hover:cursor-pointer enabled:hover:drop-shadow-md enabled:active:bg-green-400 disabled:opacity-50"
