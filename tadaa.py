@@ -4,14 +4,15 @@ import ppt
 from uuid import uuid4
 import datetime
 from pptx import Presentation
-from app import UPLOAD_DIR, ROOT_PATH
+from main import UPLOAD_DIR, ROOT_PATH
 import pandas as pd
 
 
-
 def generate_ppt(form_data:dict, export_files:list, schema:dict):
+    timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     target_files = get_target_files_from_schema(schema)
-    PROJECT_DIR, timestamp = create_project_dir(export_files)
+    PROJECT_DIR = create_project_dir(export_files, timestamp)
+    save_csvs(export_files, PROJECT_DIR)
     parsed_export_files = parse_export_files(export_files, target_files, PROJECT_DIR)
     tadaabject = create_tadaabject(form_data, parsed_export_files, timestamp)
     ppt_path = setup_powerpoint(schema, tadaabject['audit_data'], PROJECT_DIR)
@@ -19,15 +20,14 @@ def generate_ppt(form_data:dict, export_files:list, schema:dict):
 
     return tadaabject
 
-
-def create_project_dir(export_files):
-    timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+def create_project_dir(timestamp):
     PROJECT_DIR = UPLOAD_DIR + '/' + timestamp
     os.makedirs(PROJECT_DIR, exist_ok=True)
-    for file in export_files:
-        file.save(os.path.join(PROJECT_DIR, os.path.basename(file.filename)))
+    return PROJECT_DIR
 
-    return PROJECT_DIR, timestamp
+def save_csvs(export_files, dir):
+    for file in export_files:
+        file.save(os.path.join(dir, os.path.basename(file.filename)))
 
 # TODO: Do I need to parse more in order to populate the powerpoint?
 def parse_export_files(export_files:list, target_files:list, PROJECT_DIR:str):
@@ -42,7 +42,7 @@ def parse_export_files(export_files:list, target_files:list, PROJECT_DIR:str):
         file_object = {
             "name": file_name,
             "num": dataframe.shape[0],
-            "data": dataframe
+            #"data": dataframe
         }
         parsed_export_files.append(file_object)
 
@@ -57,7 +57,7 @@ def create_tadaabject(form_data:dict, parsed_export_files:dict, timestamp:str):
         "ts": timestamp,
         "audit_data": audit_data,
         "ppt_path": ""
-        }
+    }
     
     return tadaabject
 
@@ -87,11 +87,11 @@ def populate_powerpoint(presentation:Presentation, schema:dict, audit_data:tuple
                 for shape in schema_shapes:
                     shape_id, shape_index = shape
                     if shape_id == template_shape.name:
+                        # TODO: insert data into ppt
+                        # insert_data_into_ppt(data, type, shape)
                         pass
-                
-
+    
     return presentation
-
 
 def get_shape_ids_from_schema(schema:dict):  # Also gets the slide index for shape (id, index)
     shapes = []

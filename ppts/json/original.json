@@ -292,7 +292,7 @@
 }
   
 
-{
+"slide": {
   "index": 1,
   "name": "basically-slide-topic",
   "target_export_files": [
@@ -317,4 +317,28 @@
       }
     ]
   }
+}
+
+"target_export_files": [
+  "targeted-file-name-strings-from-sitebulb-exports",
+  "used-in-match-target-files-function"
+],
+"slide": {
+  "index": 1,
+  "name": "basically-slide-topic",
+  "shapes": [
+    {
+      "key": "id-on-frontend-and-in-tadaabject-and-key-in-ppt",
+      "type": "",
+      "inputs": [
+        "label": "",
+        "options": [
+          {
+            "label": "",
+            "value": ""
+          }
+        ]
+      ]
+    }
+  ]
 }

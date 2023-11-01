@@ -171,7 +171,7 @@ function handleTadaaSubmission(e, tadaaForm) {
         const client = data['client_name'];
         const pptName = `${client}-${ts}.pptx`
 
-        // requestDownload(ts, pptName);
+        requestDownload(ts, pptName);
 
         const auditsId = data['audits_id'];
         // updateRawDataLink(auditsId);
@@ -180,7 +180,7 @@ function handleTadaaSubmission(e, tadaaForm) {
     }).then(function(response) {
         // Do something with the response  
     }).finally(() => {
-        // document.body.style.cursor = 'auto';
+        document.body.style.cursor = 'auto';
         
         // updatePptButton("Downloaded PPT");
     });

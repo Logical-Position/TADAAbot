@@ -1,539 +1,668 @@
+"slide": {
+  "index": 1,
+  "name": "basically-slide-topic",
+  "shapes": [
+    {
+      "key": "id-on-frontend-and-in-tadaabject-and-key-in-ppt",
+      "type": "",
+      "input": {
+        "label": "",
+        "options": [
+          {
+            "label": "",
+            "value": ""
+          }
+        ]
+      }
+    }
+  ]
+}
+//
+// TYPES:
+// - text
+// - boolean
+// - link
+// - image
+// - number
+// - data
+// - delete
+//
 {
-    "name": "original",
-    "ppt": "SEOC Tech Audit Template.pptx",
-    "slides": [
-      {
-        "index": 1,
-        "name": "Intro1"
+  "name": "original",
+  "ppt": "SEOC Tech Audit Template.pptx",
+  "target_export_files": [
+    "url_in_multiple_xml_sitemaps",
+    "noindex_url_in_xml_sitemaps",
+    "redirect__3xx__url_in_xml_sitemaps",
+    "url_is_orphaned_and_was_not_found_by_the_crawler",
+    "title_tag_length_too_long",
+    "title_tag_length_too_short",
+    "urls_with_duplicate_page_titles",
+
+    "external_url_redirect_broken__4xx_or_5xx",
+    "broken_internal_urls",
+    "broken_external_urls",
+    "external_redirected_urls",
+    "internal_redirected_urls"
+  ],
+  "slides": [
+    {
+      "index": 1,
+      "name": "Intro1"
+    },
+    {
+      "index": 2,
+      "name": "Intro2"
+    },
+    {
+      "index": 3,
+      "name": "Intro3"
+    },
+    {
+      "index": 4,
+      "name": "Executive Summary",
+      "shapes": [
+        {
+          "key": "executive-summary",
+          "type": "delete"
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "name": "Keywords Snapshot",
+      "shapes": [
+        {
+          "key": "keyword-snapshot",
+          "type": "image",
+          "input": {
+              "label": "Upload SEMrush Screenshot."
+          }
+        }
+      ]
+    },
+    {
+      "index": 6,
+      "name": "Monitoring Intro"
+    },
+    {
+      "index": 7,
+      "name": "GA/SC Access Check",
+      "shapes": [
+        {
+          "key": "ga_bool",
+          "type": "data",
+          "input": {
+            "label": "GA Access?"
+          }
         },
-      {
-        "index": 2,
-        "name": "Intro2"
-      },
-      {
-        "index": 3,
-        "name": "Intro3"
-      },
-      {
-        "index": 4,
-        "name": "Executive Summary",
-        "keys": {
-          "shapes": {
-            "id": [
-              "executive-summary"
+        {
+          "key": "sc_bool",
+          "type": "data",
+          "input": {
+            "label": "SC Access?"
+          }
+        },
+      ]
+    },
+    {
+      "index": 8,
+      "name": "Mobile First Intro"
+    },
+    {
+      "index": 9,
+      "name": "SC Mobile Usability",
+      "shapes": [
+        {
+          "key": "sc_mob_usability",
+          "type": "data",
+        },
+        {
+          "key": "sc_mob_usability_analyst_notes",
+          "type": "text",
+          "input": {
+            "label": "Analyst Notes",
+            "options": [
+              {
+                "label": "",
+                "value": ""
+              }
             ]
           }
         }
-      },
-      {
-        "index": 5,
-        "name": "Keywords Snapshot",
-        "keys": {
-          "shapes": {
-            "id": [
-              "keyword-snapshot"
+      ]
+    },
+    {
+      "index": 10,
+      "name": "XML Sitemap",
+      "shapes": [
+        {
+          "key": "sitemap_errors_bool",
+          "type": "data"
+        },
+        {
+          "key": "sc_sitemap_submitted_bool",
+          "type": "data"
+        },
+        {
+          "key": "sitemap_analyst_notes",
+          "type": "text",
+          "input": {
+            "label": "Analyst Notes",
+            "options": [
+              {
+                "label": "",
+                "value": ""
+              }
             ]
-          },
-          "inputs": [
-            {
-              "type": "image",
-              "label": "Upload SEMrush Screenshot."
-            }
-          ]
+          }
         }
-      },
-      {
-        "index": 6,
-        "name": "Monitoring Intro"
-      },
-      {
-        "index": 7,
-        "name": "GA/SC Access Check",
-        "keys": {
-          "shapes": {
-            "id": [
-              "ga_bool",
-              "sc_bool"
+      ]
+    },
+    {
+      "index": 11,
+      "name": "Robots.txt",
+      "shapes": [
+        {
+          "key": "robots-link",
+          "type": "data"
+        },
+        {
+          "key": "robots-analyst-notes",
+          "type": "text",
+          "input": {
+            "label": "Analyst Notes",
+            "options": [
+              {
+                "label": "",
+                "value": ""
+              }
             ]
-          },
-          "inputs": [
-            {
-              "type": "boolean",
-              "label": "GA Access?"
-            },
-            {
-              "type": "boolean",
-              "label": "SC Access?"
-            }
-          ]
+          }
         }
-      },
-      {
-        "index": 8,
-        "name": "Mobile First Intro"
-      },
-      {
-        "index": 9,
-        "name": "SC Mobile Usability",
-        "target_export_files": [
-          ""
-        ],
-        "keys": {
-          "shapes": {
-            "id": [
-              "sc_mob_usability_analyst_notes",
-              "sc_mob_usability"
+      ]
+    },
+    {
+      "index": 12,
+      "name": "Structured Data",
+      "shapes": [
+        {
+          "key": "structured_data_analyst_notes",
+          "type": "text",
+          "input": {
+            "label": "Analyst Notes",
+            "options": [
+              {
+                "label": "",
+                "value": ""
+              }
             ]
-          },
-          "inputs": [
-            {
-              "type": "text",
-              "label": ""
-            },
-            {
-              "type": "text",
-              "label": ""
-            }
-          ]
+          }
         }
-      },
-      {
-        "index": 10,
-        "name": "XML Sitemap",
-        "target_export_files": [
-          "url_in_multiple_xml_sitemaps",
-          "noindex_url_in_xml_sitemaps",
-          "redirect__3xx__url_in_xml_sitemaps",
-          "url_is_orphaned_and_was_not_found_by_the_crawler"
-        ],
-        "keys": {
-          "shapes": {
-            "id": [
-              "sitemap_analyst_notes",
-              "sitemap_errors_bool",
-              "sc_sitemap_submitted_bool"
+      ]
+    },
+    {
+      "index": 13,
+      "name": "On-page SEO Intro"
+    },
+    {
+      "index": 14,
+      "name": "Page Titles",
+      "shapes": [
+        {
+          "key": "serps_screenshot",
+          "type": "image",
+          "input": {
+            "label": "SERP Screenshot"
+          }
+        },
+        {
+          "key": "link-titles-sheet",
+          "type": "link",
+          "input": {
+            "label": "Titles Sheet"
+          }
+        },
+        {
+          "key": "title-analyst-notes",
+          "type": "text",
+          "input": {
+            "label": "Analyst Notes",
+            "options": [
+              {
+                "label": "",
+                "value": ""
+              }
             ]
-          },
-          "inputs": [
-            {
-              "type": "text",
-              "label": ""
-            },
-            {
-              "type": "boolean",
-              "label": ""
-            },
-            {
-              "type": "boolean",
-              "label": ""
-            }
-          ]
+          }
         }
-      },
-      {
-        "index": 11,
-        "name": "Robots.txt",
-        "target_export_files": [
-          ""
-        ],
-        "keys": {
-          "shapes": {
-            "id": [
-              "robots-analyst-notes",
-              "robots-link"
+      ]
+    },
+    {
+      "index": 15,
+      "name": "Meta Descriptions",
+      "shapes": [
+        {
+          "key": "id-on-frontend-and-in-tadaabject-and-key-in-ppt",
+          "type": "",
+          "input": {
+            "label": "",
+            "options": [
+              {
+                "label": "",
+                "value": ""
+              }
             ]
-          },
-          "inputs": [
-            {
-              "type": "text",
-              "label": ""
-            },
-            {
-              "type": "link",
-              "label": ""
-            }
-          ]
+          }
         }
-      },
-      {
-        "index": 12,
-        "name": "Structured Data",
-        "target_export_files": [
-          ""
-        ],
-        "keys": {
-          "shapes": {
-            "id": [
-              "structured_data_analyst_notes"
-            ]
-          },
-          "inputs": [
-            {
-              "type": "text",
-              "label": ""
-            }
+      ]
+      "target_export_files": [
+        "urls_with_duplicate_meta_descriptions",
+        "description_length_too_long",
+        "description_length_too_short",
+        "meta_description_is_missing",
+        "meta_description_is_empty"
+      ],
+      "keys": {
+        "shapes": {
+          "id": [
+            "serps_screenshot",
+            "meta_descriptions_analyst_notes",
+            "link-descriptions-sheet"
           ]
-        }
-      },
-      {
-        "index": 13,
-        "name": "On-page SEO Intro"
-      },
-      {
-        "index": 14,
-        "name": "Page Titles",
-        "target_export_files": [
-          "title_tag_length_too_long",
-          "title_tag_length_too_short",
-          "urls_with_duplicate_page_titles"
-        ],
-        "keys": {
-          "shapes": {
-            "id": [
-              "serps_screenshot",
-              "title-analyst-notes",
-              "link-titles-sheet"
-            ]
+        },
+        "inputs": [
+          {
+            "type": "image",
+            "label": ""
           },
-          "inputs": [
-            {
-              "type": "image",
-              "label": ""
-            },
-            {
-              "type": "text",
-              "label": ""
-            },
-            {
-              "type": "link",
-              "label": ""
-            }
-          ]
-        }
-      },
-      {
-        "index": 15,
-        "name": "Meta Descriptions",
-        "target_export_files": [
-          "urls_with_duplicate_meta_descriptions",
-          "description_length_too_long",
-          "description_length_too_short",
-          "meta_description_is_missing",
-          "meta_description_is_empty"
-        ],
-        "keys": {
-          "shapes": {
-            "id": [
-              "serps_screenshot",
-              "meta_descriptions_analyst_notes",
-              "link-descriptions-sheet"
-            ]
+          {
+            "type": "text",
+            "label": ""
           },
-          "inputs": [
-            {
-              "type": "image",
-              "label": ""
-            },
-            {
-              "type": "text",
-              "label": ""
-            },
-            {
-              "type": "link",
-              "label": ""
-            }
-          ]
-        }
-      },
-      {
-        "index": 16,
-        "name": "H1s",
-        "target_export_files": [
-          "h1__tag_is_empty",
-          "urls_with_duplicate_h1s"
-        ],
-        "keys": {
-          "shapes": {
-            "id": [
-              "h1_analyst_notes",
-              "link-h1s-sheet"
-            ]
-          },
-          "inputs": [
-            {
-              "type": "text",
-              "label": ""
-            },
-            {
-              "type": "link",
-              "label": ""
-            }
-          ]
-        }
-      },
-      {
-        "index": 17,
-        "name": "Site Content/Experience",
-        "target_export_files": [
-          ""
-        ],
-        "keys": {
-          "shapes": {
-            "id": [
-              "site_content_analyst_notes"
-            ]
-          },
-          "inputs": [
-            {
-              "type": "text",
-              "label": ""
-            }
-          ]
-        }
-      },
-      {
-        "index": 18,
-        "name": "Duplicate Content",
-        "target_export_files": [
-          ""
-        ],
-        "keys": {
-          "shapes": {
-            "id": [
-              "dup_content_analyst_notes"
-            ]
-          },
-          "inputs": [
-            {
-              "type": "text",
-              "label": ""
-            }
-          ]
-        }
-      },
-      {
-        "index": 19,
-        "name": "Calls to Action",
-        "keys": {
-          "shapes": {
-            "id": [
-              "cta_analyst_notes"
-            ]
-          },
-          "inputs": [
-            {
-              "type": "text",
-              "label": ""
-            }
-          ]
-        }
-      },
-      {
-        "index": 20,
-        "name": "Blog",
-        "keys": {
-          "shapes": {
-            "id": [
-              "blog_updated_reg_bool",
-              "onsite_blog_bool"
-            ]
-          },
-          "inputs": [
-            {
-              "type": "boolean",
-              "label": ""
-            },
-            {
-              "type": "boolean",
-              "label": ""
-            }
-          ]
-        }
-      },
-      {
-        "index": 21,
-        "name": "Alt-Text",
-        "target_export_files": [
-          "images_with_missing_alt_text"
-        ],
-        "keys": {
-          "shapes": {
-            "id": [
-              "alt_text_analyst_notes"
-            ]
-          },
-          "inputs": [
-            {
-              "type": "text",
-              "label": ""
-            }
-          ]
-        }
-      },
-      {
-        "index": 22,
-        "name": "Technical SEO Intro"
-      },
-      {
-        "index": 23,
-        "name": "404s",
-        "target_export_files": [
-          "external_url_redirect_broken__4xx_or_5xx",
-          "broken_internal_urls",
-          "broken_external_urls"
-        ],
-        "keys": {
-          "shapes": {
-            "id": [
-              "404s_analyst_notes"
-            ]
-          },
-          "inputs": [
-            {
-              "type": "text",
-              "label": ""
-            }
-          ]
-        }
-      },
-      {
-        "index": 24,
-        "name": "Canonicals",
-        "target_export_files": [
-          ""
-        ],
-        "keys": {
-          "shapes": {
-            "id": [
-              "canonical_analyst_notes"
-            ]
-          },
-          "inputs": [
-            {
-              "type": "text",
-              "label": ""
-            }
-          ]
-        }
-      },
-      {
-        "index": 25,
-        "name": "Redirects",
-        "target_export_files": [
-          "external_redirected_urls",
-          "internal_redirected_urls"
-        ],
-        "keys": {
-          "shapes": {
-            "id": [
-              "redirects_analyst_notes"
-            ]
-          },
-          "inputs": [
-            {
-              "type": "text",
-              "label": ""
-            }
-          ]
-        }
-      },
-      {
-        "index": 26,
-        "name": "Site Security",
-        "target_export_files": [
-          ""
-        ],
-        "keys": {
-          "shapes": {
-            "id": [
-              "site_security_analyst_notes"
-            ]
-          },
-          "inputs": [
-            {
-              "type": "text",
-              "label": ""
-            }
-          ]
-        }
-      },
-      {
-        "index": 27,
-        "name": "Page Speed",
-        "target_export_files": [
-          ""
-        ],
-        "keys": {
-          "shapes": {
-            "id": [
-              "desk_load_time_float",
-              "mob_load_time_float"
-            ]
-          },
-          "inputs": [
-            {
-              "type": "number",
-              "label": ""
-            },
-            {
-              "type": "number",
-              "label": ""
-            }
-          ]
-        }
-      },
-      {
-        "index": 28,
-        "name": "Off-Page SEO Intro"
-      },
-      {
-        "index": 29,
-        "name": "Domain Authority",
-        "target_export_files": [
-          ""
-        ],
-        "keys": {
-          "shapes": {
-            "id": [
-              "dom_auth_screenshot",
-              "dom_auth_analyst_notes"
-            ]
-          },
-          "inputs": [
-            {
-              "type": "image",
-              "label": ""
-            },
-            {
-              "type": "text",
-              "label": ""
-            }
-          ]
-        }
-      },
-      {
-        "index": 30,
-        "name": "Backlinks",
-        "target_export_files": [
-          ""
-        ],
-        "keys": {
-          "shapes": {
-            "id": [
-              "backlinks_analyst_notes"
-            ]
-          },
-          "inputs": [
-            {
-              "type": "text",
-              "label": ""
-            }
-          ]
-        }
-      },
-      {
-        "index": 31,
-        "name": "Thank You"
+          {
+            "type": "link",
+            "label": ""
+          }
+        ]
       }
-    ]
-  }
+    },
+    {
+      "index": 16,
+      "name": "H1s",
+      "shapes": [
+        {
+          "key": "id-on-frontend-and-in-tadaabject-and-key-in-ppt",
+          "type": "",
+          "input": {
+            "label": "",
+            "options": [
+              {
+                "label": "",
+                "value": ""
+              }
+            ]
+          }
+        }
+      ]
+      "target_export_files": [
+        "h1__tag_is_empty",
+        "urls_with_duplicate_h1s"
+      ],
+      "keys": {
+        "shapes": {
+          "id": [
+            "h1_analyst_notes",
+            "link-h1s-sheet"
+          ]
+        },
+        "inputs": [
+          {
+            "type": "text",
+            "label": ""
+          },
+          {
+            "type": "link",
+            "label": ""
+          }
+        ]
+      }
+    },
+    {
+      "index": 17,
+      "name": "Site Content/Experience",
+      "shapes": [
+        {
+          "key": "id-on-frontend-and-in-tadaabject-and-key-in-ppt",
+          "type": "",
+          "input": {
+            "label": "",
+            "options": [
+              {
+                "label": "",
+                "value": ""
+              }
+            ]
+          }
+        }
+      ]
+      "target_export_files": [
+        ""
+      ],
+      "keys": {
+        "shapes": {
+          "id": [
+            "site_content_analyst_notes"
+          ]
+        },
+        "inputs": [
+          {
+            "type": "text",
+            "label": ""
+          }
+        ]
+      }
+    },
+    {
+      "index": 18,
+      "name": "Duplicate Content",
+      "shapes": [
+        {
+          "key": "id-on-frontend-and-in-tadaabject-and-key-in-ppt",
+          "type": "",
+          "input": {
+            "label": "",
+            "options": [
+              {
+                "label": "",
+                "value": ""
+              }
+            ]
+          }
+        }
+      ]
+      "keys": {
+        "shapes": {
+          "id": [
+            "dup_content_analyst_notes"
+          ]
+        },
+        "inputs": [
+          {
+            "type": "text",
+            "label": ""
+          }
+        ]
+      }
+    },
+    {
+      "index": 19,
+      "name": "Calls to Action",
+      "shapes": [
+        {
+          "key": "id-on-frontend-and-in-tadaabject-and-key-in-ppt",
+          "type": "",
+          "input": {
+            "label": "",
+            "options": [
+              {
+                "label": "",
+                "value": ""
+              }
+            ]
+          }
+        }
+      ]
+      "keys": {
+        "shapes": {
+          "id": [
+            "cta_analyst_notes"
+          ]
+        },
+        "inputs": [
+          {
+            "type": "text",
+            "label": ""
+          }
+        ]
+      }
+    },
+    {
+      "index": 20,
+      "name": "Blog",
+      "shapes": [
+        {
+          "key": "id-on-frontend-and-in-tadaabject-and-key-in-ppt",
+          "type": "",
+          "input": {
+            "label": "",
+            "options": [
+              {
+                "label": "",
+                "value": ""
+              }
+            ]
+          }
+        }
+      ]
+      "keys": {
+        "shapes": {
+          "id": [
+            "blog_updated_reg_bool",
+            "onsite_blog_bool"
+          ]
+        },
+        "inputs": [
+          {
+            "type": "boolean",
+            "label": ""
+          },
+          {
+            "type": "boolean",
+            "label": ""
+          }
+        ]
+      }
+    },
+    {
+      "index": 21,
+      "name": "Alt-Text",
+      "shapes": [
+        {
+          "key": "id-on-frontend-and-in-tadaabject-and-key-in-ppt",
+          "type": "",
+          "input": {
+            "label": "",
+            "options": [
+              {
+                "label": "",
+                "value": ""
+              }
+            ]
+          }
+        }
+      ]
+      "target_export_files": [
+        "images_with_missing_alt_text"
+      ],
+      "keys": {
+        "shapes": {
+          "id": [
+            "alt_text_analyst_notes"
+          ]
+        },
+        "inputs": [
+          {
+            "type": "text",
+            "label": ""
+          }
+        ]
+      }
+    },
+    {
+      "index": 22,
+      "name": "Technical SEO Intro"
+    },
+    {
+      "index": 23,
+      "name": "404s",
+      "shapes": [
+        {
+          "key": "id-on-frontend-and-in-tadaabject-and-key-in-ppt",
+          "type": "",
+          "input": {
+            "label": "",
+            "options": [
+              {
+                "label": "",
+                "value": ""
+              }
+            ]
+          }
+        }
+      ]
+      "target_export_files": [
+        "external_url_redirect_broken__4xx_or_5xx",
+        "broken_internal_urls",
+        "broken_external_urls"
+      ],
+      "keys": {
+        "shapes": {
+          "id": [
+            "404s_analyst_notes"
+          ]
+        },
+        "inputs": [
+          {
+            "type": "text",
+            "label": ""
+          }
+        ]
+      }
+    },
+    {
+      "index": 24,
+      "name": "Canonicals",
+      "shapes": [
+        {
+          "key": "canonical_analyst_notes",
+          "type": "text",
+          "input": {
+            "label": "Analyst Notes",
+            "options": [
+              {
+                "label": "",
+                "value": ""
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "index": 25,
+      "name": "Redirects",
+      "shapes": [
+        {
+          "key": "redirects_analyst_notes",
+          "type": "text",
+          "input": {
+            "label": "Analyst Notes",
+            "options": [
+              {
+                "label": "",
+                "value": ""
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "index": 26,
+      "name": "Site Security",
+      "shapes": [
+        {
+          "key": "site_security_analyst_notes",
+          "type": "text",
+          "input": {
+            "label": "Analyst Notes",
+            "options": [
+              {
+                "label": "",
+                "value": ""
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "index": 27,
+      "name": "Page Speed",
+      "shapes": [
+        {
+          "key": "desk_load_time_float",
+          "type": "data"
+        },
+        {
+          "key": "mob_load_time_float",
+          "type": "data"
+        }
+      ]
+    },
+    {
+      "index": 28,
+      "name": "Off-Page SEO Intro"
+    },
+    {
+      "index": 29,
+      "name": "Domain Authority",
+      "shapes": [
+        {
+          "key": "dom_auth_screenshot",
+          "type": "image",
+          "input": {
+            "label": "Dom Auth Screenshot"
+          }
+        },
+        {
+          "key": "dom_auth_analyst_notes",
+          "type": "text",
+          "input": {
+            "label": "Analyst Notes",
+            "options": [
+              {
+                "label": "",
+                "value": ""
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "index": 30,
+      "name": "Backlinks",
+      "shapes": [
+        {
+          "key": "backlinks_analyst_notes",
+          "type": "text",
+          "input": {
+            "label": "Analyst Notes",
+            "options": [
+              {
+                "label": "",
+                "value": ""
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "index": 31,
+      "name": "Thank You"
+    }
+  ]
+}
