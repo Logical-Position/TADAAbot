@@ -7,6 +7,8 @@ from pptx import Presentation
 from main import UPLOAD_DIR, ROOT_PATH
 import pandas as pd
 
+def get_audit_data():
+    return {}
 
 def generate_ppt(form_data:dict, export_files:list, schema:dict):
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")

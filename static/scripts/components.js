@@ -1,6 +1,36 @@
-document.addEventListener('DOMContentLoaded', addComponents);
+document.addEventListener('DOMContentLoaded', attachComponents);
 
-function addComponents() {
+// MARK: Radio-Radio Component
+
+function handleRadioRadioChange(q, toEnable) {
+    // Secondary options become available once yes is checked, might be a cleaner way to do this later.
+    const secondaryInputs = document.querySelectorAll(`input[name^=${q}][data-rrs=""]`);
+    console.log(secondaryInputs);
+    if (toEnable) {
+        enableSecondaryRadioInputs(secondaryInputs);
+    } else {
+        disableSecondaryRadioInputs(secondaryInputs);
+    }
+}
+
+function enableSecondaryRadioInputs(secondaryInputs) {
+    console.log(secondaryInputs);
+    secondaryInputs.forEach(item => item.disabled = false);
+}
+
+function disableSecondaryRadioInputs(secondaryInputs) {
+    secondaryInputs.forEach(item => item.disabled = true);
+}
+
+// MARK: Dynamic Text "Component"
+//class DynamicTextComponent() {}
+
+function handleDynamicTextChange(input, textarea, formInput) {
+    textarea.innerText = input.value;
+    formInput.value = input.value;
+}
+
+function attachComponents() {
     try {
         // MARK: Hidden Input Component
         let hiddenInputs = document.querySelectorAll('.hidden-input');
@@ -14,6 +44,20 @@ function addComponents() {
                 }
             });
         }
+
+        // MARK: Radio-Radio Components
+        // const rrComponents = document.querySelectorAll(".things-n-stuff");
+        // rrComponents.forEach((comp) => {
+        //     const id = comp.querySelector('input').name;
+        //     const inputs = comp.querySelectorAll(`input[name='${id}']`);
+        //     inputs.forEach((input) => {
+        //         input.addEventListener("change", function(e) {
+        //             const q = input.getAttribute('name');
+        //             const toEnable = input.value === 'yes';
+        //             handleRadioRadioChange(q, toEnable);
+        //         });
+        //     })
+        // });
 
         // MARK: Dynamic Text Component
         const dtComps = document.querySelectorAll('[data-comp="dynamic-text"]');

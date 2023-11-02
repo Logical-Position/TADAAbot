@@ -85,6 +85,19 @@ desk_load_time = float
 # Slide 30.
 broken_backlinks = 0
 
+def put_text_into_shape(text, shape):
+    pass
+
+def put_link_into_shape(link, shape):
+    pass
+
+def put_image_into_shape(image, shape):
+    pass
+
+def put_thing_into_shape(thing, shape):
+    pass
+
+
 # NEW DEF
 def _populate_powerpoint(ppt_schema: dict, audit_data: dict):
     """
@@ -107,6 +120,8 @@ def _populate_powerpoint(ppt_schema: dict, audit_data: dict):
     # print(" ===== DATA ===== ")
     # print(audit_data)
     # print("")
+
+    
 
     # for slide in slides:
         # for shape in slide.shapes:
@@ -139,6 +154,14 @@ def old_populate_powerpoint(final_data_object, project_dir, root_path, project_n
     template_name = 'SEOC Tech Audit Template.pptx'
     template_path = root_path + templates_dir + template_name
     presentation = Presentation(template_path)
+    '''
+    Presentation
+        - Slides
+            - Shapes
+                - Text_frame
+                    - Paragraphs
+                        - Runs
+    '''
     slides = [slide for slide in presentation.slides]
     slide_num = 0
     for slide in slides:
@@ -149,6 +172,7 @@ def old_populate_powerpoint(final_data_object, project_dir, root_path, project_n
                 text_frame = shape.text_frame
                 paragraph = text_frame.paragraphs[0]
                 runs = paragraph.runs
+                # runs = shape.text_frame.paragraphs[0].runs
 
                 # Slide 7
                 if 'ga_bool' == shape.name:
