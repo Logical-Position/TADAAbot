@@ -85,126 +85,57 @@ desk_load_time = float
 # Slide 30.
 broken_backlinks = 0
 
-def put_text_into_shape(text, shape):
-    pass
 
-def put_link_into_shape(link, shape):
-    pass
-
-def put_image_into_shape(image, shape):
-    pass
-
-def put_thing_into_shape(thing, shape):
-    pass
-
-
-# NEW DEF
-def _populate_powerpoint(ppt_schema: dict, audit_data: dict):
-    """
-    Prepare the final deliverable file by inserting tech audit data into the specified output template.
-    @param ppt_schema: Information from the output.json (output schema) that is needed to generate the final document.
-    @param audit_data: Data collected during the audit process (this includes data parsed from Sitebulb files as well as data collected from manual input fields)
-    """
-    
-    # templates_dir = '/ppts/pptx/'
-    # template_name = 'SEOC Tech Audit Template.pptx'
-    # template_path = root_path + templates_dir + template_name
-    # presentation = Presentation(template_path)
-    
-    # print("")
-    # print(" ===== SCHEMA ===== ")
-    # print(ppt_schema)
-    # print("")
-
-    # print("")
-    # print(" ===== DATA ===== ")
-    # print(audit_data)
-    # print("")
-
-    
-
-    # for slide in slides:
-        # for shape in slide.shapes:
-            # Slide 7
-                # shape.name == ppt_schema.slides[slide_num].shapes[shape_num].id => True
-                # iterate through shapes in
-                # if 'ga_bool' == shape.name:
-                #     if not has_ga_access:
-                #         runs[0].text = 'No'
-                #     #print(shape.name)
-                # if 'sc_bool' == shape.name:
-                #     if not has_sc_access:
-                #         runs[0].text = 'No'
-                #     #print(shape.name)
-
-    # output_path = project_dir + f'/{project_name}.pptx'
-    # presentation.save(output_path)
-
-    # return output_path
-    pass
-
-def old_populate_powerpoint(final_data_object, project_dir, root_path, project_name, manual_data):
+def populate_powerpoint(final_data_object, project_dir, root_path, project_name):
     """
     Goes through the template PowerPoint slide by slide, and adjusts the values/SEO recommendation text to correspond
     to the calculated data and user inputs.
     @param exports_path: the path to the main exports folder.
     @param root_path: the path to the tech audit template ppt.
     """
-    templates_dir = '/ppts/pptx/'
-    template_name = 'SEOC Tech Audit Template.pptx'
-    template_path = root_path + templates_dir + template_name
+    template_path = root_path + '/ppts/pptx/SEOC Tech Audit Template.pptx'
     presentation = Presentation(template_path)
-    '''
-    Presentation
-        - Slides
-            - Shapes
-                - Text_frame
-                    - Paragraphs
-                        - Runs
-    '''
     slides = [slide for slide in presentation.slides]
     slide_num = 0
     for slide in slides:
         slide_num += 1
-        #print(f'---------Slide {slide_num}---------')
+        print(f'---------Slide {slide_num}---------')
         for shape in slide.shapes:
             if shape.has_text_frame:
                 text_frame = shape.text_frame
                 paragraph = text_frame.paragraphs[0]
                 runs = paragraph.runs
-                # runs = shape.text_frame.paragraphs[0].runs
 
                 # Slide 7
                 if 'ga_bool' == shape.name:
                     if not has_ga_access:
                         runs[0].text = 'No'
-                    #print(shape.name)
+                    print(shape.name)
                 if 'sc_bool' == shape.name:
                     if not has_sc_access:
                         runs[0].text = 'No'
-                    #print(shape.name)
+                    print(shape.name)
 
                 # Slide 9
                 if 'sc_mob_usability_analyst_notes' == shape.name:
                     if not is_mobile_friendly:
                         runs[0].text = f"We found that {num_mob_friendly_issues} of your pages are NOT mobile-friendly. We recommend making your pages mobile-friendly, so visitors can easily view your site on their mobile devices."
-                    #print(shape.name)
+                    print(shape.name)
                 if 'sc_mob_usability' == shape.name:
-                    #print(shape.name)
-                    pass
+                    print(shape.name)
 
                 # Slide 10
                 if 'sitemap_analyst_notes' == shape.name:
-                    #print(shape.name)
+                    print(shape.name)
                     runs[0].text = f'Sitemap Errors: {sitemap_errors} | Orphaned Pages: {orphaned_pages} | ' \
                                    f'Redirects in Sitemap: {redirects_in_sitemap} | Noindex URLs in Sitemap: ' \
                                    f'{noindex_urls_in_sitemap} | URLs in Multiple Sitemaps: {urls_in_multiple_sitemaps}'
                 if 'sc_sitemap_submitted_bool' == shape.name:
                     if not is_sitemap_submitted_sc:
                         runs[0].text = "We could not find a sitemap. We recommend creating a sitemap and submitting it through Google Search Console."
-                    #print(shape.name)
+                    print(shape.name)
                 if 'sitemap_errors_bool' == shape.name:
-                    #print(shape.name)
+                    print(shape.name)
                     if sitemap_errors == 0:
                         runs[0].text = 'No'
 
@@ -220,7 +151,7 @@ def old_populate_powerpoint(final_data_object, project_dir, root_path, project_n
                         else:
                             runs[0].text += (f"Your robots.txt is located here: " + robots_location)
 
-                    #print(shape.name)
+                    print(shape.name)
 
                 # Slide 12
                 if 'structured_data_analyst_notes' == shape.name:
@@ -228,64 +159,63 @@ def old_populate_powerpoint(final_data_object, project_dir, root_path, project_n
                         runs[0].text = "We found that your website does not have structured data. Structured data can be beneficial to you and your customers. Accurate structured data can help with rankings, while visitors immediately receive pertinent information about the website. We recommend creating structured data for your website."
                     elif num_str_data_err > 0:
                         runs[0].text = f"We found that your website has structured data; however, there are {num_str_data_err} items with errors. We recommend updating the missing fields or descriptions to eliminate these errors."
-                    #print(shape.name)
+                    print(shape.name)
 
                 # Slide 14
                 if 'meta_title_analyst_notes' == shape.name:
-                    #print(shape.name)
+                    print(shape.name)
                     runs[0].text = f'Short titles : {titles_too_short} | Long titles :' \
                                    f' {titles_too_long} | Duplicate titles: {duplicate_titles}'
 
                 # Slide 15
                 if 'meta_descriptions_analyst_notes' == shape.name:
-                    #print(shape.name)
+                    print(shape.name)
                     runs[0].text = f'Missing descriptions: {desc_missing} | Short descriptions: {desc_too_short} | ' \
                                    f'Long descriptions: {desc_too_long} | Empty descriptions: {desc_empty}'
-                
 
                 # Slide 16
                 if 'h1_analyst_notes' == shape.name:
-                    #print(shape.name)
+                    print(shape.name)
                     runs[0].text = f'Empty H1 tags: {h1_tag_empty} | Duplicate H1 tags: {duplicate_h1_tags}'
 
                 # Slide 17
                 if 'site_content_analyst_notes' == shape.name:
                     if not has_thin_content:
                         runs[0].text = f"After reviewing your site, we found that you have quite a bit of content. While this is a great start, we recommend adding keyword-targeted content. This will help crawlers understand the products and services your website offers, and you will also be able to rank better in the long run."
-                    #print(shape.name)
+                    print(shape.name)
 
                 # Slide 18
                 if 'dup_content_analyst_notes' == shape.name:
                     if has_duplicate_content:
                         runs[0].text = "We found that there are several instances of duplicate content across your site, primarily on your category pages. We recommend writing original content for each page. This can increase readability and rankings."
-                    #print(shape.name)
+                    print(shape.name)
 
                 # Slide 19
                 if 'cta_analyst_notes' == shape.name:
                     if not is_good_cta:
                         runs[0].text = "We found that your site could benefit from visible CTAs. Clear contact forms, phone numbers, and addresses can help with click-through-rate and conversions. We recommend creating accurate and visible CTAs throughout your website."
-                    #print(shape.name)
+                    print(shape.name)
 
                 # Slide 20
                 if 'blog_updated_reg_bool' == shape.name:
                     if not is_blog_updated:
                         runs[0].text = "No"
-                    #print(shape.name)
+                    print(shape.name)
                 if 'onsite_blog_bool' == shape.name:
                     if not has_onsite_blog:
                         runs[0].text = "No"
-                    #print(shape.name)
+                    print(shape.name)
 
                 # Slide 21
                 if 'alt_text_analyst_notes' == shape.name:
-                    #print(shape.name)
+                    print(shape.name)
                     runs[0].text = f"We found that {img_alt_text} of your website's images do not have image alt-text. We recommend adding alt-text to your images. This will give a keyword-focused image description to users and search engines. You can view the images that do not have alt-text here."
                     if img_alt_text == 0:
                         runs[0].text = "We found that your website's images have image alt-text."
 
                 # Slide 23
                 if '404s_analyst_notes' == shape.name:
-                    #print(shape.name)
+                    print(shape.name)
 
                     if broken_4xx_5xx or broken_ext_links or broken_int_links > 0:
 
@@ -299,14 +229,14 @@ def old_populate_powerpoint(final_data_object, project_dir, root_path, project_n
                         runs[0].text = "We found that your pages do not have canonicals; however, it looks like canonicals are unnecessary at the moment since you do not have a lot of duplicate content. If you add a blog, canonicals may be necessary."
                         if canonical_has_errors:
                             runs[0].text = "We found that your pages do not have canonicals. We recommend pointing filtered or paginated pages back to the first page to avoid duplicate content."
-                    #print(shape.name)
+                    print(shape.name)
 
                 # Slide 25
                 if 'redirects_analyst_notes' == shape.name:
                     if int_redirect_links > 0 or ext_redirect_links > 0:
                         runs[0].text = f"We found {int_redirect_links} internal redirect links and {ext_redirect_links} external redirect links on your site. You can find the internal redirect links here, and the external redirect links here. We recommend correcting these links with their new 2XX-status URLs."
                     
-                    #print(shape.name)
+                    print(shape.name)
 
 
                 # Slide 26
@@ -318,26 +248,25 @@ def old_populate_powerpoint(final_data_object, project_dir, root_path, project_n
                     if ssl_exp and not loads_http:
                         runs[0].text += "We found that your site has HTTPS; however, the SSL certificate has expired. We recommend renewing your SSL certificate.\n"
                     
-                    #print(shape.name)
+                    print(shape.name)
 
                 # Slide 27
                 if 'desk_load_time_float' == shape.name:
                     runs[0].text = str(desk_load_time)
-                    #print(shape.name)
+                    print(shape.name)
                 if 'mob_load_time_float' == shape.name:
                     runs[0].text = str(mob_load_time)
-                    #print(shape.name)
+                    print(shape.name)
 
                 # Slide 29
                 if 'dom_auth_analyst_notes' == shape.name:
-                    #print(shape.name)
-                    pass
+                    print(shape.name)
 
                 # Slide 30
                 if 'backlinks_analyst_notes' == shape.name:
                     if broken_backlinks > 0:
                         runs[0].text = f"We found {broken_backlinks} broken backlinks. You can view them here. To help maintain your website's authority, we recommend fixing broken backlinks from relevant, high-authority domains."
-                    #print(shape.name)
+                    print(shape.name)
 
     output_path = project_dir + f'/{project_name}.pptx'
     presentation.save(output_path)

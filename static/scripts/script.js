@@ -167,12 +167,13 @@ function updateRawDataLink(id) {
 
 function handleTadaaSubmission(e, tadaaForm) {
     e.preventDefault();
+    const formAction = tadaaForm.getAttribute('action');
     const formData = new FormData(tadaaForm);
     // set cursor to show progress
     // progess bar goes through stages of completion
     document.body.style.cursor = 'progress';
     updatePptButton("Generating PPT...");
-    fetch('/gen-ppt', {
+    fetch(formAction, {
         method: 'POST',
         body: formData,
     }).then(function(res) {
