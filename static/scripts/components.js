@@ -25,9 +25,16 @@ function disableSecondaryRadioInputs(secondaryInputs) {
 // MARK: Dynamic Text "Component"
 //class DynamicTextComponent() {}
 
-function handleDynamicTextChange(input, textarea, formInput) {
+function updateInputValue(input, value) {
+    console.log(input);
+    console.log(value);
+    input.value = value;
+    console.log(input.value);
+}
+
+function updateTextArea(input, textarea, formInput) {
     textarea.innerText = input.value;
-    formInput.value = input.value;
+    updateInputValue(formInput, input.value);
 }
 
 function attachComponents() {
@@ -62,21 +69,28 @@ function attachComponents() {
         // MARK: Dynamic Text Component
         const dtComps = document.querySelectorAll('[data-comp="dynamic-text"]');
         dtComps.forEach((comp) => {
-            const inputs = comp.querySelectorAll(`input[type="radio"]`);
+            // const inputs = comp.querySelectorAll(`input[type="radio"]`);
+            const dropdown = comp.querySelector(`select`);
             const textarea = comp.querySelector(`div[contenteditable="true"]`);
             const formInput = comp.querySelector(`input[type="text"]`);
-            inputs.forEach((input, index) => {
-                if (index === 0) {
-                    input.checked = true;
-                    handleDynamicTextChange(input, textarea, formInput);
-                }
+            dropdown.addEventListener("change", function(e) {
+                updateTextArea(dropdown, textarea, formInput);
+            });
+            textarea.addEventListener("input", function(e) {
+                updateInputValue(formInput, textarea.innerText);
+            });
+            // inputs.forEach((input, index) => {
+            //     if (index === 0) {
+            //         input.checked = true;
+            //         updateTextArea(input, textarea, formInput);
+            //     }
 
-                input.addEventListener("change", function(e) {
-                    if (input.checked) {
-                        handleDynamicTextChange(input, textarea, formInput);
-                    }
-                });
-            })
+            //     input.addEventListener("change", function(e) {
+            //         if (input.checked) {
+            //             updateTextArea(input, textarea, formInput);
+            //         }
+            //     });
+            // });
         });
     } catch (e) {
         console.error(e);
