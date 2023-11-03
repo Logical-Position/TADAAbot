@@ -1,35 +1,119 @@
+'''
+Action:
+POST /gen-ppt
+1. Get CSV filenames
+2. Generate PowerPoint
+    1. Create timestamp
+    2. Select target CSVs
+    3. Create a project directory
+    4. Save CSVs
+    5. Parse CSVs
+    6. Create tadaabject
+    7. Setup PowerPoint
+    8. Add PowerPoint path to tadaabject
+    9. Return tadaabject
+3. Return tadaabject to client
+
+Rework to:
+1. Create UUID
+1. Save CSVs to Uploads
+2. Save images to Uploads
+3. Generate PowerPoint
+    1. Run Audit
+        2. Select target CSVs (can this be done client-side?)
+        3. Parse CSVs
+        4. Parse other form data
+        5. Return audit_data
+    2. Create PowerPoint
+        1. Setup PowerPoint
+        2. Populate PowerPoint
+    3. Return tadaabject
+4. Return tadaabject
+'''
+
+from tadaa import csv
+from tadaa import ppt
+
+def run_audit(sitebulb_files):
+    audit_results = csv.parse_sitebulb_csvs(sitebulb_files)
+    return audit_results
+
+def create_presentation(template_path, output_path, data):
+    ppt.create_powerpoint(template_path, output_path, data)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+'''
+
 import os
-import utils
-import ppt
-from uuid import uuid4
-import datetime
+from tadaa import csv
+from tadaa import ppt
+
 from pptx import Presentation
-from main import UPLOAD_DIR, ROOT_PATH
 import pandas as pd
+
+
 
 def get_audit_data():
     return {}
 
 def generate_ppt(form_data:dict, export_files:list, schema:dict):
-    timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    
+    ppt.old_populate_powerpoint()
+
+    return {}
+
+def new_generate_ppt(form_data:dict, export_files:list, schema:dict, upload_dir):
     target_files = get_target_files_from_schema(schema)
-    PROJECT_DIR = create_project_dir(timestamp)
-    save_csvs(export_files, PROJECT_DIR)
+
     parsed_export_files = parse_export_files(export_files, target_files, PROJECT_DIR)
     tadaabject = create_tadaabject(form_data, parsed_export_files, timestamp)
+    
     ppt_path = setup_powerpoint(schema, tadaabject['audit_data'], PROJECT_DIR)
     tadaabject['ppt_path'] = ppt_path
 
     return tadaabject
-
-def create_project_dir(timestamp):
-    PROJECT_DIR = UPLOAD_DIR + '/' + timestamp
-    os.makedirs(PROJECT_DIR, exist_ok=True)
-    return PROJECT_DIR
-
-def save_csvs(export_files, dir):
-    for file in export_files:
-        file.save(os.path.join(dir, os.path.basename(file.filename)))
 
 # TODO: Do I need to parse more in order to populate the powerpoint?
 def parse_export_files(export_files:list, target_files:list, PROJECT_DIR:str):
@@ -68,7 +152,9 @@ def setup_powerpoint(schema:dict, audit_data:tuple, PROJECT_DIR:str):
     form_data = audit_data[0]
     
     template_name = schema['ppt']
-    template_path = ROOT_PATH + '/ppts/pptx/' + template_name
+    template_path = '/ppts/pptx/' + template_name
+    print(" TEMPLATE PATH")
+    print(template_path)
     presentation = Presentation(template_path)
 
     populated_presentation = populate_powerpoint(presentation, schema, audit_data)
@@ -115,99 +201,7 @@ def get_target_files_from_schema(schema:dict):
 
     return target_files
 
-# TODO: Variable names from exports match the target file name. Variable names from form match input id.
-# TODO: Add input id field to schema?
-
-# Slide 7.
-# ga_bool = form_data['ga_bool'] 
-# sc_bool = form_data['sc_bool'] 
-
-# # Slide 9.
-# sc_mob_usability = form_data['sc_mob_usability'] 
-# num_mob_friendly_issues = form_data['num_mob_friendly_issues']
-
-# # Slide 10.
-# is_sitemap_submitted_sc = form_data['is_sitemap_submitted_sc']  
-# sitemap_slug = form_data['sitemap-slug']
-# url_is_orphaned_and_was_not_found_by_the_crawler = self.count() 
-# redirect__3xx__url_in_xml_sitemaps = self.count()
-# noindex_url_in_xml_sitemaps = self.count()
-# urls_in_multiple_sitemaps = self.count()
-
-# # Slide 11.
-# has_robots = form_data['has_robots']
-# robots_blocks_good_pages = form_data['robots_blocks_good_pages']
-# robots_should_block_bad_pages = form_data['robots_should_block_bad_pages']
-
-# # Slide 12.
-# has_structured_data_errors = form_data['has_structured_data_errors']
-# num_structured_data_errors = form_data['num_structured_data_errors']
-
-# # Slide 14.
-# title_tag_length_too_long = self.count()
-# title_tag_length_too_short = self.count()
-# urls_with_duplicate_page_titles = self.count()
-
-# # Slide 15.
-# description_length_too_long = self.count()
-# description_length_too_short = self.count()
-# urls_with_duplicate_meta_descriptions = self.count()
-# meta_description_is_missing = self.count()
-# meta_description_is_empty = self.count()
-
-# # Slide 16.
-# urls_with_duplicate_h1s = self.count()
-# h1__tag_is_empty = self.count()
-
-# # Slide 17.
-# has_duplicate_content = form_data['has_duplicate_content']
-# has_thin_content = form_data['has_thin_content']
-
-# # Slide 19.
-# has_good_cta = form_data['has_good_cta']
-
-# # Slide 20.
-# has_onsite_blog = form_data['has_onsite_blog']
-# is_blog_updated = form_data['is_blog_updated']
-
-# # Slide 21.
-# images_with_missing_alt_text = self.count()
-
-# # Slide 23.
-# broken_internal_urls = self.count()
-# broken_external_urls = self.count()
-# external_url_redirect_broken__4xx_or_5xx = self.count()
-# sc_404s = form_data['sc_404s']
-# sc_crawl_anomalies = form_data['sc_crawl_anomalies']
-# sc_soft_404s = form_data['sc_soft_404s']
-
-# # Slide 24.
-# has_canonicals = form_data['has_canonicals']
-# canonical_has_errors = form_data['canonical_has_errors']
-
-# # Slide 25.
-# internal_redirected_urls = self.count()
-# external_redirected_urls = self.count()
-
-# # Slide 26.
-# loads_http = form_data['loads_http']
-# loads_mixed_resources = form_data['loads_mixed_resources']
-# ssl_exp = form_data['ssl_exp']
-
-# # Slide 27.
-# mobile_load_time = form_data['mobile_load_time']
-# desktop_load_time = form_data['desktop_load_time']
-
-# # Slide 30.
-# broken_backlinks = form_data['broken_backlinks']
-
-
-
-
 # ======== OLD BELOW =========
-
-
-
 
 def old_generate_ppt(project_dir:str, form_data:dict, root_path:str, project_name:str, timestamp:str, schema):
     """
@@ -237,7 +231,7 @@ def old_generate_ppt(project_dir:str, form_data:dict, root_path:str, project_nam
     }
     old_parse_data(project_dir, form_data)
     
-    tadaabject['ppt_url'] = ppt._populate_powerpoint(schema, data)
+    tadaabject['ppt_url'] = ppt._populate_powerpoint(schema, {})
     
     return tadaabject
 
@@ -253,11 +247,12 @@ def old_parse_data(project_dir, form_data):
 
     all_uploaded_files = os.listdir(project_dir)
 
-    matched_list = utils.match_target_hint_files(all_uploaded_files)
-    matched_paths = utils.get_abs_paths(matched_list, project_dir)
+    matched_list = csv.match_target_hint_files(all_uploaded_files)
+    matched_paths = csv.get_abs_paths(matched_list, project_dir)
 
     # All the CSV data
-    final_data_obj = utils.get_data_obj(matched_paths)
+    final_data_obj = csv.get_data_obj(matched_paths)
 
     return None
     #return final_data_obj
+'''

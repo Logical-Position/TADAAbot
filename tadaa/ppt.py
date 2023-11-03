@@ -1,5 +1,98 @@
 from pptx import Presentation
 
+
+def put_text_into_shape(text, shape):
+    pass
+
+def put_link_into_shape(link, shape):
+    pass
+
+def put_image_into_shape(image, shape):
+    pass
+
+def put_thing_into_shape(thing, shape):
+    pass
+
+
+def create_powerpoint(template_pathname, output_pathname, data):
+    """
+    Create a PowerPoint presentation with the given data and save it at the output_pathname.
+    @param template_pathname: Filepath to the PowerPoint template to use
+    @param output_pathname: Filepath, including filename, for where the PowerPoint should be saved. A file extension must be added.
+    @param data: Audit data to insert into the PowerPoint.
+    """
+    presentation = Presentation(template_pathname)
+    
+    # update PowerPoint with data here
+    
+    filename = output_pathname + '.pptx'
+    presentation.save(filename)
+
+# NEW DEF
+'''
+def _populate_powerpoint(ppt_schema: dict, audit_data: dict):
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Slide 7.
 has_sc_access = bool
 has_ga_access = bool
@@ -85,65 +178,7 @@ desk_load_time = float
 # Slide 30.
 broken_backlinks = 0
 
-def put_text_into_shape(text, shape):
-    pass
-
-def put_link_into_shape(link, shape):
-    pass
-
-def put_image_into_shape(image, shape):
-    pass
-
-def put_thing_into_shape(thing, shape):
-    pass
-
-
-# NEW DEF
-def _populate_powerpoint(ppt_schema: dict, audit_data: dict):
-    """
-    Prepare the final deliverable file by inserting tech audit data into the specified output template.
-    @param ppt_schema: Information from the output.json (output schema) that is needed to generate the final document.
-    @param audit_data: Data collected during the audit process (this includes data parsed from Sitebulb files as well as data collected from manual input fields)
-    """
-    
-    # templates_dir = '/ppts/pptx/'
-    # template_name = 'SEOC Tech Audit Template.pptx'
-    # template_path = root_path + templates_dir + template_name
-    # presentation = Presentation(template_path)
-    
-    # print("")
-    # print(" ===== SCHEMA ===== ")
-    # print(ppt_schema)
-    # print("")
-
-    # print("")
-    # print(" ===== DATA ===== ")
-    # print(audit_data)
-    # print("")
-
-    
-
-    # for slide in slides:
-        # for shape in slide.shapes:
-            # Slide 7
-                # shape.name == ppt_schema.slides[slide_num].shapes[shape_num].id => True
-                # iterate through shapes in
-                # if 'ga_bool' == shape.name:
-                #     if not has_ga_access:
-                #         runs[0].text = 'No'
-                #     #print(shape.name)
-                # if 'sc_bool' == shape.name:
-                #     if not has_sc_access:
-                #         runs[0].text = 'No'
-                #     #print(shape.name)
-
-    # output_path = project_dir + f'/{project_name}.pptx'
-    # presentation.save(output_path)
-
-    # return output_path
-    pass
-
-def old_populate_powerpoint(final_data_object, project_dir, root_path, project_name, manual_data):
+def populate_powerpoint(project_dir, root_path, project_name):
     """
     Goes through the template PowerPoint slide by slide, and adjusts the values/SEO recommendation text to correspond
     to the calculated data and user inputs.
