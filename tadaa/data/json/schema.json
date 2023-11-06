@@ -105,12 +105,12 @@
             "label": "Analyst Notes",
             "options": [
               {
-                "label": "Not mobile friendly",
-                "value": "We found that # of your pages are NOT mobile-friendly. We recommend making your pages mobile-friendly, so visitors can easily view your site on their mobile devices."
-              },
-              {
                 "label": "Mobile friendly",
                 "value": "We found your site is mobile-friendly."
+              },
+              {
+                "label": "Not mobile friendly",
+                "value": "We found that # of your pages are NOT mobile-friendly. We recommend making your pages mobile-friendly, so visitors can easily view your site on their mobile devices."
               }
             ]
           }
@@ -137,8 +137,12 @@
             "label": "Analyst Notes",
             "options": [
               {
-                "label": "",
-                "value": ""
+                "label": "Sitemap exists",
+                "value": "We found a sitemap on your site."
+              },
+              {
+                "label": "Sitemap not found",
+                "value": "We could not find a sitemap. We recommend creating a sitemap and submitting it through Google Search Console."
               }
             ]
           }
@@ -161,8 +165,20 @@
             "label": "Analyst Notes",
             "options": [
               {
-                "label": "",
-                "value": ""
+                "label": "Robots.txt exists",
+                "value": "We found that your site has a robots.txt file and is appropriately setup."
+              },
+              {
+                "label": "Remove NOINDEX tags",
+                "value": "We found that your site has pages that should be indexed being blocked by noindex tags. We recommend removing the noindex tags to prevent this."
+              },
+              {
+                "label": "E-commerce not blocked",
+                "value": "We found that your site has a robots.txt file; however, it does not block shopping cart pages, pages that contain login information, and other account pages. We recommend updating the robots.txt file to block these pages."
+              },
+              {
+                "label": "Robots.txt not found",
+                "value": "We found that your site does not have a robots.txt file. We recommend creating a robots.txt file, so you can block pages that do not need to be indexed."
               }
             ]
           }
@@ -181,8 +197,16 @@
             "label": "Analyst Notes",
             "options": [
               {
-                "label": "",
-                "value": ""
+                "label": "Structured data exists and is correct",
+                "value": "We found that your website has structured data."
+              },
+              {
+                "label": "Structured data exists but has errors",
+                "value": "We found that your website has structured data; however, there are items with errors. We recommend updating the missing fields or descriptions to eliminate these errors."
+              },
+              {
+                "label": "Structured data does not exist",
+                "value": "We found that your website does not have structured data. Structured data can be beneficial to you and your customers. Accurate structured data can help with rankings, while visitors immediately receive pertinent information about the website. We recommend creating structured data for your website."
               }
             ]
           }
@@ -220,7 +244,19 @@
             "label": "Analyst Notes",
             "options": [
               {
-                "label": "",
+                "label": "Titles are okay",
+                "value": ""
+              },
+              {
+                "label": "Titles are missing",
+                "value": ""
+              },
+              {
+                "label": "Titles too short",
+                "value": ""
+              },
+              {
+                "label": "Titles too long",
                 "value": ""
               }
             ]
@@ -247,7 +283,7 @@
             "label": "Analyst Notes",
             "options": [
               {
-                "label": "",
+                "label": "Descriptions are okay",
                 "value": ""
               }
             ]
@@ -274,7 +310,7 @@
             "label": "Analyst Notes",
             "options": [
               {
-                "label": "",
+                "label": "H1s are okay",
                 "value": ""
               }
             ]
@@ -301,8 +337,16 @@
             "label": "Analyst Notes",
             "options": [
               {
-                "label": "",
-                "value": ""
+                "label": "Content is good",
+                "value": "After reviewing your site, we found that you have quite a bit of content. It is keyword-optimized and of appropriate length."
+              },
+              {
+                "label": "Needs keywords",
+                "value": "After reviewing your site, we found that you have quite a bit of content. While this is a great start, we recommend adding keyword-targeted content. This will help crawlers understand the products and services your website offers, and you will also be able to rank better in the long run."
+              },
+              {
+                "label": "Has thin content",
+                "value": "After reviewing your site, we found that your site has thin content."
               }
             ]
           }
@@ -321,8 +365,12 @@
             "label": "Analyst Notes",
             "options": [
               {
-                "label": "",
-                "value": ""
+                "label": "No duplicate content",
+                "value": "We found your site has no instances of duplicate content."
+              },
+              {
+                "label": "Duplicate content found",
+                "value": "We found that there are several instances of duplicate content across your site, primarily on your category pages. We recommend writing original content for each page. This can increase readability and rankings."
               }
             ]
           }
@@ -341,8 +389,12 @@
             "label": "Analyst Notes",
             "options": [
               {
-                "label": "",
-                "value": ""
+                "label": "CTAs exist",
+                "value": "We found that your site has CTAs visibly on the page."
+              },
+              {
+                "label": "No CTAs found",
+                "value": "We found that your site could benefit from visible CTAs. Clear contact forms, phone numbers, and addresses can help with click-through-rate and conversions. We recommend creating accurate and visible CTAs throughout your website."
               }
             ]
           }
@@ -382,8 +434,12 @@
             "label": "Analyst Notes",
             "options": [
               {
-                "label": "",
-                "value": ""
+                "label": "Alt text OK",
+                "value": "We found that your site's images have appropriate alt text."
+              },
+              {
+                "label": "Missing alt text",
+                "value": "We found that some of your website's images do not have image alt-text. We recommend adding alt-text to your images. This will give a keyword-focused image description to users and search engines. You can view the images that do not have alt-text here."
               }
             ]
           }
@@ -407,8 +463,12 @@
             "label": "Analyst Notes",
             "options": [
               {
-                "label": "",
-                "value": ""
+                "label": "No 404s found",
+                "value": "We found that your site has no Search Console 404 errors."
+              },
+              {
+                "label": "Broken links and 404s found",
+                "value": "We found that your site has broken internal links and broken external links. You can find the broken internal links here, and the broken external links here. Google Search Console also found # 404 errors; they can be found here. However, we identified that only # need to be addressed. # crawl anomalies were also found, they can be found here. It also found # soft 404 errors, which can be found here. A soft 404 is a URL that returns a page telling the user that the page does not exist and also a 200-level (success) code. In some cases, it might be a page with little or no content--for example, a sparsely populated or empty page. If there is a new URL for any of these 404 errors, we recommend redirecting the broken URL to that new page. If no URL exists, we recommend redirecting the broken URL to a relevant 2xx page. We recommend replacing the broken links with a new link or removing them from any pages they appear on."
               }
             ]
           }
@@ -427,8 +487,20 @@
             "label": "Analyst Notes",
             "options": [
               {
-                "label": "",
+                "label": "Canonicals exist and are setup correctly",
                 "value": ""
+              },
+              {
+                "label": "Canonicals exist but are setup incorrectly",
+                "value": "We found that your canonicals are not set up properly. We recommend pointing filtered or paginated pages back to the first page to avoid duplicate content. This includes tagged collection pages, which are dynamically generated and cannot be edited. We recommend pointing tagged pages back to the original collection page."
+              },
+              {
+                "label": "Canonicals not found but not needed",
+                "value": "We found that your pages do not have canonicals; however, it looks like canonicals are unnecessary at the moment since you do not have a lot of duplicate content. If you add a blog, canonicals may be necessary."
+              },
+              {
+                "label": "Canonicals not found and are needed",
+                "value": "We found that your pages do not have canonicals. We recommend pointing filtered or paginated pages back to the first page to avoid duplicate content."
               }
             ]
           }
@@ -447,8 +519,12 @@
             "label": "Analyst Notes",
             "options": [
               {
-                "label": "",
-                "value": ""
+                "label": "No redirects found",
+                "value": "We found no redirect links on your site."
+              },
+              {
+                "label": "Redirects found",
+                "value": "We found {int_redirect_links} internal redirect links and {ext_redirect_links} external redirect links on your site. You can find the internal redirect links here, and the external redirect links here. We recommend correcting these links with their new 2XX-status URLs."
               }
             ]
           }
@@ -467,8 +543,20 @@
             "label": "Analyst Notes",
             "options": [
               {
-                "label": "",
-                "value": ""
+                "label": "Site is secure",
+                "value": "We found that your site loads over HTTPS and is secure."
+              },
+              {
+                "label": "Not secure",
+                "value": "We found that your site is not secure, as it does not load in HTTPS. We recommend that your site switch to HTTPS."
+              },
+              {
+                "label": "Loads mixed resources",
+                "value": "We found that your site has HTTPS; however, it loads mixed resources. We recommend ensuring that your site's resources load securely."
+              },
+              {
+                "label": "Expired SSL certificate",
+                "value": "We found that your site has HTTPS; however, the SSL certificate has expired. We recommend renewing your SSL certificate."
               }
             ]
           }
@@ -506,26 +594,13 @@
           "input": {
             "label": "Dom Auth Screenshot"
           }
-        },
-        {
-          "key": "dom_auth_analyst_notes",
-          "type": "text",
-          "input": {
-            "label": "Analyst Notes",
-            "options": [
-              {
-                "label": "",
-                "value": ""
-              }
-            ]
-          }
         }
       ]
     },
     {
       "index": 30,
       "name": "Backlinks",
-			"requires_input": "false",
+			"requires_input": "true",
       "shapes": [
         {
           "key": "backlinks_analyst_notes",
@@ -534,10 +609,21 @@
             "label": "Analyst Notes",
             "options": [
               {
-                "label": "",
-                "value": ""
+                "label": "No broken backlinks found",
+                "value": "We found no broken backlinks to your site."
+              },
+              {
+                "label": "Broken backlinks exist",
+                "value": "We found your site has some broken backlinks. To help maintain your website's authority, we recommend fixing broken backlinks from relevant, high-authority domains."
               }
             ]
+          }
+        },
+        {
+          "key": "broken-backlinks-sheet",
+          "type": "link",
+          "input": {
+            "label": "Broken Backlinks Sheet"
           }
         }
       ]
