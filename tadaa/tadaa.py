@@ -36,13 +36,14 @@ from tadaa import ppt
 
 def run_audit(sitebulb_files):
     audit_results = csv.parse_sitebulb_csvs(sitebulb_files)
+    # parse_sc_404_files
+    # parse_siteliner_results
+    # parse ...
+    # concatenate all the data
     return audit_results
 
 def create_presentation(template_path, output_path, data):
     ppt.create_powerpoint(template_path, output_path, data)
-
-
-
 
 
 

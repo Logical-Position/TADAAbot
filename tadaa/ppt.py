@@ -189,14 +189,14 @@ def populate_powerpoint(project_dir, root_path, project_name):
     template_name = 'SEOC Tech Audit Template.pptx'
     template_path = root_path + templates_dir + template_name
     presentation = Presentation(template_path)
-    '''
+    
     Presentation
         - Slides
             - Shapes
                 - Text_frame
                     - Paragraphs
                         - Runs
-    '''
+    
     slides = [slide for slide in presentation.slides]
     slide_num = 0
     for slide in slides:
@@ -378,3 +378,4 @@ def populate_powerpoint(project_dir, root_path, project_name):
     presentation.save(output_path)
 
     return output_path
+'''
