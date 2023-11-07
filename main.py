@@ -27,15 +27,15 @@ load_dotenv()
 
 #ProxyFix Middleware for Nginx
 from werkzeug.middleware.proxy_fix import ProxyFix
-
+# TADAA secret key should be static
+app.secret_key = os.environ.get('TADAA_SECRET_KEY')
+app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_port=1, x_prefix=1)
 
 app = Flask(__name__)
 login_manager = LoginManager()
 login_manager.init_app(app)
 
-# TADAA secret key should be static
-app.secret_key = os.environ.get('TADAA_SECRET_KEY')
-app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_port=1, x_prefix=1)
+
 
 
 # MARK: Configuration

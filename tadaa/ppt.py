@@ -1,5 +1,98 @@
 from pptx import Presentation
 
+
+def put_text_into_shape(text, shape):
+    pass
+
+def put_link_into_shape(link, shape):
+    pass
+
+def put_image_into_shape(image, shape):
+    pass
+
+def put_thing_into_shape(thing, shape):
+    pass
+
+
+def create_powerpoint(template_pathname, output_pathname, data):
+    """
+    Create a PowerPoint presentation with the given data and save it at the output_pathname.
+    @param template_pathname: Filepath to the PowerPoint template to use
+    @param output_pathname: Filepath, including filename, for where the PowerPoint should be saved. A file extension must be added.
+    @param data: Audit data to insert into the PowerPoint.
+    """
+    presentation = Presentation(template_pathname)
+    
+    # update PowerPoint with data here
+    
+    filename = output_pathname + '.pptx'
+    presentation.save(filename)
+
+# NEW DEF
+'''
+def _populate_powerpoint(ppt_schema: dict, audit_data: dict):
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Slide 7.
 has_sc_access = bool
 has_ga_access = bool
@@ -86,7 +179,7 @@ desk_load_time = float
 broken_backlinks = 0
 
 
-def populate_powerpoint(final_data_object, project_dir, root_path, project_name):
+def populate_powerpoint(project_dir, root_path, project_name):
     """
     Goes through the template PowerPoint slide by slide, and adjusts the values/SEO recommendation text to correspond
     to the calculated data and user inputs.
@@ -95,6 +188,14 @@ def populate_powerpoint(final_data_object, project_dir, root_path, project_name)
     """
     template_path = root_path + '/ppts/pptx/SEOC Tech Audit Template.pptx'
     presentation = Presentation(template_path)
+    
+    Presentation
+        - Slides
+            - Shapes
+                - Text_frame
+                    - Paragraphs
+                        - Runs
+    
     slides = [slide for slide in presentation.slides]
     slide_num = 0
     for slide in slides:
@@ -272,3 +373,4 @@ def populate_powerpoint(final_data_object, project_dir, root_path, project_name)
     presentation.save(output_path)
 
     return output_path
+'''

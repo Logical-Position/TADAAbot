@@ -155,16 +155,6 @@ function updatePptButton(text) {
     pptButton.value = text;
 };
 
-function updateRawDataLink(id) {
-    const elId = "raw-data-link";
-    const disabledClass = "disabled-raw-data-link";
-    const anchor = document.getElementById(elId);
-    if (anchor) {
-        anchor.href = `/db/${id}`;
-        anchor.classList.remove(disabledClass);
-    }
-}
-
 function handleTadaaSubmission(e, tadaaForm) {
     e.preventDefault();
     const formAction = tadaaForm.getAttribute('action');
@@ -176,30 +166,17 @@ function handleTadaaSubmission(e, tadaaForm) {
     fetch(formAction, {
         method: 'POST',
         body: formData,
-    }).then(function(res) {
-        // Do something with the response
+    }).then((res) => {
         return res.json();
 
     }).then((data) => {
-         // console.log(data);
-        
-        const ts = data['ts'];
-        console.log(data);
-        // TODO: This still isn't great; the server and client should 
-        //      coordinate the exact file to be downloaded. This is still
-        //      just educated guessing.
-        const client = data['client_name'];
-        const pptName = `${client}-${ts}.pptx`
+        requestDownload(data['id']);
 
-        requestDownload(ts, pptName);
+    })
+    // .then((res) => {
 
-        const auditsId = data['audits_id'];
-        // updateRawDataLink(auditsId);
-
-        
-    }).then(function(response) {
-        // Do something with the response  
-    }).finally(() => {
+    // })
+    .finally(() => {
         document.body.style.cursor = 'auto';
         updatePptButton("Downloaded PPT");
     });
@@ -214,9 +191,9 @@ function handleTadaaSubmission(e, tadaaForm) {
  * - Saving and downloading PPT
  */
 
-function requestDownload(ts, filename) {
-    let downloadURL = `/download/${ts}`;
-    makeRequest(downloadURL, (res) => {
+function requestDownload(auditId) {
+    let downloadURL = `/download/${auditId}`;
+    makeRequest(downloadURL, (res, filename) => {
         // https://stackoverflow.com/questions/22724070/prompt-file-download-with-xmlhttprequest
         // https://stackoverflow.com/questions/29192301/how-to-download-a-file-via-url-then-get-its-name
         // let contentDispo = e.currentTarget.getResponseHeader('Content-Disposition');
@@ -231,7 +208,11 @@ function makeRequest(path, callback) {
     req.onload = function(e) {
         // https://stackoverflow.com/questions/22724070/prompt-file-download-with-xmlhttprequest
         let blob = e.target.response;
-        callback(blob);
+        // console.log(e);
+        let contentDispo = e.currentTarget.getResponseHeader('Content-Disposition');
+        console.log(contentDispo)
+        let filename = contentDispo.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/)[1];
+        callback(blob, filename);
     };
 
     req.open("GET", path, true);
@@ -293,22 +274,22 @@ function main() {
     const structuredDataNotCorrect = document.querySelector("#incorrect_structured_data");
     const numStructuredData = document.querySelector("#structured_data_errors");
     
-    try {
-        structuredDataCorrect.addEventListener("change", function(e) {
-            if (structuredDataCorrect.checked) {
-                numStructuredData.disabled = false;
-            }
-        });
+    // try {
+    //     structuredDataCorrect.addEventListener("change", function(e) {
+    //         if (structuredDataCorrect.checked) {
+    //             numStructuredData.disabled = false;
+    //         }
+    //     });
         
-        structuredDataNotCorrect.addEventListener("change", function(e) {
-            if (structuredDataNotCorrect.checked) {
-                numStructuredData.disabled = true;
-            }
-        });
-    } catch (err) {
-        console.error("Failed to attached listeners to structredData");
-        console.error(err);
-    }
+    //     structuredDataNotCorrect.addEventListener("change", function(e) {
+    //         if (structuredDataNotCorrect.checked) {
+    //             numStructuredData.disabled = true;
+    //         }
+    //     });
+    // } catch (err) {
+    //     console.error("Failed to attached listeners to structredData");
+    //     console.error(err);
+    // }
     
 }
 

@@ -9,7 +9,6 @@ python-pptx==0.6.21
 openpyxl==3.0.10
 pandas==1.5.3
 seaborn==0.12.2
-python-dotenv
 uuid
 pytailwindcss
 flask-login==0.6.2

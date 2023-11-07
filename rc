@@ -1,5 +1,7 @@
-INPUT_FILE='./tailwind/input.css'
-OUTPUT_FILE='./static/styles/tailwind.css'
+#!/bin/bash
+
+INPUT_FILE='./tadaa/tailwind/input.css'
+OUTPUT_FILE='./tadaa/static/styles/tailwind.css'
 
 __compilecss() {
   tailwindcss -i $INPUT_FILE -o $OUTPUT_FILE
@@ -9,12 +11,20 @@ __watchcss() {
   tailwindcss -i $INPUT_FILE -o $OUTPUT_FILE --watch
 }
 
+install() {
+  pip install -r requirements.txt
+}
+
 build() {
   __compilecss
 }
 
+clean() {
+  rm -rf ./instance
+}
+
 run() {
-  python3 main.py
+  python3 wsgi.py
 }
 
 start() {
