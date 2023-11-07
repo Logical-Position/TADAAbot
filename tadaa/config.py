@@ -1,6 +1,12 @@
 import os
 from tadaa import app
 
+# Load .env files
+from dotenv import load_dotenv
+load_dotenv()
+
+app.secret_key = os.environ.get('SECRET_KEY')
+
 #ProxyFix Middleware for Nginx
 from werkzeug.middleware.proxy_fix import ProxyFix
 app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_port=1, x_prefix=1)
