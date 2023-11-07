@@ -1,6 +1,10 @@
 from flask_login import LoginManager, UserMixin
 import os
 
+# Load .env file
+from dotenv import load_dotenv
+load_dotenv()
+
 from tadaa import app
 
 login_manager = LoginManager()
