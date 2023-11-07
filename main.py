@@ -20,23 +20,29 @@ import datetime
 import json
 
 from flask_login import LoginManager, login_required, UserMixin, login_user, logout_user, current_user
-login_manager = LoginManager()
-
-
-app = Flask(__name__)
-login_manager.init_app(app)
-app.secret_key = str(uuid.uuid4())
 
 # Load .env file
 from dotenv import load_dotenv
 load_dotenv()
+
+#ProxyFix Middleware for Nginx
+from werkzeug.middleware.proxy_fix import ProxyFix
+
+
+app = Flask(__name__)
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+# TADAA secret key should be static
+app.secret_key = os.environ.get('TADAA_SECRET_KEY')
+app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_port=1, x_prefix=1)
+
 
 # MARK: Configuration
 
 # For user-uploaded Excel files
 UPLOAD_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'uploads')
 app.config['UPLOAD_DIR'] = UPLOAD_DIR
-
 # TODO: Code the options and labels here instead.
 #   Keys should be used as IDs.
 # tadaaptions = ta_decisions.json 
@@ -101,7 +107,7 @@ def login():
         password = request.form['password']
 
         if username == USERNAME and password == PASSWORD:
-            login_user(lp_user)
+            login_user(lp_user, remember=True)
             return redirect(url_for('index'))
 
         # If no matching user is found, return a 401 Unauthorized response
@@ -130,11 +136,8 @@ with open('ppts/json/schema.json') as t:
     schema = json.load(t)
     
 @app.route('/', methods=['GET', 'POST'])
+@login_required
 def index():
-    if not current_user.is_authenticated:
-        # If the user is not authenticated, redirect to login
-        return redirect(url_for('login'))
-
     if request.method == 'GET':
         # Accessing manual input options in json file
         
@@ -215,6 +218,5 @@ def download_audit(ts):
 
 
 # Main Function
-
 if __name__ == '__main__':
-    app.run(debug=True, host="0.0.0.0",  port=os.getenv("PORT", default=5000))
+    app.run(debug=True, host="0.0.0.0")
