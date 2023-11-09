@@ -21,6 +21,8 @@ build() {
 
 clean() {
   rm -rf ./instance
+  rm -rf ./__pycache__
+  rm -rf ./tadaa/__pycache__
 }
 
 run() {

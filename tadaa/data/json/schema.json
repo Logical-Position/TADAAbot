@@ -57,10 +57,7 @@
       "shapes": [
         {
           "key": "keyword-snapshot",
-          "type": "image",
-          "input": {
-              "label": "Upload SEMrush Screenshot."
-          }
+          "type": "image"
         }
       ]
     },
@@ -225,10 +222,7 @@
       "shapes": [
         {
           "key": "serps_screenshot",
-          "type": "image",
-          "input": {
-            "label": "SERP Screenshot"
-          }
+          "type": "image"
         },
         {
           "key": "link-titles-sheet",
@@ -271,10 +265,7 @@
       "shapes": [
         {
           "key": "serps_screenshot",
-          "type": "image",
-          "input": {
-            "label": "SERP Screenshot"
-          }
+          "type": "image"
         },
         {
           "key": "meta_descriptions_analyst_notes",
@@ -586,7 +577,7 @@
     {
       "index": 29,
       "name": "Domain Authority",
-			"requires_input": "true",
+			"requires_input": "false",
       "shapes": [
         {
           "key": "dom_auth_screenshot",

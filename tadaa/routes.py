@@ -50,10 +50,10 @@ def generate_presentation():
     sitebulb_files = request.files.getlist('spreadsheet-selection')
     save_files(sitebulb_files, data_dir)
     
-    serp_images = request.files.getlist('')
+    serp_images = request.files.getlist('serps_screenshot-image')
     save_files(serp_images, data_dir)
 
-    semrush_images = request.files.getlist('')
+    semrush_images = request.files.getlist('keyword-snapshot-image')
     save_files(semrush_images, data_dir)
 
     domauth_images = request.files.getlist('dom_auth_screenshot-image')

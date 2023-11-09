@@ -170,6 +170,7 @@ function handleTadaaSubmission(e, tadaaForm) {
         return res.json();
 
     }).then((data) => {
+        console.log(data);
         requestDownload(data['id']);
 
     })

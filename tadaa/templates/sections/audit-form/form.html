@@ -64,13 +64,27 @@
     <!-- SECTION: PageSpeed Insights -->
     {% set section_name = "5. PageSpeed Insights" %}
     {% set section_contents %}
-        {% set key, prompt = 'mobility_issues', 'Number of Mobile Usability Issues' %}
+        {% set key, prompt, units = 'desk_load_time_float', 'Desktop load time', 'seconds' %}
         {% include 'sections/audit-form/inputs/number.html' %}
+        {% set key, prompt, units = 'mob_load_time_float', 'Mobile load time', 'seconds' %}
+        {% include 'sections/audit-form/inputs/number.html' %}
+    {% endset %}
+    {% include 'sections/audit-form/form-section.html' %}
+
+    <!-- SECTION: Screenshots -->
+    {% set section_name = "6. Screenshots" %}
+    {% set section_contents %}
+       {% set key, prompt = 'desk_load_time_float', 'SERP screenshot' %}
+       {% include 'sections/audit-form/inputs/image.html' %}
+        {% set key, prompt = 'keyword-snapshot', 'Keyword snapshot from Semrush' %}
+        {% include 'sections/audit-form/inputs/image.html' %}
+        {% set key, prompt = 'dom_auth_screenshot', 'Domain authority screenshot' %}
+        {% include 'sections/audit-form/inputs/image.html' %}
     {% endset %}
     {% include 'sections/audit-form/form-section.html' %}
     
     <!-- SECTION: Slide Notes -->
-    {% set section_name = "6. Slide Notes" %}
+    {% set section_name = "7. Slide Notes" %}
     {% set section_contents %}
     {% for slide in schema.slides %}
         {% if slide.requires_input == "true" %}
