@@ -169,3 +169,6 @@ uploads/
 
 # NPM
 node_modules/
+
+# Tailwind
+tailwind.css

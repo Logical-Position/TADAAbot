@@ -292,5 +292,11 @@ function main() {
     //     console.error(err);
     // }
     
+    let confetti = new Confetti('confetti');
+    confetti.setCount(25);
+    confetti.setSize(2);
+    confetti.setPower(42);
+    confetti.setFade(true);
+    confetti.destroyTarget(false);
 }
 
