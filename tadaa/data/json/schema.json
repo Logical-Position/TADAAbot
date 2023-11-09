@@ -53,7 +53,7 @@
     {
       "index": 5,
       "name": "Keywords Snapshot",
-      "requires_input": "true",
+      "requires_input": "false",
       "shapes": [
         {
           "key": "keyword-snapshot",
