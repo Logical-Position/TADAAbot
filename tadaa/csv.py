@@ -66,343 +66,353 @@ def match_target_hint_files(all_uploaded_files):
 
     return found_hint_files
 
-def parse_sitebulb_csvs(matched_paths):
+def parse_sitebulb_csvs(sitebulb_file_paths, target_export_files):
     """
     Takes the matched paths to the target csv files, reads into each file using Pandas, forms our custom data object, and returns it.
 
-    @param matched_paths: absolute paths to the matched target csv files that are used in the tech audit.
+    @param sitebulb_file_paths: absolute paths to the matched target csv files that are used in the tech audit.
 
     @return audit_results: our custom data object that is a dictionary ({target_file_name: data}) that includes data as pandas dataframe/series objects.
     """
     
-    audit_results = {}
-    audit_results['sitemap_errors'] = 0
+    sitebulb_data = {}
     
-    for path in matched_paths:
+    for path in sitebulb_file_paths:
+        for target_file in target_export_files:
+            if target_file in path:
+                dataframe = pd.read_csv(path)
+                sitebulb_data[target_file] = dataframe.shape[0] # {key, num of rows}
 
-        if 'broken__4xx_or_5xx' in path:
-            data_obj, data = {}, []
-            df = pd.read_csv(path)
-
-            urls = df['URL']
-            parent_urls = df['First Parent URL']
-
-            pp.broken_4xx_5xx = int(urls.count())
-            audit_results['broken_4xx_5xx'] = int(urls.count())
-
-            data.append(urls)
-            data.append(parent_urls)
-            data_obj.update({'broken__4xx_or_5xx': data})
-
-            #final_data_obj.update(data_obj)
+    print('=== SITEBULB DATA ===')
+    print(sitebulb_data)
+    print('')
+    print('')
+    return sitebulb_data
 
 
-        if 'broken_internal_urls' in path:
-            data_obj, data = {}, []
-            df = pd.read_csv(path)
+    #     if 'broken__4xx_or_5xx' in path:
+    #         data_obj, data = {}, []
+    #         df = pd.read_csv(path)
 
-            urls = df['URL']
-            parent_urls = df['First Parent URL']
+    #         urls = df['URL']
+    #         parent_urls = df['First Parent URL']
 
-            pp.broken_int_links = int(urls.count())
-            audit_results['broken_int_links'] = int(urls.count())
+    #         pp.broken_4xx_5xx = int(urls.count())
+    #         audit_results['broken_4xx_5xx'] = int(urls.count())
 
-            data.append(urls)
-            data.append(parent_urls)
-            data_obj.update({'broken_internal_urls': data})
+    #         data.append(urls)
+    #         data.append(parent_urls)
+    #         data_obj.update({'broken__4xx_or_5xx': data})
 
-            #final_data_obj.update(data_obj)
+    #         #final_data_obj.update(data_obj)
+
+
+    #     if 'broken_internal_urls' in path:
+    #         data_obj, data = {}, []
+    #         df = pd.read_csv(path)
+
+    #         urls = df['URL']
+    #         parent_urls = df['First Parent URL']
+
+    #         pp.broken_int_links = int(urls.count())
+    #         audit_results['broken_int_links'] = int(urls.count())
+
+    #         data.append(urls)
+    #         data.append(parent_urls)
+    #         data_obj.update({'broken_internal_urls': data})
+
+    #         #final_data_obj.update(data_obj)
             
 
-        if 'broken_external_urls' in path:
-            data_obj, data = {}, []
-            df = pd.read_csv(path)
+    #     if 'broken_external_urls' in path:
+    #         data_obj, data = {}, []
+    #         df = pd.read_csv(path)
 
-            urls = df['URL']
-            parent_urls = df['First Parent URL']
+    #         urls = df['URL']
+    #         parent_urls = df['First Parent URL']
 
-            pp.broken_ext_links = int(urls.count())
-            audit_results['broken_ext_links'] = int(urls.count())
+    #         pp.broken_ext_links = int(urls.count())
+    #         audit_results['broken_ext_links'] = int(urls.count())
 
-            data.append(urls)
-            data.append(parent_urls)
-            data_obj.update({'broken_external_urls': data})
+    #         data.append(urls)
+    #         data.append(parent_urls)
+    #         data_obj.update({'broken_external_urls': data})
 
-            #final_data_obj.update(data_obj)
+    #         #final_data_obj.update(data_obj)
 
 
-        if 'h1__tag_is_empty' in path:
-            data_obj, data = {}, []
-            df = pd.read_csv(path)
+    #     if 'h1__tag_is_empty' in path:
+    #         data_obj, data = {}, []
+    #         df = pd.read_csv(path)
 
-            urls = df['URL']
+    #         urls = df['URL']
 
-            pp.h1_tag_empty = int(urls.count())
-            audit_results['h1_tag_empty'] = int(urls.count())
+    #         pp.h1_tag_empty = int(urls.count())
+    #         audit_results['h1_tag_empty'] = int(urls.count())
 
-            data.append(urls)
-            data_obj.update({'h1__tag_is_empty': data})
+    #         data.append(urls)
+    #         data_obj.update({'h1__tag_is_empty': data})
 
-            #final_data_obj.update(data_obj)
+    #         #final_data_obj.update(data_obj)
 
 
-        if 'urls_with_duplicate_h1' in path:
-            data_obj, data = {}, []
-            df = pd.read_csv(path)
+    #     if 'urls_with_duplicate_h1' in path:
+    #         data_obj, data = {}, []
+    #         df = pd.read_csv(path)
 
-            urls = df['URL']
-            dup_urls = df['Duplicate URL']
+    #         urls = df['URL']
+    #         dup_urls = df['Duplicate URL']
 
-            pp.duplicate_h1_tags = int(urls.count())
-            audit_results['duplicate_h1_tags'] = int(urls.count())
+    #         pp.duplicate_h1_tags = int(urls.count())
+    #         audit_results['duplicate_h1_tags'] = int(urls.count())
 
-            data.append(urls)
-            data.append(dup_urls)
-            data_obj.update({'urls_with_duplicate_h1': data})
+    #         data.append(urls)
+    #         data.append(dup_urls)
+    #         data_obj.update({'urls_with_duplicate_h1': data})
 
-            #final_data_obj.update(data_obj)
+    #         #final_data_obj.update(data_obj)
 
 
-        if 'external_redirected_urls' in path:
-            data_obj, data = {}, []
-            df = pd.read_csv(path)
+    #     if 'external_redirected_urls' in path:
+    #         data_obj, data = {}, []
+    #         df = pd.read_csv(path)
 
-            urls = df['URL']
-            parent_urls = df['First Parent URL']
+    #         urls = df['URL']
+    #         parent_urls = df['First Parent URL']
 
-            pp.ext_redirect_links = int(urls.count())
-            audit_results['ext_redirect_links'] = int(urls.count())
+    #         pp.ext_redirect_links = int(urls.count())
+    #         audit_results['ext_redirect_links'] = int(urls.count())
 
-            data.append(urls)
-            data.append(parent_urls)
-            data_obj.update({'external_redirected_urls': data})
+    #         data.append(urls)
+    #         data.append(parent_urls)
+    #         data_obj.update({'external_redirected_urls': data})
 
-            #final_data_obj.update(data_obj)
+    #         #final_data_obj.update(data_obj)
 
 
-        if 'missing_alt_text' in path:
-            data_obj, data = {}, []
-            df = pd.read_csv(path)
+    #     if 'missing_alt_text' in path:
+    #         data_obj, data = {}, []
+    #         df = pd.read_csv(path)
 
-            urls = df['HTML URL']
-            image_urls = df['Image URL']
+    #         urls = df['HTML URL']
+    #         image_urls = df['Image URL']
 
-            pp.img_alt_text = int(urls.count())
-            audit_results['img_alt_text'] = int(urls.count())
+    #         pp.img_alt_text = int(urls.count())
+    #         audit_results['img_alt_text'] = int(urls.count())
 
-            data.append(urls)
-            data.append(image_urls)
-            data_obj.update({'missing_alt_text': data})
+    #         data.append(urls)
+    #         data.append(image_urls)
+    #         data_obj.update({'missing_alt_text': data})
 
-            #final_data_obj.update(data_obj)
+    #         #final_data_obj.update(data_obj)
 
 
-        if 'internal_redirected_urls' in path:
-            data_obj, data = {}, []
-            df = pd.read_csv(path)
+    #     if 'internal_redirected_urls' in path:
+    #         data_obj, data = {}, []
+    #         df = pd.read_csv(path)
 
-            urls = df['URL']
-            parent_urls = df['First Parent URL']
+    #         urls = df['URL']
+    #         parent_urls = df['First Parent URL']
 
-            pp.int_redirect_links = int(urls.count())
-            audit_results['int_redirect_links'] = int(urls.count())
+    #         pp.int_redirect_links = int(urls.count())
+    #         audit_results['int_redirect_links'] = int(urls.count())
 
-            data.append(urls)
-            data.append(parent_urls)
-            data_obj.update({'internal_redirected_urls': data})
+    #         data.append(urls)
+    #         data.append(parent_urls)
+    #         data_obj.update({'internal_redirected_urls': data})
 
-            #final_data_obj.update(data_obj)
+    #         #final_data_obj.update(data_obj)
 
 
-        if 'description_is_empty' in path:
-            data_obj, data = {}, []
-            df = pd.read_csv(path)
+    #     if 'description_is_empty' in path:
+    #         data_obj, data = {}, []
+    #         df = pd.read_csv(path)
 
-            urls = df['URL']
+    #         urls = df['URL']
 
-            pp.desc_empty = int(urls.count())
-            audit_results['desc_empty'] = int(urls.count())
+    #         pp.desc_empty = int(urls.count())
+    #         audit_results['desc_empty'] = int(urls.count())
 
-            data.append(urls)
-            data_obj.update({'description_is_empty': data})
+    #         data.append(urls)
+    #         data_obj.update({'description_is_empty': data})
 
-            #final_data_obj.update(data_obj)
+    #         #final_data_obj.update(data_obj)
 
 
-        if 'description_is_missing' in path:
-            data_obj, data = {}, []
-            df = pd.read_csv(path)
+    #     if 'description_is_missing' in path:
+    #         data_obj, data = {}, []
+    #         df = pd.read_csv(path)
 
-            urls = df['URL']
+    #         urls = df['URL']
 
-            pp.desc_missing = int(urls.count())
-            audit_results['desc_missing'] = int(urls.count())
+    #         pp.desc_missing = int(urls.count())
+    #         audit_results['desc_missing'] = int(urls.count())
 
-            data.append(urls)
-            data_obj.update({'description_is_missing': data})
+    #         data.append(urls)
+    #         data_obj.update({'description_is_missing': data})
 
-            #final_data_obj.update(data_obj)
+    #         #final_data_obj.update(data_obj)
 
 
-        if 'description_length_too_long' in path:
-            data_obj, data = {}, []
-            df = pd.read_csv(path)
+    #     if 'description_length_too_long' in path:
+    #         data_obj, data = {}, []
+    #         df = pd.read_csv(path)
 
-            urls = df['URL']
+    #         urls = df['URL']
 
-            pp.desc_too_long = int(urls.count())
-            audit_results['desc_too_long'] = int(urls.count())
+    #         pp.desc_too_long = int(urls.count())
+    #         audit_results['desc_too_long'] = int(urls.count())
 
-            data.append(urls)
-            data_obj.update({'description_length_is_too_long': data})
+    #         data.append(urls)
+    #         data_obj.update({'description_length_is_too_long': data})
 
-            #final_data_obj.update(data_obj)
+    #         #final_data_obj.update(data_obj)
 
 
-        if 'description_length_too_short' in path:
-            data_obj, data = {}, []
-            df = pd.read_csv(path)
+    #     if 'description_length_too_short' in path:
+    #         data_obj, data = {}, []
+    #         df = pd.read_csv(path)
 
-            urls = df['URL']
+    #         urls = df['URL']
 
-            pp.desc_too_short = int(urls.count())
-            audit_results['desc_too_short'] = int(urls.count())
+    #         pp.desc_too_short = int(urls.count())
+    #         audit_results['desc_too_short'] = int(urls.count())
 
-            data.append(urls)
-            data_obj.update({'description_length_is_too_short': data})
+    #         data.append(urls)
+    #         data_obj.update({'description_length_is_too_short': data})
 
-            #final_data_obj.update(data_obj)
+    #         #final_data_obj.update(data_obj)
 
 
-        if 'not_found_by_the_crawler' in path:
-            data_obj, data = {}, []
-            df = pd.read_csv(path)
+    #     if 'not_found_by_the_crawler' in path:
+    #         data_obj, data = {}, []
+    #         df = pd.read_csv(path)
 
-            urls = df['URL']
+    #         urls = df['URL']
 
-            pp.orphaned_pages = int(urls.count())
-            audit_results['orphaned_pages'] = int(urls.count())
-            pp.sitemap_errors = int(urls.count())
-            audit_results['sitemap_errors'] += int(urls.count())
+    #         pp.orphaned_pages = int(urls.count())
+    #         audit_results['orphaned_pages'] = int(urls.count())
+    #         pp.sitemap_errors = int(urls.count())
+    #         audit_results['sitemap_errors'] += int(urls.count())
 
-            data.append(urls)
-            data_obj.update({'not_found_by_the_crawler': data})
+    #         data.append(urls)
+    #         data_obj.update({'not_found_by_the_crawler': data})
 
-            #final_data_obj.update(data_obj)
+    #         #final_data_obj.update(data_obj)
 
 
-        if 'duplicate_meta_descriptions' in path:
-            data_obj, data = {}, []
-            df = pd.read_csv(path)
+    #     if 'duplicate_meta_descriptions' in path:
+    #         data_obj, data = {}, []
+    #         df = pd.read_csv(path)
 
-            urls = df['URL']
-            dup_urls = df['Duplicate URL']
+    #         urls = df['URL']
+    #         dup_urls = df['Duplicate URL']
 
-            pp.duplicate_desc = int(urls.count())
-            audit_results['duplicate_desc'] = int(urls.count())
+    #         pp.duplicate_desc = int(urls.count())
+    #         audit_results['duplicate_desc'] = int(urls.count())
 
-            data.append(urls)
-            data.append(dup_urls)
-            data_obj.update({'duplicate_meta_descriptions': data})
+    #         data.append(urls)
+    #         data.append(dup_urls)
+    #         data_obj.update({'duplicate_meta_descriptions': data})
 
-            #final_data_obj.update(data_obj)
+    #         #final_data_obj.update(data_obj)
 
 
-        if 'title_tag_length_too_long' in path:
-            data_obj, data = {}, []
-            df = pd.read_csv(path)
+    #     if 'title_tag_length_too_long' in path:
+    #         data_obj, data = {}, []
+    #         df = pd.read_csv(path)
 
-            urls = df['URL']
+    #         urls = df['URL']
 
-            pp.titles_too_long = int(urls.count())
-            audit_results['titles_too_long'] = int(urls.count())
+    #         pp.titles_too_long = int(urls.count())
+    #         audit_results['titles_too_long'] = int(urls.count())
 
-            data.append(urls)
-            data_obj.update({'title_tag_length_too_long': data})
+    #         data.append(urls)
+    #         data_obj.update({'title_tag_length_too_long': data})
 
-            #final_data_obj.update(data_obj)
+    #         #final_data_obj.update(data_obj)
 
 
-        if 'title_tag_length_too_short' in path:
-            data_obj, data = {}, []
-            df = pd.read_csv(path)
+    #     if 'title_tag_length_too_short' in path:
+    #         data_obj, data = {}, []
+    #         df = pd.read_csv(path)
 
-            urls = df['URL']
+    #         urls = df['URL']
 
-            pp.titles_too_short = int(urls.count())
-            audit_results['titles_too_short'] = int(urls.count())
+    #         pp.titles_too_short = int(urls.count())
+    #         audit_results['titles_too_short'] = int(urls.count())
 
-            data.append(urls)
-            data_obj.update({'title_tag_length_too_short': data})
+    #         data.append(urls)
+    #         data_obj.update({'title_tag_length_too_short': data})
 
-            #final_data_obj.update(data_obj)
+    #         #final_data_obj.update(data_obj)
 
 
-        if 'duplicate_page_titles' in path:
-            data_obj, data = {}, []
-            df = pd.read_csv(path)
+    #     if 'duplicate_page_titles' in path:
+    #         data_obj, data = {}, []
+    #         df = pd.read_csv(path)
 
-            urls = df['URL']
-            dup_urls = df['Duplicate URL']
+    #         urls = df['URL']
+    #         dup_urls = df['Duplicate URL']
 
-            pp.duplicate_titles = int(urls.count())
-            audit_results['duplicate_titles'] = int(urls.count())
+    #         pp.duplicate_titles = int(urls.count())
+    #         audit_results['duplicate_titles'] = int(urls.count())
 
-            data.append(urls)
-            data.append(dup_urls)
-            data_obj.update({'duplicate_page_titles': data})
+    #         data.append(urls)
+    #         data.append(dup_urls)
+    #         data_obj.update({'duplicate_page_titles': data})
 
-            #final_data_obj.update(data_obj)
+    #         #final_data_obj.update(data_obj)
 
 
-        if 'url_in_multiple_xml_sitemaps' in path:
-            data_obj, data = {}, []
-            df = pd.read_csv(path)
+    #     if 'url_in_multiple_xml_sitemaps' in path:
+    #         data_obj, data = {}, []
+    #         df = pd.read_csv(path)
 
-            urls = df['URL']
+    #         urls = df['URL']
 
-            pp.urls_in_multiple_sitemaps = int(urls.count())
-            audit_results['urls_in_multiple_sitemaps'] = int(urls.count())
-            pp.sitemap_errors += int(urls.count())
-            audit_results['sitemap_errors'] += int(urls.count())
+    #         pp.urls_in_multiple_sitemaps = int(urls.count())
+    #         audit_results['urls_in_multiple_sitemaps'] = int(urls.count())
+    #         pp.sitemap_errors += int(urls.count())
+    #         audit_results['sitemap_errors'] += int(urls.count())
 
-            data.append(urls)
-            data_obj.update({'url_in_multiple_xml_sitemaps': data})
+    #         data.append(urls)
+    #         data_obj.update({'url_in_multiple_xml_sitemaps': data})
 
-            #final_data_obj.update(data_obj)
+    #         #final_data_obj.update(data_obj)
 
 
-        if 'noindex_url_in_xml_sitemaps' in path:
-            data_obj, data = {}, []
-            df = pd.read_csv(path)
+    #     if 'noindex_url_in_xml_sitemaps' in path:
+    #         data_obj, data = {}, []
+    #         df = pd.read_csv(path)
 
-            urls = df['URL']
+    #         urls = df['URL']
 
-            pp.noindex_urls_in_sitemap = int(urls.count())
-            audit_results['noindex_urls_in_sitemap'] = int(urls.count())
-            pp.sitemap_errors += int(urls.count())
-            audit_results['sitemap_errors'] = int(urls.count())
+    #         pp.noindex_urls_in_sitemap = int(urls.count())
+    #         audit_results['noindex_urls_in_sitemap'] = int(urls.count())
+    #         pp.sitemap_errors += int(urls.count())
+    #         audit_results['sitemap_errors'] = int(urls.count())
 
-            data.append(urls)
-            data_obj.update({'noindex_url_in_xml_sitemaps': data})
+    #         data.append(urls)
+    #         data_obj.update({'noindex_url_in_xml_sitemaps': data})
 
-            #final_data_obj.update(data_obj)
+    #         #final_data_obj.update(data_obj)
 
 
-        if 'redirect__3xx__url_in_xml_sitemaps' in path:
-            data_obj, data = {}, []
-            df = pd.read_csv(path)
+    #     if 'redirect__3xx__url_in_xml_sitemaps' in path:
+    #         data_obj, data = {}, []
+    #         df = pd.read_csv(path)
 
-            urls = df['URL']
+    #         urls = df['URL']
 
-            pp.redirects_in_sitemap = int(urls.count())
-            audit_results['redirects_in_sitemap'] = int(urls.count())
-            pp.sitemap_errors += int(urls.count())
-            audit_results['sitemap_errors'] += int(urls.count())
+    #         pp.redirects_in_sitemap = int(urls.count())
+    #         audit_results['redirects_in_sitemap'] = int(urls.count())
+    #         pp.sitemap_errors += int(urls.count())
+    #         audit_results['sitemap_errors'] += int(urls.count())
 
-            data.append(urls)
-            data_obj.update({'redirect__3xx__url_in_xml_sitemaps': data})
+    #         data.append(urls)
+    #         data_obj.update({'redirect__3xx__url_in_xml_sitemaps': data})
 
-            #final_data_obj.update(data_obj)
+    #         #final_data_obj.update(data_obj)
 
-    return audit_results
+    # return audit_results

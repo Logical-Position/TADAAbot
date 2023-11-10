@@ -34,16 +34,27 @@ Rework to:
 from tadaa import csv
 from tadaa import ppt
 
-def run_audit(sitebulb_files):
-    audit_results = csv.parse_sitebulb_csvs(sitebulb_files)
+def run_audit(sitebulb_files, target_export_files, form_data):
+    sitebulb_data = csv.parse_sitebulb_csvs(sitebulb_files, target_export_files)
+    print('')
+    print('=== FORM DATA ===')
+    print(form_data)
+    print('')
+    audit_data = {}
+    audit_data.update(sitebulb_data)
+    audit_data.update(form_data)
     # parse_sc_404_files
     # parse_siteliner_results
     # parse ...
     # concatenate all the data
-    return audit_results
+    print('')
+    print('=== AUDIT DATA ===')
+    print(audit_data)
+    print('')
+    return audit_data
 
-def create_presentation(template_path, output_path, data):
-    ppt.create_powerpoint(template_path, output_path, data)
+def create_presentation(template_path, output_path, audit_data, schema):
+    ppt.create_powerpoint(template_path, output_path, audit_data, schema)
 
 
 
