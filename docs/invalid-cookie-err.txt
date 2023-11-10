@@ -1,0 +1,85 @@
+BUG: expired cookie? is causing internal server error
+No issue loading site in incognito window.
+Need to redirect on expired token?
+
+STACKTRACE:
+---
+
+127.0.0.1 - - [10/Nov/2023 14:50:06] "GET /logout HTTP/1.1" 500 -
+[2023-11-10 14:50:06,434] ERROR in app: Exception on /login [GET]
+Traceback (most recent call last):
+  File "/home/micruopp/.local/lib/python3.10/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/micruopp/.local/lib/python3.10/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/micruopp/.local/lib/python3.10/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/micruopp/.local/lib/python3.10/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/micruopp/.local/lib/python3.10/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/micruopp/.local/lib/python3.10/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/micruopp/Developer/copy-tadaa/tadaa/routes.py", line 90, in login
+    if current_user.is_authenticated:
+  File "/home/micruopp/.local/lib/python3.10/site-packages/werkzeug/local.py", line 347, in __getattr__
+    return getattr(self._get_current_object(), name)
+  File "/home/micruopp/.local/lib/python3.10/site-packages/werkzeug/local.py", line 306, in _get_current_object
+    return self.__local()
+  File "/home/micruopp/.local/lib/python3.10/site-packages/flask_login/utils.py", line 25, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+  File "/home/micruopp/.local/lib/python3.10/site-packages/flask_login/utils.py", line 372, in _get_user
+    current_app.login_manager._load_user()
+  File "/home/micruopp/.local/lib/python3.10/site-packages/flask_login/login_manager.py", line 376, in _load_user
+    user = self._load_user_from_remember_cookie(cookie)
+  File "/home/micruopp/.local/lib/python3.10/site-packages/flask_login/login_manager.py", line 414, in _load_user_from_remember_cookie
+    user_id = decode_cookie(cookie)
+  File "/home/micruopp/.local/lib/python3.10/site-packages/flask_login/utils.py", line 62, in decode_cookie
+    if hmac.compare_digest(_cookie_digest(payload, key=key), digest):
+  File "/home/micruopp/.local/lib/python3.10/site-packages/flask_login/utils.py", line 382, in _cookie_digest
+    return hmac.new(key, payload.encode("utf-8"), sha512).hexdigest()
+  File "/usr/lib/python3.10/hmac.py", line 184, in new
+    return HMAC(key, msg, digestmod)
+  File "/usr/lib/python3.10/hmac.py", line 53, in __init__
+    raise TypeError("key: expected bytes or bytearray, but got %r" % type(key).__name__)
+TypeError: key: expected bytes or bytearray, but got 'NoneType'
+127.0.0.1 - - [10/Nov/2023 14:50:06] "GET /login HTTP/1.1" 500 -
+[2023-11-10 14:50:06,513] ERROR in app: Exception on /login [GET]
+Traceback (most recent call last):
+  File "/home/micruopp/.local/lib/python3.10/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/micruopp/.local/lib/python3.10/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/micruopp/.local/lib/python3.10/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/micruopp/.local/lib/python3.10/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/home/micruopp/.local/lib/python3.10/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/micruopp/.local/lib/python3.10/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/micruopp/Developer/copy-tadaa/tadaa/routes.py", line 90, in login
+    if current_user.is_authenticated:
+  File "/home/micruopp/.local/lib/python3.10/site-packages/werkzeug/local.py", line 347, in __getattr__
+    return getattr(self._get_current_object(), name)
+  File "/home/micruopp/.local/lib/python3.10/site-packages/werkzeug/local.py", line 306, in _get_current_object
+    return self.__local()
+  File "/home/micruopp/.local/lib/python3.10/site-packages/flask_login/utils.py", line 25, in <lambda>
+    current_user = LocalProxy(lambda: _get_user())
+  File "/home/micruopp/.local/lib/python3.10/site-packages/flask_login/utils.py", line 372, in _get_user
+    current_app.login_manager._load_user()
+  File "/home/micruopp/.local/lib/python3.10/site-packages/flask_login/login_manager.py", line 376, in _load_user
+    user = self._load_user_from_remember_cookie(cookie)
+  File "/home/micruopp/.local/lib/python3.10/site-packages/flask_login/login_manager.py", line 414, in _load_user_from_remember_cookie
+    user_id = decode_cookie(cookie)
+  File "/home/micruopp/.local/lib/python3.10/site-packages/flask_login/utils.py", line 62, in decode_cookie
+    if hmac.compare_digest(_cookie_digest(payload, key=key), digest):
+  File "/home/micruopp/.local/lib/python3.10/site-packages/flask_login/utils.py", line 382, in _cookie_digest
+    return hmac.new(key, payload.encode("utf-8"), sha512).hexdigest()
+  File "/usr/lib/python3.10/hmac.py", line 184, in new
+    return HMAC(key, msg, digestmod)
+  File "/usr/lib/python3.10/hmac.py", line 53, in __init__
+    raise TypeError("key: expected bytes or bytearray, but got %r" % type(key).__name__)
+TypeError: key: expected bytes or bytearray, but got 'NoneType'
+
+---
