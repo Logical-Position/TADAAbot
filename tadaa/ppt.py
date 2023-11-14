@@ -28,14 +28,6 @@ def create_powerpoint(template_pathname, output_pathname, data):
     filename = output_pathname + '.pptx'
     presentation.save(filename)
 
-# NEW DEF
-'''
-def _populate_powerpoint(ppt_schema: dict, audit_data: dict):
-
-
-
-
-
 
 
 
@@ -178,7 +170,7 @@ desk_load_time = float
 # Slide 30.
 broken_backlinks = 0
 
-
+'''
 def populate_powerpoint(project_dir, root_path, project_name):
     """
     Goes through the template PowerPoint slide by slide, and adjusts the values/SEO recommendation text to correspond
