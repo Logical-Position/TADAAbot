@@ -15,28 +15,69 @@ def create_powerpoint(template_pathname, output_pathname, data, schema):
     filename = output_pathname + '.pptx'
     presentation.save(filename)
 
-# NEW DEF
+
 def populate_powerpoint(schema: dict, audit_data: dict, presentation: Presentation):
-    ppt_shapes = [shape for slide in presentation.slides for shape in slide.shapes]
-    schema_shapes = [shape for slide in schema['slides'] if 'shapes' in slide for shape in slide['shapes']]
-    ppt_shape_dict = {shape.name: shape for shape in ppt_shapes}
-
-    for key, data in audit_data.items():
-        if key in ppt_shape_dict:
-            try:
-                target_index = schema_shapes.index(key)
-                data_type = schema_shapes[target_index]['type']
-
-                print('')
-                print('=== Data types ===')
+    """
+    Do the work of inserting the data into the powerpoint based on the schema.
+    """
+    
+    # We're stuck on the question:
+    #   What do we traverse?
+    # But, isn't this what the schema was supposed to help solve?
+    # Instead of traversing the presentation or the data,
+    # what if we trying traversing the schema?
+    # Instead of traversing the other objects and trying to figure out what
+    #   we need to do, traversing the schema should _tell_ us what we need
+    #   to do.
+    
+    # Attempt to traverse the schema
+    # Get only the slides that have 'shapes' to populate
+    slide_schemas = [slide for slide in schema['slides'] if 'shapes' in slide]
+    for slide in slide_schemas:
+        index = slide['index']
+        print("")
+        print(index)
+        for shape_schema in slide['shapes']:
+            ppt_shape = presentation.slides[index]
+            key = shape_schema['key']
+            data_type = shape_schema['type']
+            #print(shape_schema)
+            if key in audit_data:
+                data = audit_data[key]
+                print(data)
                 print(data_type)
-                ppt_shape = ppt_shape_dict[key]
+                print(ppt_shape)
+                #put_data_into_shape(data, shape)
+            else:
+                print(f"{key} not present in data")
+    
+    # Attempt to traverse the presentation
+    # for slide in presentation.slides:
+    #     for shape in slide.shapes:
+            # What we were doing initially
+            # ...
 
-                put_data_into_shape(data, data_type, ppt_shape)
+    # Attempt to traverse the data
+    # ppt_shapes = [shape for slide in presentation.slides for shape in slide.shapes]
+    # schema_shapes = [shape for slide in schema['slides'] if 'shapes' in slide for shape in slide['shapes']]
+    # ppt_shape_dict = {shape.name: shape for shape in ppt_shapes}
 
-            except ValueError:
-                print('Value error.')
-                pass
+    # for key, data in audit_data.items():
+    #     if key in ppt_shape_dict:
+    #         try:
+    #             target_index = schema_shapes.index(key)
+    #             data_type = schema_shapes[target_index]['type']
+
+    #             print('')
+    #             print('=== Data types ===')
+    #             print(data_type)
+    #             ppt_shape = ppt_shape_dict[key]
+
+    #             put_data_into_shape(data, data_type, ppt_shape)
+
+    #         except ValueError:
+    #             print('Value error.')
+    #             pass
 
 def put_text_into_shape(text, shape):
     runs = shape.text_frame.paragraphs[0].runs
