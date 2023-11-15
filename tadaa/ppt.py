@@ -38,7 +38,7 @@ def populate_powerpoint(schema: dict, audit_data: dict, presentation: Presentati
         print("")
         print(index)
         for shape_schema in slide['shapes']:
-            ppt_shape = presentation.slides[index]
+            ppt_shape = presentation.slides[index] # I think this needs to be index - 1
             key = shape_schema['key']
             data_type = shape_schema['type']
             #print(shape_schema)
