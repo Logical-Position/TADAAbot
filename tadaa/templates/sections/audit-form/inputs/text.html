@@ -8,6 +8,6 @@
         {% endfor %}
     </select>
     <div class="w-full bg-white border border-neutral-400 p-1 rounded-md" contenteditable="true">{{ options[0].value }}</div>
-    <input type="text" id="{{ key }}-text-input" name="{{ key }}" class="hidden-input">
+    <input type="text" id="{{ key }}-text-input" name="{{ key }}" value="{{ options[0].value }}" class="hidden-input">
 </div>
 {% endblock %}
