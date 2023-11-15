@@ -1,4 +1,4 @@
-from flask import jsonify, render_template, request, redirect, send_from_directory, url_for, Response, abort
+from flask import jsonify, render_template, request, redirect, send_from_directory, url_for, Response, abort, flash
 from flask_login import login_required, login_user, logout_user, current_user
 import json
 import os
@@ -101,12 +101,9 @@ def login():
         if username == auth.USERNAME and password == auth.PASSWORD:
             login_user(auth.lp_user, remember=True)
             return redirect(url_for('index'))
-
-        # If no matching user is found, return a 401 Unauthorized response
-        print("User not found or invalid credentials.")
-        return abort(401)
-
-    print("Get or login failed.")
+        else:
+            flash("Invalid username or password.", 'error')
+            return abort(401)
     return render_template('views/login.html')
 
 # somewhere to logout
@@ -114,7 +111,8 @@ def login():
 @login_required
 def logout():
     logout_user()
-    return Response('<p>Logged out</p>')
+    flash("Successfully logged out.", 'info')
+    return redirect(url_for('index'))
 
 # Error Handling
 # 401 unauthorized

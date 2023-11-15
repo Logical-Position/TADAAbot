@@ -52,3 +52,15 @@ progress::-webkit-progress-value {
   border-top: 2px solid black;
 }
 
+/* Messages */
+.error-message {
+  border: 1px solid red;
+  padding: 5px;
+  color: red;
+}
+
+.info-message {
+  border: 1px solid blue;
+  padding: 5px;
+  color: blue;
+}
