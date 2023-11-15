@@ -34,22 +34,33 @@ def populate_powerpoint(schema: dict, audit_data: dict, presentation: Presentati
     # Get only the slides that have 'shapes' to populate
     slide_schemas = [slide for slide in schema['slides'] if 'shapes' in slide]
     for slide in slide_schemas:
-        index = slide['index']
-        print("")
-        print(index)
-        for shape_schema in slide['shapes']:
-            ppt_shape = presentation.slides[index] # I think this needs to be index - 1
-            key = shape_schema['key']
-            data_type = shape_schema['type']
-            #print(shape_schema)
-            if key in audit_data:
-                data = audit_data[key]
-                print(data)
-                print(data_type)
-                print(ppt_shape)
-                #put_data_into_shape(data, shape)
-            else:
-                print(f"{key} not present in data")
+        index = slide['index'] - 1
+        ppt_slide = presentation.slides[index]
+        for shape in ppt_slide.shapes:
+            shape_key = shape.name
+            # XXX: get rid of this triple loop
+            for shape_schema in slide['shapes']:
+                schema_key = shape_schema['key']
+                if shape_key == schema_key:
+                    if schema_key in audit_data:
+                        data = audit_data[schema_key]
+                        data_type = shape_schema['type']
+                        put_data_into_shape(data, data_type, shape)
+                    else:
+                        print(f"Key {schema_key} not present in data.")
+
+        # for shape_schema in slide['shapes']:
+        #     key = shape_schema['key']
+        #     data_type = shape_schema['type']
+        #     #print(shape_schema)
+        #     if key in audit_data:
+        #         data = audit_data[key]
+        #         print(data)
+        #         print(data_type)
+        #         print(ppt_slide)
+        #         #put_data_into_shape(data, shape)
+        #     else:
+        #         print(f"{key} not present in data")
     
     # Attempt to traverse the presentation
     # for slide in presentation.slides:
