@@ -30,6 +30,9 @@ def save_files(filelist:list, path:str=''):
             filename = secure_filename(base_filename)
             file.save(os.path.join(path, filename))
 
+def save_image():
+    pass
+
 # Routes
 @app.route('/', methods=['GET'])
 @login_required
