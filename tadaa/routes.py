@@ -60,11 +60,11 @@ def generate_presentation():
     save_files(domauth_images, data_dir)
 
     sitebulb_csvs = [os.path.join(data_dir, os.path.basename(file.filename)) for file in sitebulb_files if file.filename != '']
-    audit_data = tadaa.run_audit(sitebulb_csvs)
+    audit_data = tadaa.run_audit(sitebulb_csvs, schema['target_export_files'], form_data)
     
     template_path = os.path.join(app.config['DATA_DIR'], 'pptx', schema['ppt'])
     output_path = os.path.join(data_dir, audit_id)
-    tadaa.create_presentation(template_path, output_path, audit_data)
+    tadaa.create_presentation(template_path, output_path, audit_data, schema)
 
     tadaabject = {
         'id': audit_id,

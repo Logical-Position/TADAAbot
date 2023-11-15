@@ -1,20 +1,7 @@
 from pptx import Presentation
 
 
-def put_text_into_shape(text, shape):
-    pass
-
-def put_link_into_shape(link, shape):
-    pass
-
-def put_image_into_shape(image, shape):
-    pass
-
-def put_thing_into_shape(thing, shape):
-    pass
-
-
-def create_powerpoint(template_pathname, output_pathname, data):
+def create_powerpoint(template_pathname, output_pathname, data, schema):
     """
     Create a PowerPoint presentation with the given data and save it at the output_pathname.
     @param template_pathname: Filepath to the PowerPoint template to use
@@ -23,66 +10,134 @@ def create_powerpoint(template_pathname, output_pathname, data):
     """
     presentation = Presentation(template_pathname)
     
-    # update PowerPoint with data here
+    populate_powerpoint(schema, data, presentation)
     
     filename = output_pathname + '.pptx'
     presentation.save(filename)
 
 
+def populate_powerpoint(schema: dict, audit_data: dict, presentation: Presentation):
+    """
+    Do the work of inserting the data into the powerpoint based on the schema.
+    """
+    
+    # We're stuck on the question:
+    #   What do we traverse?
+    # But, isn't this what the schema was supposed to help solve?
+    # Instead of traversing the presentation or the data,
+    # what if we trying traversing the schema?
+    # Instead of traversing the other objects and trying to figure out what
+    #   we need to do, traversing the schema should _tell_ us what we need
+    #   to do.
+    
+    # Attempt to traverse the schema
+    # Get only the slides that have 'shapes' to populate
+    slide_schemas = [slide for slide in schema['slides'] if 'shapes' in slide]
+    for slide in slide_schemas:
+        index = slide['index'] - 1
+        ppt_slide = presentation.slides[index]
+        for shape in ppt_slide.shapes:
+            shape_key = shape.name
+            # XXX: get rid of this triple loop
+            for shape_schema in slide['shapes']:
+                schema_key = shape_schema['key']
+                if shape_key == schema_key:
+                    if schema_key in audit_data:
+                        data = audit_data[schema_key]
+                        data_type = shape_schema['type']
+                        put_data_into_shape(data, data_type, shape)
+                    else:
+                        print(f"Key {schema_key} not present in data.")
+
+        # for shape_schema in slide['shapes']:
+        #     key = shape_schema['key']
+        #     data_type = shape_schema['type']
+        #     #print(shape_schema)
+        #     if key in audit_data:
+        #         data = audit_data[key]
+        #         print(data)
+        #         print(data_type)
+        #         print(ppt_slide)
+        #         #put_data_into_shape(data, shape)
+        #     else:
+        #         print(f"{key} not present in data")
+    
+    # Attempt to traverse the presentation
+    # for slide in presentation.slides:
+    #     for shape in slide.shapes:
+            # What we were doing initially
+            # ...
+
+    # Attempt to traverse the data
+    # ppt_shapes = [shape for slide in presentation.slides for shape in slide.shapes]
+    # schema_shapes = [shape for slide in schema['slides'] if 'shapes' in slide for shape in slide['shapes']]
+    # ppt_shape_dict = {shape.name: shape for shape in ppt_shapes}
+
+    # for key, data in audit_data.items():
+    #     if key in ppt_shape_dict:
+    #         try:
+    #             target_index = schema_shapes.index(key)
+    #             data_type = schema_shapes[target_index]['type']
+
+    #             print('')
+    #             print('=== Data types ===')
+    #             print(data_type)
+    #             ppt_shape = ppt_shape_dict[key]
+
+    #             put_data_into_shape(data, data_type, ppt_shape)
+
+    #         except ValueError:
+    #             print('Value error.')
+    #             pass
+
+def put_text_into_shape(text, shape):
+    print(text)
+    print(shape)
+    runs = shape.text_frame.paragraphs[0].runs
+    runs[0].text = text
+
+def put_link_into_shape(link, anchor_text, shape):
+    runs = shape.text_frame.paragraphs[0].runs[0]
+    runs[0].text = anchor_text
+    hylink = runs[0].hyperlink
+    hylink.address = link
+
+def put_image_into_shape(image, shape):
+    shape.image = image
+
+def put_data_into_shape(data, data_type, shape):
+    match data_type:
+        case "delete":
+            pass
+
+        case "image":
+            put_image_into_shape(data, shape)
+
+        case "data":
+            pass
+
+        case "text":
+            put_text_into_shape(data, shape)
+
+        case "link": 
+            link = data['link']
+            anchor_text = data['anchor_text']
+            put_link_into_shape(link, anchor_text, shape)
+
+        case "boolean":
+            pass
 
 
+"""
+Presentation
+    - Slides
+        - Shapes
+            - Text_frame
+                - Paragraphs
+                    - Runs
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                    runs = shape.text_frame.paragraphs[0].runs
+"""
 
 
 # Slide 7.
@@ -171,7 +226,7 @@ desk_load_time = float
 broken_backlinks = 0
 
 '''
-def populate_powerpoint(project_dir, root_path, project_name):
+def _populate_powerpoint(project_dir, root_path, project_name):
     """
     Goes through the template PowerPoint slide by slide, and adjusts the values/SEO recommendation text to correspond
     to the calculated data and user inputs.
@@ -180,13 +235,6 @@ def populate_powerpoint(project_dir, root_path, project_name):
     """
     template_path = root_path + '/ppts/pptx/SEOC Tech Audit Template.pptx'
     presentation = Presentation(template_path)
-    
-    Presentation
-        - Slides
-            - Shapes
-                - Text_frame
-                    - Paragraphs
-                        - Runs
     
     slides = [slide for slide in presentation.slides]
     slide_num = 0
