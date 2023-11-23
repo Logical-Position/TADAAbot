@@ -47,25 +47,6 @@ data_keys = {
     'sitemap-url-redirect-3xx': 'redirect__3xx__url_in_xml_sitemaps'
 }
 
-
-def match_target_hint_files(all_uploaded_files):
-    """
-    Matches the necessary export files that are used in the tech audit. Returns a list of file paths to these matched files.
-    @param [str] all_uploaded_files: the file paths in the uploaded directory as a list.
-    @return [list] found_hint_files: a list of matched hint files that are used in the TA.
-    """
-    
-    found_hint_files = []
-    for file_name in all_uploaded_files:
-        for possible_file in target_hint_files:
-            if possible_file in file_name:
-                target_hint_files.remove(possible_file)
-                found_hint_files.append(file_name)
-
-    not_found_hint_files = target_hint_files
-
-    return found_hint_files
-
 def parse_sitebulb_csvs(sitebulb_file_paths, target_export_files):
     """
     Takes the matched paths to the target csv files, reads into each file using Pandas, forms our custom data object, and returns it.

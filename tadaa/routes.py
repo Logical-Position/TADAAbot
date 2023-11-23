@@ -35,13 +35,13 @@ def save_image():
 
 # Routes
 @app.route('/', methods=['GET'])
-@login_required
+# @login_required
 def index():
     schema = get_schema()
     return render_template('views/index.html', schema=schema)
 
 @app.route('/generate-presentation', methods=['POST'])
-@login_required
+# @login_required
 def generate_presentation():
     schema = get_schema()
     
@@ -78,7 +78,7 @@ def generate_presentation():
 
 # NOTE: If requesting to redownload a previous powerpoint, browser caches previous download and looks to pull from cache first.
 @app.route('/download/<id>', methods=['GET'])
-@login_required
+# @login_required
 def download_presentation(id):
     presentation_path = os.path.join(app.config['AUDITS_DIR'], id)
     filename = f"{id}.pptx"

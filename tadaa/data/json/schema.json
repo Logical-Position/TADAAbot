@@ -45,7 +45,7 @@
 			"requires_input": "false",
       "shapes": [
         {
-          "key": "executive-summary",
+          "key": "executive_summary",
           "type": "delete"
         }
       ]
@@ -53,13 +53,7 @@
     {
       "index": 5,
       "name": "Keywords Snapshot",
-      "requires_input": "false",
-      "shapes": [
-        {
-          "key": "keyword-snapshot",
-          "type": "image"
-        }
-      ]
+      "requires_input": "false"
     },
     {
       "index": 6,
@@ -73,11 +67,11 @@
       "shapes": [
         {
           "key": "ga_bool",
-          "type": "data"
+          "type": "boolean"
         },
         {
           "key": "sc_bool",
-          "type": "data"
+          "type": "boolean"
         }
       ]
     },
@@ -111,6 +105,13 @@
               }
             ]
           }
+        },
+        {
+          "key": "sc_mob_link",
+          "type": "link",
+          "input": {
+            "label": "SC mobile usability links"
+          }
         }
       ]
     },
@@ -121,11 +122,11 @@
       "shapes": [
         {
           "key": "sitemap_errors_bool",
-          "type": "data"
+          "type": "boolean"
         },
         {
           "key": "sc_sitemap_submitted_bool",
-          "type": "data"
+          "type": "boolean"
         },
         {
           "key": "sitemap_analyst_notes",
@@ -143,6 +144,13 @@
               }
             ]
           }
+        },
+        {
+          "key": "sitemap_links",
+          "type": "link",
+          "input": {
+            "label": "Sitemap links"
+          }
         }
       ]
     },
@@ -152,11 +160,7 @@
 			"requires_input": "true",
       "shapes": [
         {
-          "key": "robots-link",
-          "type": "data"
-        },
-        {
-          "key": "robots-analyst-notes",
+          "key": "robots_analyst_notes",
           "type": "text",
           "input": {
             "label": "Analyst Notes",
@@ -207,6 +211,13 @@
               }
             ]
           }
+        },
+        {
+          "key": "structured_data_links",
+          "type": "link",
+          "input": {
+            "label": "Structured data links"
+          }
         }
       ]
     },
@@ -221,39 +232,10 @@
 			"requires_input": "true",
       "shapes": [
         {
-          "key": "serps_screenshot",
-          "type": "image"
-        },
-        {
-          "key": "link-titles-sheet",
+          "key": "titles_link",
           "type": "link",
           "input": {
-            "label": "Titles Sheet"
-          }
-        },
-        {
-          "key": "title-analyst-notes",
-          "type": "text",
-          "input": {
-            "label": "Analyst Notes",
-            "options": [
-              {
-                "label": "Titles are okay",
-                "value": ""
-              },
-              {
-                "label": "Titles are missing",
-                "value": ""
-              },
-              {
-                "label": "Titles too short",
-                "value": ""
-              },
-              {
-                "label": "Titles too long",
-                "value": ""
-              }
-            ]
+            "label": "Titles links"
           }
         }
       ]
@@ -264,27 +246,10 @@
 			"requires_input": "true",
       "shapes": [
         {
-          "key": "serps_screenshot",
-          "type": "image"
-        },
-        {
-          "key": "meta_descriptions_analyst_notes",
-          "type": "text",
-          "input": {
-            "label": "Analyst Notes",
-            "options": [
-              {
-                "label": "Descriptions are okay",
-                "value": ""
-              }
-            ]
-          }
-        },
-        {
-          "key": "link-descriptions-sheet",
+          "key": "meta_descriptions_link",
           "type": "link",
           "input": {
-            "label": "Descriptions Sheet link"
+            "label": "Meta description links"
           }
         }
       ]
@@ -295,23 +260,10 @@
 			"requires_input": "true",
       "shapes": [
         {
-          "key": "h1_analyst_notes",
-          "type": "text",
-          "input": {
-            "label": "Analyst Notes",
-            "options": [
-              {
-                "label": "H1s are okay",
-                "value": ""
-              }
-            ]
-          }
-        },
-        {
-          "key": "link-h1s-sheet",
+          "key": "link_h1s_sheet",
           "type": "link",
           "input": {
-            "label": "H1s Sheet"
+            "label": "H1 links"
           }
         }
       ]
@@ -419,20 +371,10 @@
 			"requires_input": "true",
       "shapes": [
         {
-          "key": "alt_text_analyst_notes",
-          "type": "text",
+          "key": "alt_text_link",
+          "type": "link",
           "input": {
-            "label": "Analyst Notes",
-            "options": [
-              {
-                "label": "Alt text OK",
-                "value": "We found that your site's images have appropriate alt text."
-              },
-              {
-                "label": "Missing alt text",
-                "value": "We found that some of your website's images do not have image alt-text. We recommend adding alt-text to your images. This will give a keyword-focused image description to users and search engines. You can view the images that do not have alt-text here."
-              }
-            ]
+            "label": "Alt Text links"
           }
         }
       ]
@@ -462,6 +404,13 @@
                 "value": "We found that your site has broken internal links and broken external links. You can find the broken internal links here, and the broken external links here. Google Search Console also found # 404 errors; they can be found here. However, we identified that only # need to be addressed. # crawl anomalies were also found, they can be found here. It also found # soft 404 errors, which can be found here. A soft 404 is a URL that returns a page telling the user that the page does not exist and also a 200-level (success) code. In some cases, it might be a page with little or no content--for example, a sparsely populated or empty page. If there is a new URL for any of these 404 errors, we recommend redirecting the broken URL to that new page. If no URL exists, we recommend redirecting the broken URL to a relevant 2xx page. We recommend replacing the broken links with a new link or removing them from any pages they appear on."
               }
             ]
+          }
+        },
+        {
+          "key": "404_link",
+          "type": "link",
+          "input": {
+            "label": "404 links"
           }
         }
       ]
@@ -519,6 +468,13 @@
               }
             ]
           }
+        },
+        {
+          "key": "redirects_link",
+          "type": "link",
+          "input": {
+            "label": "Redirect links"
+          }
         }
       ]
     },
@@ -557,17 +513,7 @@
     {
       "index": 27,
       "name": "Page Speed",
-			"requires_input": "false",
-      "shapes": [
-        {
-          "key": "desk_load_time_float",
-          "type": "data"
-        },
-        {
-          "key": "mob_load_time_float",
-          "type": "data"
-        }
-      ]
+			"requires_input": "false"
     },
     {
       "index": 28,
@@ -577,16 +523,7 @@
     {
       "index": 29,
       "name": "Domain Authority",
-			"requires_input": "false",
-      "shapes": [
-        {
-          "key": "dom_auth_screenshot",
-          "type": "image",
-          "input": {
-            "label": "Dom Auth Screenshot"
-          }
-        }
-      ]
+			"requires_input": "false"
     },
     {
       "index": 30,
@@ -611,7 +548,7 @@
           }
         },
         {
-          "key": "broken-backlinks-sheet",
+          "key": "broken_backlinks_link",
           "type": "link",
           "input": {
             "label": "Broken Backlinks Sheet"

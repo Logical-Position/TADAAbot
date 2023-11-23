@@ -91,8 +91,6 @@ def populate_powerpoint(schema: dict, audit_data: dict, presentation: Presentati
     #             pass
 
 def put_text_into_shape(text, shape):
-    print(text)
-    print(shape)
     runs = shape.text_frame.paragraphs[0].runs
     runs[0].text = text
 
@@ -119,13 +117,17 @@ def put_data_into_shape(data, data_type, shape):
         case "text":
             put_text_into_shape(data, shape)
 
-        case "link": 
+        case "link": # Can we have generic link and anchor text keys on the form so I can grab them here?
             link = data['link']
             anchor_text = data['anchor_text']
             put_link_into_shape(link, anchor_text, shape)
 
         case "boolean":
-            pass
+            if data == 'true':
+                data = 'Yes'
+            else:
+                data = 'No'
+            put_text_into_shape(data, shape)
 
 
 """

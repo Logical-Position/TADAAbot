@@ -56,7 +56,7 @@
     <!-- SECTION: Google Analytics -->
     {% set section_name = "4. Google Analytics" %}
     {% set section_contents %}
-        {% set key, prompt = 'ga_bool', 'Is Google Analytics installed on the site?' %}
+        {% set key, prompt = 'ga_bool', 'Do we have access to Google Analytics?' %}
         {% include 'sections/audit-form/inputs/boolean.html' %}
     {% endset %}
     {% include 'sections/audit-form/form-section.html' %}
