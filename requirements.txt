@@ -12,3 +12,4 @@ seaborn==0.12.2
 uuid
 pytailwindcss
 flask-login==0.6.2
+python-dotenv
