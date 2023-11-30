@@ -34,7 +34,7 @@ Rework to:
 from tadaa import csv
 from tadaa import ppt
 
-def run_audit(sitebulb_files, target_export_files, form_data):
+def run_audit(sitebulb_files, target_export_files, form_data, image_paths):
     sitebulb_data = csv.parse_sitebulb_csvs(sitebulb_files, target_export_files)
     print('')
     print('=== FORM DATA ===')
@@ -43,6 +43,7 @@ def run_audit(sitebulb_files, target_export_files, form_data):
     audit_data = {}
     audit_data.update(sitebulb_data)
     audit_data.update(form_data)
+    audit_data.update(image_paths)
     # parse_sc_404_files
     # parse_siteliner_results
     # parse ...

@@ -30,14 +30,14 @@ def save_files(filelist:list, path:str=''):
             filename = secure_filename(base_filename)
             file.save(os.path.join(path, filename))
 
-def save_image(image_file, path, image_key):
+def save_image(image_file, image_path):
     base_filename = os.path.basename(image_file.filename)
     # filename = "my.file.name.png"
     # parts = filename.split["."] => ["my", "file", "name", "png"]
     # ext = parts[parts.length - 1]
     if base_filename != '' and is_allowed_filetype(base_filename):
-        os.makedirs(path, exist_ok=True)
-        image_file.save(os.path.join(path, image_key))
+        # os.makedirs(image_path, exist_ok=True)
+        image_file.save(os.path.join(image_path))
 
 # Routes
 @app.route('/', methods=['GET'])
@@ -54,31 +54,30 @@ def generate_presentation():
     form_data = request.form.to_dict()
     
     audit_id = f"{form_data['domain_url']}-{str(uuid4())}"
-    data_dir = os.path.join(app.config['AUDITS_DIR'], audit_id)
+    project_dir = os.path.join(app.config['AUDITS_DIR'], audit_id)
 
     sitebulb_files = request.files.getlist('spreadsheet-selection')
-    save_files(sitebulb_files, data_dir)
-    
-    serp_image_key = 'serps_screenshot-image'
-    serp_images = request.files.getlist(serp_image_key)
-    #save_files(serp_images, data_dir)
-    save_image(serp_images[0], data_dir, serp_image_key)
+    save_files(sitebulb_files, project_dir)
 
-    semrush_image_key = 'keyword-snapshot-image'
-    semrush_images = request.files.getlist(semrush_image_key)
-    #save_files(semrush_images, data_dir)
-    save_image(semrush_images[0], data_dir, semrush_image_key)
+    image_keys = [
+        'serps_screenshot-image',
+        'keyword-snapshot-image',
+        'dom_auth_screenshot-image'
+    ]
+    image_paths = {}
 
-    domauth_images_key = 'dom_auth_screenshot-image'
-    domauth_images = request.files.getlist(domauth_images_key)
-    #save_files(domauth_images, data_dir)
-    save_image(domauth_images[0], data_dir, domauth_images_key)
+    for image_key in image_keys:
+        images = request.files.getlist(image_key)
+        if len(images) > 0:
+            image_path = os.path.join(project_dir, image_key)
+            image_paths[image_key] = image_path
+            save_image(images[0], image_path)
 
-    sitebulb_csvs = [os.path.join(data_dir, os.path.basename(file.filename)) for file in sitebulb_files if file.filename != '']
-    audit_data = tadaa.run_audit(sitebulb_csvs, schema['target_export_files'], form_data)
+    sitebulb_csvs = [os.path.join(project_dir, os.path.basename(file.filename)) for file in sitebulb_files if file.filename != '']
+    audit_data = tadaa.run_audit(sitebulb_csvs, schema['target_export_files'], form_data, image_paths)
     
     template_path = os.path.join(app.config['DATA_DIR'], 'pptx', schema['ppt'])
-    output_path = os.path.join(data_dir, audit_id)
+    output_path = os.path.join(project_dir, audit_id)
     tadaa.create_presentation(template_path, output_path, audit_data, schema)
 
     tadaabject = {
