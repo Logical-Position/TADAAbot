@@ -30,8 +30,14 @@ def save_files(filelist:list, path:str=''):
             filename = secure_filename(base_filename)
             file.save(os.path.join(path, filename))
 
-def save_image():
-    pass
+def save_image(image_file, path, image_key):
+    base_filename = os.path.basename(image_file.filename)
+    # filename = "my.file.name.png"
+    # parts = filename.split["."] => ["my", "file", "name", "png"]
+    # ext = parts[parts.length - 1]
+    if base_filename != '' and is_allowed_filetype(base_filename):
+        os.makedirs(path, exist_ok=True)
+        image_file.save(os.path.join(path, image_key))
 
 # Routes
 @app.route('/', methods=['GET'])
@@ -53,14 +59,20 @@ def generate_presentation():
     sitebulb_files = request.files.getlist('spreadsheet-selection')
     save_files(sitebulb_files, data_dir)
     
-    serp_images = request.files.getlist('serps_screenshot-image')
-    save_files(serp_images, data_dir)
+    serp_image_key = 'serps_screenshot-image'
+    serp_images = request.files.getlist(serp_image_key)
+    #save_files(serp_images, data_dir)
+    save_image(serp_images[0], data_dir, serp_image_key)
 
-    semrush_images = request.files.getlist('keyword-snapshot-image')
-    save_files(semrush_images, data_dir)
+    semrush_image_key = 'keyword-snapshot-image'
+    semrush_images = request.files.getlist(semrush_image_key)
+    #save_files(semrush_images, data_dir)
+    save_image(semrush_images[0], data_dir, semrush_image_key)
 
-    domauth_images = request.files.getlist('dom_auth_screenshot-image')
-    save_files(domauth_images, data_dir)
+    domauth_images_key = 'dom_auth_screenshot-image'
+    domauth_images = request.files.getlist(domauth_images_key)
+    #save_files(domauth_images, data_dir)
+    save_image(domauth_images[0], data_dir, domauth_images_key)
 
     sitebulb_csvs = [os.path.join(data_dir, os.path.basename(file.filename)) for file in sitebulb_files if file.filename != '']
     audit_data = tadaa.run_audit(sitebulb_csvs, schema['target_export_files'], form_data)
