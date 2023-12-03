@@ -1,7 +1,7 @@
 from pptx import Presentation
 
 
-def create_powerpoint(template_pathname, output_pathname, data, schema):
+def create_powerpoint(template_pathname, output_pathname, audit_data, schema):
     """
     Create a PowerPoint presentation with the given data and save it at the output_pathname.
     @param template_pathname: Filepath to the PowerPoint template to use
@@ -10,7 +10,7 @@ def create_powerpoint(template_pathname, output_pathname, data, schema):
     """
     presentation = Presentation(template_pathname)
     
-    populate_powerpoint(schema, data, presentation)
+    populate_powerpoint(schema, audit_data, presentation)
     
     filename = output_pathname + '.pptx'
     presentation.save(filename)
@@ -20,18 +20,7 @@ def populate_powerpoint(schema: dict, audit_data: dict, presentation: Presentati
     """
     Do the work of inserting the data into the powerpoint based on the schema.
     """
-    
-    # We're stuck on the question:
-    #   What do we traverse?
-    # But, isn't this what the schema was supposed to help solve?
-    # Instead of traversing the presentation or the data,
-    # what if we trying traversing the schema?
-    # Instead of traversing the other objects and trying to figure out what
-    #   we need to do, traversing the schema should _tell_ us what we need
-    #   to do.
-    
-    # Attempt to traverse the schema
-    # Get only the slides that have 'shapes' to populate
+
     slide_schemas = [slide for slide in schema['slides'] if 'shapes' in slide]
     for slide in slide_schemas:
         index = slide['index'] - 1
@@ -45,50 +34,9 @@ def populate_powerpoint(schema: dict, audit_data: dict, presentation: Presentati
                     if schema_key in audit_data:
                         data = audit_data[schema_key]
                         data_type = shape_schema['type']
-                        put_data_into_shape(data, data_type, shape)
+                        put_data_into_shape(data, data_type, shape, ppt_slide)
                     else:
-                        print(f"Key {schema_key} not present in data.")
-
-        # for shape_schema in slide['shapes']:
-        #     key = shape_schema['key']
-        #     data_type = shape_schema['type']
-        #     #print(shape_schema)
-        #     if key in audit_data:
-        #         data = audit_data[key]
-        #         print(data)
-        #         print(data_type)
-        #         print(ppt_slide)
-        #         #put_data_into_shape(data, shape)
-        #     else:
-        #         print(f"{key} not present in data")
-    
-    # Attempt to traverse the presentation
-    # for slide in presentation.slides:
-    #     for shape in slide.shapes:
-            # What we were doing initially
-            # ...
-
-    # Attempt to traverse the data
-    # ppt_shapes = [shape for slide in presentation.slides for shape in slide.shapes]
-    # schema_shapes = [shape for slide in schema['slides'] if 'shapes' in slide for shape in slide['shapes']]
-    # ppt_shape_dict = {shape.name: shape for shape in ppt_shapes}
-
-    # for key, data in audit_data.items():
-    #     if key in ppt_shape_dict:
-    #         try:
-    #             target_index = schema_shapes.index(key)
-    #             data_type = schema_shapes[target_index]['type']
-
-    #             print('')
-    #             print('=== Data types ===')
-    #             print(data_type)
-    #             ppt_shape = ppt_shape_dict[key]
-
-    #             put_data_into_shape(data, data_type, ppt_shape)
-
-    #         except ValueError:
-    #             print('Value error.')
-    #             pass
+                        print(f"Key {schema_key} not present in audit data.")
 
 def put_text_into_shape(text, shape):
     runs = shape.text_frame.paragraphs[0].runs
@@ -100,16 +48,17 @@ def put_link_into_shape(link, anchor_text, shape):
     hylink = runs[0].hyperlink
     hylink.address = link
 
-def put_image_into_shape(image, shape):
-    shape.image = image
+def put_image_into_shape(image_path, ppt_slide):
+    img_shape = ppt_slide.shapes.add_picture(image_path, 20, 20)
+    print(img_shape.name)
 
-def put_data_into_shape(data, data_type, shape):
+def put_data_into_shape(data, data_type, shape, ppt_slide):
     match data_type:
         case "delete":
             pass
 
         case "image":
-            put_image_into_shape(data, shape)
+            put_image_into_shape(data, ppt_slide)
 
         case "data":
             pass
@@ -127,6 +76,9 @@ def put_data_into_shape(data, data_type, shape):
                 data = 'Yes'
             else:
                 data = 'No'
+            put_text_into_shape(data, shape)
+        
+        case "number":
             put_text_into_shape(data, shape)
 
 
