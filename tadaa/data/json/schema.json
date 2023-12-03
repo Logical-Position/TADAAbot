@@ -1,6 +1,6 @@
 {
   "name": "original",
-  "ppt": "SEOC Tech Audit Template.pptx",
+  "ppt": "OSR Tech Audit Template.pptx",
   "target_export_files": [
     "url_in_multiple_xml_sitemaps",
     "noindex_url_in_xml_sitemaps",
@@ -53,7 +53,13 @@
     {
       "index": 5,
       "name": "Keywords Snapshot",
-      "requires_input": "false"
+      "requires_input": "false",
+      "shapes": [
+        {
+          "key": "keyword-snapshot-image",
+          "type": "image"
+        }
+      ]
     },
     {
       "index": 6,
@@ -237,6 +243,10 @@
           "input": {
             "label": "Titles links"
           }
+        },
+        {
+          "key": "serps_screenshot-image",
+          "type": "image"
         }
       ]
     },
@@ -251,6 +261,10 @@
           "input": {
             "label": "Meta description links"
           }
+        },
+        {
+          "key": "serps_screenshot-image",
+          "type": "image"
         }
       ]
     },
@@ -407,7 +421,7 @@
           }
         },
         {
-          "key": "404_link",
+          "key": "404_links",
           "type": "link",
           "input": {
             "label": "404 links"
@@ -470,7 +484,7 @@
           }
         },
         {
-          "key": "redirects_link",
+          "key": "redirects_links",
           "type": "link",
           "input": {
             "label": "Redirect links"
@@ -522,8 +536,43 @@
     },
     {
       "index": 29,
-      "name": "Domain Authority",
-			"requires_input": "false"
+      "name": "Authority Score and Linking Domains",
+			"requires_input": "true",
+      "shapes": [
+        {
+          "key": "off_page_analyst_notes",
+          "type": "text",
+          "input": {
+            "label": "Off-page Analyst Notes",
+            "options": [
+              {
+                "label": "Increasing your site's authority is an important step in raising your overall rankings. We suggest spending some time building relevant backlinks. This can raise your site's overall authority in the eyes of the search engines."
+              }
+            ]
+          }
+        },
+        {
+          "key": "backlinks_integer",
+          "type": "number",
+          "input": {
+            "label": "Number of broken backlinks"
+          }
+        },
+        {
+          "key": "authority_score",
+          "type": "number",
+          "input": {
+            "label": "Authority Score"
+          }
+        },
+        {
+          "key": "referring_domains",
+          "type": "number",
+          "input": {
+            "label": "Number of referring domains"
+          }
+        }
+      ]
     },
     {
       "index": 30,
