@@ -9,6 +9,7 @@
 
 ## Slide 5. Keyword Snapshot
 * Image - Semrush overview
+* Added image shape
 
 ## Slide 7. Analytics
 * Bool - Update SC Access
@@ -18,6 +19,9 @@
 * Text - Update Limited Mobile Usability text
 * Rich Text - Analyst Notes
 * Link - to Search Console
+* Edited formatting/wording on slide
+    - Number of pages with errors has it's own shape, to get num from form
+    - Added new shape for export link/anchor text
 
 ## Slide 10. Sitemap
 * Bool - Is SC used
@@ -25,6 +29,7 @@
 * Rich Text - Analyst Notes
 * Link - to client's sitemap
 * Link - to orphaned pages sheet
+* Added new text shape for export links/anchor text
 
 ## Slide 11. Robots
 * Rich Text - Analyst Notes
@@ -65,16 +70,21 @@
 
 ## Slide 21. Alt Text
 * Rich Text - Analyst Notes
+* Edited formatting
+    - Created new shape for num of errors
+    - Created new shape for export link/anchor text.
 
 ## Slide 23. 404 Errors
 * Rich Text - Analyst Notes
 * Links - to _
+* Created new shape for link/s to export files
 
 ## Slide 24. Canonicals
 * Rich Text - Analyst Notes
 
 ## Slide 25. Redirects
 * Rich Text - Analyst Notes
+* Created new shape for link/s to export files
 
 ## Slide 26. Website Security
 * Rich Text - Analyst Notes
@@ -85,15 +95,19 @@ ssl_exp = bool
 ## Slide 27. Page Speed
 * Num - mob_load_time
 * Num - desk_load_time
+* Separated num shape and unit (sec) shape
 
-## Slide 28.
+## Slide 28. Off-page SEO
 
-## Slide 29. Domain Authority
-* Image Upload - 
+## Slide 29. Authority Score and Linking Domains
 * Rich Text - Analyst Notes
+* Integer - Authority Score
+* Integer - Referring Domains
+* Integer - Backlinks
 
 ## Slide 30. Backlinks
 * Rich Text - Analyst Notes
+* Added new shape for export link
 
 ## Slide 31. Thank You
 
