@@ -1,4 +1,5 @@
 from pptx import Presentation
+from pptx.util import Inches
 
 
 def create_powerpoint(template_pathname, output_pathname, audit_data, schema):
@@ -43,13 +44,15 @@ def put_text_into_shape(text, shape):
     runs[0].text = text
 
 def put_link_into_shape(link, anchor_text, shape):
+    print(link)
+    print(anchor_text)
     runs = shape.text_frame.paragraphs[0].runs[0]
     runs[0].text = anchor_text
     hylink = runs[0].hyperlink
     hylink.address = link
 
-def put_image_into_shape(image_path, ppt_slide):
-    img_shape = ppt_slide.shapes.add_picture(image_path, 20, 20)
+def put_image_into_shape(image_path, ppt_slide, left, top):
+    img_shape = ppt_slide.shapes.add_picture(image_path, left, top)
     print(img_shape.name)
 
 def put_data_into_shape(data, data_type, shape, ppt_slide):
@@ -58,7 +61,7 @@ def put_data_into_shape(data, data_type, shape, ppt_slide):
             pass
 
         case "image":
-            put_image_into_shape(data, ppt_slide)
+            put_image_into_shape(data, ppt_slide, Inches(4), Inches(4))
 
         case "data":
             pass
