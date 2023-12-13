@@ -25,7 +25,6 @@ flask run
 ```
 
 ## Server (Production)
-Hosted on: Lightsail Ubuntu - ver. 22.04 LTS(Jammy Jellyfish)
 ### Structure:
 * Application runs on a docker container which receives requests from Nginx proxy on host machine: 
   * Nginx Proxy(80) > Tadaa Docker Container(5000)
