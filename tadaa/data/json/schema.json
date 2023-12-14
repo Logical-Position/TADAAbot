@@ -6,6 +6,8 @@
     "noindex_url_in_xml_sitemaps",
     "redirect__3xx__url_in_xml_sitemaps",
     "url_is_orphaned_and_was_not_found_by_the_crawler",
+    "title_tag_is_missing",
+    "title_tag_is_empty",
     "title_tag_length_too_long",
     "title_tag_length_too_short",
     "urls_with_duplicate_page_titles",
@@ -14,12 +16,15 @@
     "description_length_too_short",
     "meta_description_is_missing",
     "meta_description_is_empty",
+    "multiple__h1__tags",
     "h1__tag_is_empty",
+    "h1__tag_is_missing",
     "urls_with_duplicate_h1s",
     "images_with_missing_alt_text",
     "external_url_redirect_broken__4xx_or_5xx",
     "broken_internal_urls",
     "broken_external_urls",
+    "redirect_chains",
     "external_redirected_urls",
     "internal_redirected_urls"
   ],
@@ -157,6 +162,22 @@
           "input": {
             "label": "Sitemap links"
           }
+        },
+        {
+          "key": "url_in_multiple_xml_sitemaps",
+          "type": "data"
+        },
+        {
+          "key": "noindex_url_in_xml_sitemaps",
+          "type": "data"
+        },
+        {
+          "key": "redirect__3xx__url_in_xml_sitemaps",
+          "type": "data"
+        },
+        {
+          "key": "url_is_orphaned_and_was_not_found_by_the_crawler",
+          "type": "data"
         }
       ]
     },
@@ -247,6 +268,26 @@
         {
           "key": "serps_screenshot-image",
           "type": "image"
+        },
+        {
+          "key": "title_tag_is_missing",
+          "type": "data"
+        },
+        {
+          "key": "title_tag_is_empty",
+          "type": "data"
+        },
+        {
+          "key": "title_tag_length_too_long",
+          "type": "data"
+        },
+        {
+          "key": "title_tag_length_too_short",
+          "type": "data"
+        },
+        {
+          "key": "urls_with_duplicate_page_titles",
+          "type": "data"
         }
       ]
     },
@@ -265,6 +306,26 @@
         {
           "key": "serps_screenshot-image",
           "type": "image"
+        },
+        {
+          "key": "urls_with_duplicate_meta_descriptions",
+          "type": "data"
+        },
+        {
+          "key": "description_length_too_long",
+          "type": "data"
+        },
+        {
+          "key": "description_length_too_short",
+          "type": "data"
+        },
+        {
+          "key": "meta_description_is_missing",
+          "type": "data"
+        },
+        {
+          "key": "meta_description_is_empty",
+          "type": "data"
         }
       ]
     },
@@ -279,6 +340,22 @@
           "input": {
             "label": "H1 links"
           }
+        },
+        {
+          "key": "multiple__h1__tags",
+          "type": "data"
+        },
+        {
+          "key": "h1__tag_is_empty",
+          "type": "data"
+        },
+        {
+          "key": "h1__tag_is_missing",
+          "type": "data"
+        },
+        {
+          "key": "urls_with_duplicate_h1s",
+          "type": "data"
         }
       ]
     },
@@ -390,6 +467,10 @@
           "input": {
             "label": "Alt Text links"
           }
+        },
+        {
+          "key": "images_with_missing_alt_text",
+          "type": "data"
         }
       ]
     },
@@ -426,6 +507,18 @@
           "input": {
             "label": "404 links"
           }
+        },
+        {
+          "key": "external_url_redirect_broken__4xx_or_5xx",
+          "type": "data"
+        },
+        {
+          "key": "broken_internal_urls",
+          "type": "data"
+        },
+        {
+          "key": "broken_external_urls",
+          "type": "data"
         }
       ]
     },
@@ -489,6 +582,18 @@
           "input": {
             "label": "Redirect links"
           }
+        },
+        {
+          "key": "redirect_chains",
+          "type": "data"
+        },
+        {
+          "key": "external_redirected_urls",
+          "type": "data"
+        },
+        {
+          "key": "internal_redirected_urls",
+          "type": "data"
         }
       ]
     },
@@ -527,7 +632,17 @@
     {
       "index": 27,
       "name": "Page Speed",
-			"requires_input": "false"
+			"requires_input": "false",
+      "shapes": [
+        {
+          "key": "desk_load_time_float",
+          "type": "number"
+        },
+        {
+          "key": "mob_load_time_float",
+          "type": "number"
+        }
+      ]
     },
     {
       "index": 28,

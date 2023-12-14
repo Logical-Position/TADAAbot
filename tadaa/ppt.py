@@ -53,7 +53,6 @@ def put_link_into_shape(link, anchor_text, shape):
 
 def put_image_into_shape(image_path, ppt_slide, left, top):
     img_shape = ppt_slide.shapes.add_picture(image_path, left, top)
-    print(img_shape.name)
 
 def put_data_into_shape(data, data_type, shape, ppt_slide):
     match data_type:
@@ -64,14 +63,14 @@ def put_data_into_shape(data, data_type, shape, ppt_slide):
             put_image_into_shape(data, ppt_slide, Inches(4), Inches(4))
 
         case "data":
-            pass
+            put_text_into_shape(str(data), shape)
 
         case "text":
             put_text_into_shape(data, shape)
 
-        case "link": # Can we have generic link and anchor text keys on the form so I can grab them here?
-            link = data['link']
-            anchor_text = data['anchor_text']
+        case "link":
+            link = "https://www.google.com"
+            anchor_text = 'Here be the anchor text.'
             put_link_into_shape(link, anchor_text, shape)
 
         case "boolean":
