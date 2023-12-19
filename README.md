@@ -38,7 +38,7 @@ flask run
 
 ### Docker Setup:
 * Build Docker image from Github repository clone: `docker build -t tadaa ~/TADAAbot/`
-* Run Docker container from image: `docker run --restart always --name tadaa --env-file ~/.env -dp 5000:5000 tadaa`
+* Run Docker container from image: `docker run --restart always --name tadaa --env-file ~/TADAAbot/.env -dp 5000:5000 tadaa`
 
 ### Updating to latest Prod release:
 * Will need to stop and remove prior image/container before building one with the same name/ports.
