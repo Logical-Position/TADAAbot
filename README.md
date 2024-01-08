@@ -26,19 +26,23 @@ flask run
 
 ## Server (Production)
 ### Structure:
-* Application runs on a docker container which receives requests from Nginx proxy on host machine: 
-  * Nginx Proxy(80) > Tadaa Docker Container(5000)
+* Application runs on a docker network which receives requests from Nginx container: 
+  * Nginx Container(80) > Tadaa Container(5000)
 
 ### Installation:
 1. Clone repository: `git clone git@github.com:Logical-Position/TADAAbot.git` into home directory.
 1. Create .env file for needed login/session variables in auth.py
 
-### Nginx Setup:
-* Nginx config file required w/symlink between `/etc/nginx/sites-available && /etc/nginx/sites-enabled`.
 
 ### Docker Setup:
-* Build Docker image from Github repository clone: `docker build -t tadaa ~/TADAAbot/`
-* Run Docker container from image: `docker run --restart always --name tadaa --env-file ~/TADAAbot/.env -dp 5000:5000 tadaa`
+#### Nginx
+* Build Nginx from tadaa-nginx folder: `docker build -t nginx ~/tadaa-nginx/`
+* Run Nginx container from image: `docker run --restart always --name nginx --network tadaa-net -dp 80:80 nginx`
+
+#### TADAA
+* Build TADAA image from Github repository clone: `docker build -t tadaa ~/TADAAbot/`
+* Run TADAA container from image: `docker run --restart always --name tadaa --env-file ~/TADAAbot/.env --network tadaa-net -d tadaa`
+
 
 ### Updating to latest Prod release:
 * Will need to stop and remove prior image/container before building one with the same name/ports.
