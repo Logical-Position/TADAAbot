@@ -37,7 +37,7 @@ flask run
 ### Docker Setup:
 #### Nginx
 * Build Nginx from tadaa-nginx folder: `docker build -t nginx ~/tadaa-nginx/`
-* Run Nginx container from image: `docker run --restart always --name nginx --network tadaa-net -dp 80:80 nginx`
+* Run Nginx container from image: `docker run --restart always --name nginx --network tadaa-net --mount type=bind,src=/etc/letsencrypt,target=/etc/letsencrypt,readonly -d -p 80:80 -p 443:443 nginx`
 
 #### TADAA
 * Build TADAA image from Github repository clone: `docker build -t tadaa ~/TADAAbot/`
