@@ -25,36 +25,30 @@ flask run
 ```
 
 ## Server (Production)
-gunicorn and nginx are leveraged for handling HTTP requests.
-
-Hosted on: Lightsail Ubuntu - ver. 22.04 LTS(Jammy Jellyfish)
 ### Structure:
-* Application runs on a docker container which receives requests from Nginx proxy on host machine: 
-  * Nginx Proxy(80) > Tadaa Docker Container(5000)
-* `dock` bash file in home directory for bash commands
-
-### Docker Setup:
-* Dockerfile and .dockerignore found in TADAAbot directory for build process
-* Tadaa currently restarts any time docker daemon restarts using `--restart always` flag.
+* Application runs on a docker network which receives requests from Nginx container: 
+  * Nginx Container(80) > Tadaa Container(5000)
 
 ### Installation:
-* Prerequisites: Nginx and Docker Install
-    * Nginx setup required `/etc/nginx/sites-available && /etc/nginx/sites-enabled` for proxypass.
-1. Clone repository: `git clone git@github.com:Logical-Position/TADAAbot.git` into ~/ directory.
-1. Create .env file for needed login/session variables
-1. Source `dock` file in terminal: 
-`source dock` -> (`build` - `stopprod` - `runprod`)
-2. Build Docker Image: 
-`build` -> (`docker build -t tadaa ~/TADAAbot/`)
-1. Run Production: 
-`runprod` -> (`docker run --restart always --name tadaa --env-file ~/.env -dp 5000:5000 tadaa`)
+1. Clone repository: `git clone git@github.com:Logical-Position/TADAAbot.git` into home directory.
+1. Create .env file for needed login/session variables in auth.py
+
+
+### Docker Setup:
+#### Nginx
+* Build Nginx from tadaa-nginx folder: `docker build -t nginx ~/tadaa-nginx/`
+* Run Nginx container from image: `docker run --restart always --name nginx --network tadaa-net --mount type=bind,src=/etc/letsencrypt,target=/etc/letsencrypt,readonly -d -p 80:80 -p 443:443 nginx`
+
+#### TADAA
+* Build TADAA image from Github repository clone: `docker build -t tadaa ~/TADAAbot/`
+* Run TADAA container from image: `docker run --restart always --name tadaa --env-file ~/TADAAbot/.env --network tadaa-net -d tadaa`
+
 
 ### Updating to latest Prod release:
 * Will need to stop and remove prior image/container before building one with the same name/ports.
 1. Pull latest changes on production branch: `git pull origin/prod`
-2. Rebuild new docker image: `build`
-3. Run new container: `runprod`
-### Installation
+2. Rebuild new docker image
+3. Run new container
 
 TODO
 
