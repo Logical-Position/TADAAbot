@@ -53,14 +53,34 @@ progress::-webkit-progress-value {
 }
 
 /* Messages */
-.error-message {
-  border: 1px solid red;
-  padding: 5px;
-  color: red;
+.message{
+  text-align: center;
+  width: 80%;
+  margin: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid black;
+  border-radius: 7px;
+
+}
+.error.message {
+  color: white;
+  background-color: #d63638;
+  border-color:#d63638;
 }
 
-.info-message {
-  border: 1px solid blue;
-  padding: 5px;
-  color: blue;
+.info.message {
+  color: white;
+  background-color: #298451;
+  border-color:#298451;
 }
+
+.welcome.message {
+  font-size: 18px;
+  font-weight: 500;
+  color: rgb(55 65 81);
+  border-color: transparent;
+  list-style-type: none;
+}
+

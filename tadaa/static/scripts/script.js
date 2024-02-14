@@ -300,3 +300,4 @@ function main() {
     confetti.destroyTarget(false);
 }
 
+
