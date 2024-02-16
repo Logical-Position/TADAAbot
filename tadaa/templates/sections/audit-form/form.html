@@ -89,7 +89,10 @@
     {% for slide in schema.slides %}
         {% if slide.requires_input == "true" %}
         <fieldset>
-            <legend><h4 class="text-lg italic px-2">#{{ slide.index }} {{ slide.name }}</h4></legend>
+            <legend>
+                <h4 class="text-gray-800 font-semibold text-lg pl-2 px-2">{{ slide.name }}</h4>
+                <h5 class="text-gray-400 font-normal text-sm pl-3">SLIDE {{ slide.index }}</h5>
+            </legend>
             {% for shape in slide.shapes %}
                 {% if shape.input and shape.type != "data" and shape.type != "delete" %}
                     {% set key = shape.key %}
